@@ -23,9 +23,11 @@ jobs:
           java-version: '21'
           cache: 'maven'
 
+      - name: Change to Project Directory
+        run: cd EinkaufsListen  # Adjust this if your project is inside a different folder
+
       - name: Build with Maven
-        run: mvn clean install --batch-mode
+        run: cd EinkaufsListen && mvn clean install --batch-mode
 
       - name: Run Tests
-        run: mvn test --batch-mode
-        
+        run: cd EinkaufsListen && mvn test --batch-mode
