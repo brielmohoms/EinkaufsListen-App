@@ -32,6 +32,22 @@ public class Item {
 
 
     /**
+     * Constructor
+     * @param id the item id
+     * @param name the item name
+     * @param category the item category
+     * @param price the item price
+     * @param quantity the item quantity
+     */
+    public Item(int id, String name, String category, double price, double quantity) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    /**
      * Default constructor
      */
     public Item() {
