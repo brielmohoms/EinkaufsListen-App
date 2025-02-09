@@ -1,0 +1,4 @@
+org\prog3\dao\DatabaseConnectionTest.class
+org\prog3\controllers\ItemControllerTest.class
+org\prog3\dao\ItemDAOTest.class
+org\prog3\services\ItemServiceTest.class
