@@ -10,24 +10,34 @@ public class Item {
     private String name;
     private String category;
     private double price;
-    private int quantity;
+    private double quantity;
+    private int shoppingListId;
+
 
     /**
      * Constructor
      *
-     * @param id the item id
      * @param name the item name
      * @param category the item category
      * @param price the item price
      * @param quantity the item quantity
      */
-    public Item(int id, String name, String category, double price, int quantity){
-        this.id = id;
+    public Item(String name, String category, double price, double quantity, int shoppingListId){
         this.name = name;
         this.category = category;
         this.price = price;
         this.quantity = quantity;
+        this.shoppingListId = shoppingListId;
     }
+
+
+    /**
+     * Default constructor
+     */
+    public Item() {
+
+    }
+
 
     /**
      * gets the item id
@@ -38,6 +48,7 @@ public class Item {
         return id;
     }
 
+
     /**
      * sets the item id
      *
@@ -46,6 +57,7 @@ public class Item {
     public void setId(int id) {
         this.id = id;
     }
+
 
     /**
      * gets the item name
@@ -56,6 +68,7 @@ public class Item {
         return name;
     }
 
+
     /**
      * sets the item name
      *
@@ -64,6 +77,7 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
+
 
     /**
      * gets the item category
@@ -74,6 +88,7 @@ public class Item {
         return category;
     }
 
+
     /**
      * sets the item category
      *
@@ -82,6 +97,7 @@ public class Item {
     public void setCategory(String category) {
         this.category = category;
     }
+
 
     /**
      * gets the item price
@@ -92,6 +108,7 @@ public class Item {
         return price;
     }
 
+
     /**
      * sets the item price
      *
@@ -101,21 +118,61 @@ public class Item {
         this.price = price;
     }
 
+
     /**
      * gets the item quantity
      *
      * @return the quantity
      */
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
+
 
     /**
      * sets the item quantity
      *
      * @param quantity the item quantity
      */
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
+    }
+
+
+    /**
+     * gets the shopping list ID
+     *
+     * @return the shopping list ID
+     */
+    public int getShoppingListId() {
+        return shoppingListId;
+    }
+
+
+    /**
+     * sets the shopping list ID
+     *
+     * @param shoppingListId the shopping list ID of the item
+     */
+    public void setShoppingListId(int shoppingListId) {
+        this.shoppingListId = shoppingListId;
+    }
+
+
+    /**
+     * returns a string representation of an item object
+     *
+     * @return a formatted string containing the item's details
+     */
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", shoppingListId=" + shoppingListId +
+                '}';
     }
 }
