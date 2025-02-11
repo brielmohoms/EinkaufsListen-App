@@ -1,6 +1,7 @@
 package org.prog3.app;
 
 import org.prog3.controllers.ItemController;
+import org.prog3.controllers.ShoppingListController;
 
 import java.util.Scanner;
 
@@ -12,7 +13,65 @@ public class CLI {
     ItemController itemController = new ItemController();
     Scanner scanner = new Scanner(System.in);
 
-    public void start () {
+
+    public void start(){
+        while (true){
+            try{
+                System.out.println("====SHOPPING APP====");
+                System.out.println("1.Manage Items");
+                System.out.println("2.Manage Shopping List");
+                System.out.println("3.Exit");
+                System.out.println("choose an option");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice){
+                    case 1 ->startItemMenu();
+                    case 2 ->menuShopping();
+                    case 3->{
+                        System.out.println("Bye");
+                        scanner.close();
+                        return;
+                    }
+                    default -> System.out.println("Invalid Choice .Please try again");
+                }
+            }catch (Exception e){
+                System.out.println("an Error occured : " + e.getMessage());
+                scanner.nextLine();
+            }
+        }
+    }
+    public void menuShopping (){
+        while (true){
+            try{
+                System.out.println("=====SHOPPING MENU===== ");
+                System.out.println("1. consult the shopping list");
+                System.out.println("2. add shopping list ");
+                System.out.println("3. delete  shopping list ");
+                System.out.println("4.Exit ");
+                System.out.println("choose an option");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice){
+                    case 1 -> ShoppingListController.viewShoppingList();
+                    case 2 ->ShoppingListController.addShoppingList();
+                    case 3 ->ShoppingListController.deleteShoppingList();
+                    case 4 ->{
+                        System.out.println("Bye");
+                        scanner.close();
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice. Please try again");
+
+                }
+            }catch (Exception e) {
+                System.err.println("An error occurred " + e.getMessage());
+                scanner.nextLine();
+            }
+        }
+    }
+    public void startItemMenu () {
         while (true) {
             try{
                 System.out.println("==== SHOPPING APP ====");

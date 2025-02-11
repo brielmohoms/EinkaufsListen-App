@@ -49,7 +49,7 @@ public class ShoppingList {
         }
     }
 
-    private  void updateTotalPrice (){
+    private  void updateTotalPrice(){
         totalPrice=0.0;
         for (Item item : items ){
             totalPrice += item.getPrice() * item.getQuantity();

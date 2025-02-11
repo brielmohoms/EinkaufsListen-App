@@ -10,5 +10,6 @@ public class App {
         DatabaseInitializer.initialise();
         CLI app = new CLI();
         app.start();
+
     }
 }
