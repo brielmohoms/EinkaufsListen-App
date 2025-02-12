@@ -23,12 +23,10 @@ public class DatabaseInitializer {
     public static void initialise() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             DSLContext create = DSL.using(conn, SQLDialect.SQLITE);
-
-            //User Table
             create.createTableIfNotExists("User")
                     .column("id", SQLDataType.INTEGER.identity(true))
                     .column("username", SQLDataType.VARCHAR.length(255).nullable(false))
-                    .column("email", SQLDataType.VARCHAR.length(255).nullable(false))
+                    .column("password", SQLDataType.VARCHAR.length(255).nullable(false))
                     .constraint(DSL.constraint("PK_User").primaryKey("id"))
                     .execute();
 

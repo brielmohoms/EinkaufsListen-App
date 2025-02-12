@@ -2,6 +2,9 @@ package org.prog3.app;
 
 import org.prog3.controllers.ItemController;
 import org.prog3.controllers.ShoppingListController;
+import org.prog3.controllers.UserController;
+
+
 
 import java.util.Scanner;
 
@@ -9,38 +12,80 @@ import java.util.Scanner;
  * Command line interface for the Einkaufslisten application
  */
 public class CLI {
-
+   UserController userController = new UserController();
     ItemController itemController = new ItemController();
     Scanner scanner = new Scanner(System.in);
+    private boolean running = true;
 
 
-    public void start(){
-        while (true){
-            try{
+    public void start() {
+        while (running) {
+            try {
                 System.out.println("====SHOPPING APP====");
-                System.out.println("1.Manage Items");
-                System.out.println("2.Manage Shopping List");
-                System.out.println("3.Exit");
+                System.out.println("1.Manage Users");
+                System.out.println("2.Manage Items");
+                System.out.println("3.Manage Shopping List");
+                System.out.println("4.Exit");
                 System.out.println("choose an option");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
-                switch (choice){
-                    case 1 ->startItemMenu();
-                    case 2 ->menuShopping();
-                    case 3->{
+                switch (choice) {
+                    case 1 -> menuUser();
+                    case 2 -> startItemMenu();
+                    case 3 -> menuShopping();
+                    case 4 -> {
                         System.out.println("Bye");
-                        scanner.close();
-                        return;
+                        running = false;
                     }
                     default -> System.out.println("Invalid Choice .Please try again");
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("an Error occured : " + e.getMessage());
                 scanner.nextLine();
             }
         }
     }
+
+    public void menuUser () {
+        while (true) {
+            try {
+                System.out.println("=====USER MENU===== ");
+                System.out.println("1. add User");
+                System.out.println("2. delete User ");
+                System.out.println("3. update Users ");
+                System.out.println("4. consult Users ");
+                System.out.println("5. find User by Id ");
+                System.out.println("6. Go Back");
+                System.out.println("choose an option");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1 -> userController.createUser();
+                    case 2 -> userController.deleteUser();
+                    case 3 -> userController.updateUser();
+                    case 4 -> userController.displayAllUsers();
+                    case 5 -> userController.findUserById();
+                    case 6 -> {
+                        System.out.println("Bye");
+                        start();
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice. Please try again");
+
+                }
+            } catch (Exception e) {
+                System.err.println("An error occurred " + e.getMessage());
+                scanner.nextLine();
+            }
+        }
+
+    }
+
+
+
+
     public void menuShopping (){
         while (true){
             try{
@@ -59,7 +104,7 @@ public class CLI {
                     case 3 ->ShoppingListController.deleteShoppingList();
                     case 4 ->{
                         System.out.println("Bye");
-                        scanner.close();
+                        start();
                         return;
                     }
                     default -> System.out.println("Invalid choice. Please try again");
@@ -95,7 +140,7 @@ public class CLI {
                     case 6 -> itemController.deleteAllItemsOfShoppingList();
                     case 7 -> {
                         System.out.println("Bye");
-                        scanner.close();
+                        start();
                         return;
                     }
                     default -> System.out.println("Invalid choice. Please try again");
