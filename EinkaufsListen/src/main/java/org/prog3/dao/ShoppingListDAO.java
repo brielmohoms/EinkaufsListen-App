@@ -13,9 +13,23 @@ import java.util.List;
  */
 public class ShoppingListDAO {
     private final Connection connection;
+
+    /**
+     *
+     *
+     * @param connection
+     */
     public ShoppingListDAO(Connection connection){
         this.connection = connection;
     }
+
+
+    /**
+     *
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<ShoppingList> getAllShoppingLists() throws SQLException {
         List<ShoppingList> shoppingsLists = new ArrayList<>();
         String query = "SELECT id , name FROM shoppingList";
@@ -27,6 +41,14 @@ public class ShoppingListDAO {
         }
         return shoppingsLists;
     }
+
+
+    /**
+     *
+     *
+     * @param name
+     * @throws SQLException
+     */
     public void addShoppingList(String name) throws SQLException {
         String query = "INSERT INTO shoppingList(name) VALUES (?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -34,6 +56,14 @@ public class ShoppingListDAO {
             stmt.executeUpdate();
         }
     }
+
+
+    /**
+     *
+     *
+     * @param shoppingListId
+     * @throws SQLException
+     */
     public void deleteShoppingList(int shoppingListId) throws SQLException {
         String query = "DELETE FROM shoppingList  WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -41,6 +71,15 @@ public class ShoppingListDAO {
             stmt.executeUpdate();
         }
     }
+
+
+    /**
+     *
+     *
+     * @param shoppingListId
+     * @return
+     * @throws SQLException
+     */
     public List<Item> getItems(int shoppingListId) throws SQLException {
         List<Item> items = new ArrayList<>();
         String query = "SELECT id, name, category, price, quantity FROM Item WHERE list_id = ?";
@@ -59,6 +98,5 @@ public class ShoppingListDAO {
         }
         return items;
     }
-
 }
 

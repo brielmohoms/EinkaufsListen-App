@@ -5,6 +5,7 @@ import org.prog3.controllers.ShoppingListController;
 
 import java.util.Scanner;
 
+
 /**
  * Command line interface for the Einkaufslisten application
  */
@@ -13,68 +14,79 @@ public class CLI {
     ItemController itemController = new ItemController();
     Scanner scanner = new Scanner(System.in);
 
-
-    public void start(){
+    /**
+     *
+     */
+    public void start() {
         while (true){
             try{
                 System.out.println("====SHOPPING APP====");
-                System.out.println("1.Manage Items");
-                System.out.println("2.Manage Shopping List");
-                System.out.println("3.Exit");
-                System.out.println("choose an option");
+                System.out.println("1. Manage Items");
+                System.out.println("2. Manage Shopping List");
+                System.out.println("3. Exit");
+                System.out.println("Choose an option");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice){
-                    case 1 ->startItemMenu();
-                    case 2 ->menuShopping();
-                    case 3->{
+                    case 1 -> startItemMenu();
+                    case 2 -> menuShopping();
+                    case 3 -> {
                         System.out.println("Bye");
                         scanner.close();
                         return;
                     }
-                    default -> System.out.println("Invalid Choice .Please try again");
+                    default -> System.out.println("Invalid Choice. Please try again");
                 }
-            }catch (Exception e){
-                System.out.println("an Error occured : " + e.getMessage());
+            } catch (Exception e){
+                System.out.println("An error occurred : " + e.getMessage());
                 scanner.nextLine();
             }
         }
     }
-    public void menuShopping (){
+
+
+    /**
+     *
+     */
+    public void menuShopping() {
         while (true){
             try{
                 System.out.println("=====SHOPPING MENU===== ");
-                System.out.println("1. consult the shopping list");
-                System.out.println("2. add shopping list ");
-                System.out.println("3. delete  shopping list ");
-                System.out.println("4.Exit ");
-                System.out.println("choose an option");
+                System.out.println("1. Consult the shopping list");
+                System.out.println("2. Add shopping list ");
+                System.out.println("3. Delete  shopping list ");
+                System.out.println("4. Exit ");
+                System.out.println("Choose an option");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice){
                     case 1 -> ShoppingListController.viewShoppingList();
-                    case 2 ->ShoppingListController.addShoppingList();
-                    case 3 ->ShoppingListController.deleteShoppingList();
-                    case 4 ->{
+                    case 2 -> ShoppingListController.addShoppingList();
+                    case 3 -> ShoppingListController.deleteShoppingList();
+                    case 4 -> {
                         System.out.println("Bye");
                         scanner.close();
                         return;
                     }
                     default -> System.out.println("Invalid choice. Please try again");
-
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.err.println("An error occurred " + e.getMessage());
                 scanner.nextLine();
             }
         }
     }
-    public void startItemMenu () {
+
+
+    /**
+     *
+     */
+    public void startItemMenu() {
         while (true) {
-            try{
-                System.out.println("==== SHOPPING APP ====");
+            try {
+                System.out.println("==== ITEM MENU ====");
                 System.out.println("1. Add Item");
                 System.out.println("2. Delete Item");
                 System.out.println("3. Find item by it's name");

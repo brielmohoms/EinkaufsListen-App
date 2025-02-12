@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ItemDAO {
 
+
     /**
      * Adds an item to a shopping list
      *
@@ -32,7 +33,8 @@ public class ItemDAO {
         } catch (Exception e) {
             System.err.println("Failed to add the item: " + e.getMessage());
         }
-    } //OK
+    }
+
 
     /**
      * deletes an item by its name
@@ -52,7 +54,8 @@ public class ItemDAO {
             System.err.println("Failed to delete item by name: " + e.getMessage());
         }
         return true;
-    } //OK
+    }
+
 
     /**
      * find an item by its name
@@ -83,7 +86,8 @@ public class ItemDAO {
             System.err.println("Failed to find the item: " + e.getMessage());
         }
         return null;
-    } //OK
+    }
+
 
     /**
      * updates the quantity of an item
@@ -107,7 +111,8 @@ public class ItemDAO {
             System.err.println("Failed to update item quantity: " + e.getMessage());
             return false;
         }
-    } // OK
+    }
+
 
     /**
      * Retrieves all the items of a specific shopping list
@@ -136,7 +141,8 @@ public class ItemDAO {
             System.err.println("Failed to retrieve items: " + e.getMessage());
         }
         return items;
-    } //OK
+    }
+
 
     /**
      * Deletes all the items of a specific shopping list
@@ -152,6 +158,5 @@ public class ItemDAO {
         } catch (Exception e) {
             System.err.println("Failed to clear items in the shopping list: " + e.getMessage());
         }
-    } //OK
-
+    }
 }

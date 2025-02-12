@@ -8,15 +8,23 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShoppingListController {
+
     private static ShoppingListService shoppingListService;
     private static final Scanner scanner = null;
 
 
+    /**
+     *
+     */
     public ShoppingListController() {
         //this.shoppingListService = shoppingListService;
         //this.scanner = new Scanner(System.in);
     }
 
+
+    /**
+     *
+     */
     public static  void viewShoppingList(){
         try {
             List<ShoppingList> shoppingLists = ShoppingListService.getAllShoppingLists();
@@ -27,6 +35,11 @@ public class ShoppingListController {
             System.out.println("Error fetching shopping lists : " +e.getMessage());
         }
     }
+
+
+    /**
+     *
+     */
     public static void addShoppingList(){
         System.out.println("Enter a shopping list name : ");
         String name = scanner.nextLine();
@@ -37,6 +50,11 @@ public class ShoppingListController {
             System.out.println("Error adding shopping list  " + e.getMessage());
         }
     }
+
+
+    /**
+     *
+     */
     public static void deleteShoppingList() {
         System.out.print("Enter shopping list ID to delete: ");
         int id = scanner.nextInt();

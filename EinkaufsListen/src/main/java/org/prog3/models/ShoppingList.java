@@ -17,8 +17,12 @@ public class ShoppingList {
     public int id;
 
 
-
-    // Constructor to initialize the  ShoppingList
+    /**
+     * Constructor to initialize the  ShoppingList
+     *
+     * @param id
+     * @param name
+     */
     public ShoppingList( int id , String name) {
         this.id =id ;
         this.name = name ;
@@ -26,7 +30,12 @@ public class ShoppingList {
         this.totalPrice=0.0;
     }
 
-    // add an item to the Shopping List
+
+    /**
+     * add an item to the Shopping List
+     *
+     * @param item
+     */
     public void addShoppingList (Item item){
         if (item!=null){
             items.add(item);
@@ -34,6 +43,13 @@ public class ShoppingList {
         }
 
     }
+
+
+    /**
+     *
+     *
+     * @param item
+     */
     public void deleteShoppingList (Item item){
         if (items.contains(item)) {
             items.remove(item);
@@ -41,6 +57,13 @@ public class ShoppingList {
         }
     }
 
+
+    /**
+     *
+     *
+     * @param oldItem
+     * @param newItem
+     */
     public void updateShoppingList (Item oldItem , Item newItem){
         int index = items.indexOf(oldItem);
         if (index != -1) {
@@ -49,13 +72,21 @@ public class ShoppingList {
         }
     }
 
+
+    /**
+     *
+     */
     private  void updateTotalPrice(){
         totalPrice=0.0;
         for (Item item : items ){
             totalPrice += item.getPrice() * item.getQuantity();
         }
     }
-    // display the shoppingList and total Price
+
+
+    /**
+     *
+     */
     public void display (){
         System.out.println("Shopping List : " + name );
         for(Item item : items ){
@@ -64,6 +95,13 @@ public class ShoppingList {
         System.out.println( "Total Price = " + totalPrice);
     }
 
+    /**
+     *
+     *
+     * @param dao
+     * @return
+     * @throws Exception
+     */
     public List<Item> getItems(ShoppingListDAO dao) throws Exception {
         return dao.getItems(this.id);
     }
