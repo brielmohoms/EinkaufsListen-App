@@ -38,7 +38,7 @@ public class CLI {
                         System.out.println("Bye");
                         running = false;
                     }
-                    default -> System.out.println("Invalid Choice .Please try again");
+                    default -> System.out.println("Invalid Choice. Please try again");
                 }
             } catch (Exception e) {
                 System.out.println("an Error occured : " + e.getMessage());
@@ -108,9 +108,8 @@ public class CLI {
                         return;
                     }
                     default -> System.out.println("Invalid choice. Please try again");
-
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.err.println("An error occurred " + e.getMessage());
                 scanner.nextLine();
             }

@@ -14,6 +14,8 @@ public class Item {
     private int shoppingListId;
 
 
+
+
     /**
      * Constructor
      *
@@ -47,13 +49,17 @@ public class Item {
         this.quantity = quantity;
     }
 
-    /**
-     * Default constructor
-     */
+    public Item(String name, int shoppingListId, double quantity, double price, String category) {
+        this.name = name;
+        this.shoppingListId = shoppingListId;
+        this.quantity = quantity;
+        this.price = price;
+        this.category = category;
+    }
+
     public Item() {
 
     }
-
 
     /**
      * gets the item id
