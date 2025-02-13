@@ -13,9 +13,6 @@ public class Item {
     private double quantity;
     private int shoppingListId;
 
-
-
-
     /**
      * Constructor
      *
@@ -35,6 +32,7 @@ public class Item {
 
     /**
      * Constructor
+     *
      * @param id the item id
      * @param name the item name
      * @param category the item category
@@ -49,6 +47,15 @@ public class Item {
         this.quantity = quantity;
     }
 
+    /**
+     * Constructor
+     *
+     * @param name the item name
+     * @param shoppingListId the shopping list ID
+     * @param quantity the item quantity
+     * @param price the item price
+     * @param category the item category
+     */
     public Item(String name, int shoppingListId, double quantity, double price, String category) {
         this.name = name;
         this.shoppingListId = shoppingListId;
@@ -57,6 +64,9 @@ public class Item {
         this.category = category;
     }
 
+    /**
+     * Default constructor
+     */
     public Item() {
 
     }

@@ -14,12 +14,6 @@ public class UserService {
     private final UserDAO userDAO = new UserDAO();
 
     /**
-     * Default constructor for the UserService class.
-     * This constructor can be used for cases where the UserDAO will be set later or injected through other means.
-     */
-   // public UserService() {}
-
-    /**
      * Creates a new user in the system.
      * This method contains the business logic for creating a new user, such as checking for duplicate usernames (if applicable).
      *
@@ -41,7 +35,6 @@ public class UserService {
      * @param id the id of the user to retrieve
      * @return the User object if found, or null if the user does not exist
      */
-
     public User getUserById(int id) throws Exception {
         if (id <= 0) {
             throw new IllegalArgumentException("Invalid User ID.");
@@ -63,6 +56,7 @@ public class UserService {
         return userDAO.findAll();
     }
 
+
     /**
      * Updates an existing user in the system.
      * This method contains the logic for updating user information, such as changing the username or password.
@@ -77,6 +71,11 @@ public class UserService {
     }
 
 
+    /**
+     *
+     * @param id
+     * @throws Exception
+     */
     public void deleteUser(int id) throws Exception {
         if (id <= 0) {
             throw new IllegalArgumentException("Invalid shopping list ID.");
