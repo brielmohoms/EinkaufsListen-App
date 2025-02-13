@@ -122,7 +122,7 @@ public class ItemDAO {
      */
     public List<Item> findAllItemsByShoppingListId (int shoppingListId) {
         List<Item> items = new ArrayList<>();
-        String SQL = "SELECT * FROM Item WHERE shopping_list_id = ?";
+        String SQL = "SELECT * FROM Item WHERE shopping_list_id = ? ORDER BY id ASC";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL)){
             statement.setInt(1, shoppingListId);

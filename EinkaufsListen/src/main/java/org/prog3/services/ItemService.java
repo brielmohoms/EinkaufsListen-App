@@ -10,7 +10,20 @@ import java.util.List;
  */
 public class ItemService {
 
-    private final ItemDAO itemDAO = new ItemDAO();
+    private ItemDAO itemDAO = new ItemDAO();
+
+    /**
+     * Constructor to enable dependency injection. Used for the tests
+     *
+     * @param itemDAO an itemDAO object
+     */
+    public ItemService(ItemDAO itemDAO) {
+        this.itemDAO = itemDAO;
+    }
+
+    public ItemService() {
+
+    }
 
     /**
      * Adds a new item
