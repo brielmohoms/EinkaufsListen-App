@@ -9,23 +9,24 @@ import java.util.Scanner;
 
 public class ShoppingListController {
 
-    private static ShoppingListService shoppingListService;
-    private static final Scanner scanner = null;
+    private static ShoppingListService shoppingListService  =new ShoppingListService();
+    private static  Scanner scanner = new Scanner(System.in) ;
 
 
     /**
      *
      */
-    public ShoppingListController() {
-        //this.shoppingListService = shoppingListService;
-        //this.scanner = new Scanner(System.in);
+    /**public ShoppingListController() {
+        this.shoppingListService = shoppingListService ;
+        this.scanner = new Scanner(System.in);
     }
+     **/
 
 
     /**
      *
      */
-    public static  void viewShoppingList(){
+    public   void viewShoppingList(){
         try {
             List<ShoppingList> shoppingLists = ShoppingListService.getAllShoppingLists();
             for (ShoppingList list : shoppingLists){

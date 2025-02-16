@@ -4,6 +4,7 @@ package org.prog3.dao;
 import org.prog3.models.Item;
 import org.prog3.models.ShoppingList;
 
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +13,20 @@ import java.util.List;
  * Data access object for managing shopping lists database operations
  */
 public class ShoppingListDAO {
-    private final Connection connection;
+      Connection connection = DatabaseConnection.getConnection() ;
+
+    public ShoppingListDAO() throws SQLException {
+    }
 
     /**
      *
      *
-     * @param connection
+     * @param Connection
      */
-    public ShoppingListDAO(Connection connection){
-        this.connection = connection;
+    /**public ShoppingListDAO(Connection Connection ) throws SQLException {
+        this.connection = DatabaseConnection.getConnection();
     }
+     **/
 
 
     /**
@@ -50,7 +55,8 @@ public class ShoppingListDAO {
      * @throws SQLException
      */
     public void addShoppingList(String name) throws SQLException {
-        String query = "INSERT INTO shoppingList(name) VALUES (?)";
+        connection= DatabaseConnection.getConnection();
+        String query = "INSERT INTO ShoppingList (name) VALUES (?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, name);
             stmt.executeUpdate();
@@ -65,7 +71,7 @@ public class ShoppingListDAO {
      * @throws SQLException
      */
     public void deleteShoppingList(int shoppingListId) throws SQLException {
-        String query = "DELETE FROM shoppingList  WHERE id = ?";
+        String query = "DELETE FROM ShoppingList  WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, shoppingListId);
             stmt.executeUpdate();

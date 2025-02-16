@@ -2,21 +2,32 @@ package org.prog3.services;
 
 import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.ShoppingList;
+
+import java.sql.SQLException;
 import java.util.List;
 
 
 public class ShoppingListService {
 
-    private static ShoppingListDAO shoppingListDao = null ;
+    private static ShoppingListDAO shoppingListDao;
+
+    static {
+        try {
+            shoppingListDao = new ShoppingListDAO();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Constructor to inject DAO dependency
      *
      * @param shoppingListDao
      */
-    public ShoppingListService(ShoppingListDAO shoppingListDao) {
+    /**public ShoppingListService(ShoppingListDAO shoppingListDao) {
         this.shoppingListDao = shoppingListDao;
     }
+     **/
 
 
     /**
@@ -34,6 +45,7 @@ public class ShoppingListService {
         if ((name == null) || name.trim().isEmpty()){
             throw new IllegalArgumentException("Shopping list or items cannot be null.");
         }
+
         shoppingListDao.addShoppingList(name);
     }
 

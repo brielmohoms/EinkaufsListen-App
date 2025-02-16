@@ -15,6 +15,7 @@ public class CLI {
 
     UserController userController = new UserController();
     ItemController itemController = new ItemController();
+    ShoppingListController shoppingListController = new ShoppingListController();
 
     Scanner scanner = new Scanner(System.in);
     private boolean running = true;
@@ -109,9 +110,9 @@ public class CLI {
                 scanner.nextLine();
 
                 switch (choice){
-                    case 1 -> ShoppingListController.viewShoppingList();
-                    case 2 -> ShoppingListController.addShoppingList();
-                    case 3 -> ShoppingListController.deleteShoppingList();
+                    case 1 -> shoppingListController.viewShoppingList();
+                    case 2 -> shoppingListController.addShoppingList();
+                    case 3 -> shoppingListController.deleteShoppingList();
                     case 4 ->{
                         System.out.println("Bye");
                         start();
