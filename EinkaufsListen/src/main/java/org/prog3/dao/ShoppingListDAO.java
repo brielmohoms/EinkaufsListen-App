@@ -48,17 +48,19 @@ public class ShoppingListDAO {
     }
 
 
+
     /**
      *
      *
-     * @param name
+     * @param shoppingList
      * @throws SQLException
      */
-    public void addShoppingList(String name) throws SQLException {
+    public void addShoppingList(ShoppingList shoppingList) throws SQLException {
         connection= DatabaseConnection.getConnection();
-        String query = "INSERT INTO ShoppingList (name) VALUES (?,?)";
+        String query = "INSERT INTO ShoppingList (user_id, name) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, name);
+            stmt.setString(2, shoppingList.getName());
+            stmt.setInt(1,shoppingList.getUserId());
             stmt.executeUpdate();
         }
     }

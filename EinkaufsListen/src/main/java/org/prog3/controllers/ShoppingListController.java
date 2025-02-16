@@ -38,14 +38,18 @@ public class ShoppingListController {
     }
 
 
+
     /**
      *
      */
     public static void addShoppingList(){
+        System.out.println("Enter a user Id ");
+        int userId = scanner.nextInt();
         System.out.println("Enter a shopping list name : ");
-        String name = scanner.nextLine();
+
+        String name = scanner.next();
         try {
-            shoppingListService.addShoppingList(name);
+            shoppingListService.addShoppingList(userId,name);
             System.out.println("shopping list added succesfully .");
         }catch (Exception e){
             System.out.println("Error adding shopping list  " + e.getMessage());

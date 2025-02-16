@@ -35,7 +35,6 @@ public class DatabaseInitializer {
                     .column("id", SQLDataType.INTEGER.identity(true))
                     .column("name", SQLDataType.VARCHAR.length(255).nullable(false))
                     .column("user_id", SQLDataType.INTEGER.nullable(false))
-                    .column("total_price", SQLDataType.DOUBLE.nullable(false))
                     .constraint(DSL.constraint("PK_ShoppingList").primaryKey("id"))
                     .constraint(DSL.constraint("FK_User").foreignKey("user_id").references("User", "id"))
                     .execute();

@@ -15,7 +15,7 @@ public class ShoppingList {
     public List<Item> items ;
     public String name ;
     public int id;
-
+    private  int userId ;
 
     /**
      * Constructor to initialize the  ShoppingList
@@ -23,11 +23,16 @@ public class ShoppingList {
      * @param id
      * @param name
      */
-    public ShoppingList( int id , String name) {
+   /** public ShoppingList( int id , String name) {
         this.id =id ;
         this.name = name ;
         this.items= new ArrayList<>();
         this.totalPrice=0.0;
+    }
+    **/
+    public ShoppingList(int userId ,String name ){
+        this.userId=userId;
+        this.name= name ;
     }
 
 
@@ -44,6 +49,45 @@ public class ShoppingList {
 
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     /**
      *
@@ -84,16 +128,8 @@ public class ShoppingList {
     }
 
 
-    /**
-     *
-     */
-    public void display (){
-        System.out.println("Shopping List : " + name );
-        for(Item item : items ){
-            System.out.println(item.getName() + " Quantity : " +item.getQuantity() + "; Price " + item.getPrice());
-        }
-        System.out.println( "Total Price = " + totalPrice);
-    }
+
+
 
     /**
      *

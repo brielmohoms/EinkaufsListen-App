@@ -11,6 +11,7 @@ public class ShoppingListService {
 
     private static ShoppingListDAO shoppingListDao;
 
+
     static {
         try {
             shoppingListDao = new ShoppingListDAO();
@@ -38,15 +39,16 @@ public class ShoppingListService {
     }
 
 
+
     /**
      * Adds a new shopping list after validation.
      */
-    public void addShoppingList(String name ) throws Exception {
+    public void addShoppingList(int userId ,String name ) throws Exception {
         if ((name == null) || name.trim().isEmpty()){
             throw new IllegalArgumentException("Shopping list or items cannot be null.");
         }
-
-        shoppingListDao.addShoppingList(name);
+    ShoppingList shoppingList = new ShoppingList(userId, name );
+        shoppingListDao.addShoppingList(shoppingList);
     }
 
 
