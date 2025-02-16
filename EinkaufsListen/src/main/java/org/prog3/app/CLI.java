@@ -27,7 +27,7 @@ public class CLI {
     public void start() {
         while (running) {
             try {
-                System.out.println("==== ITEM MENU ====");
+                System.out.println("==== MENU ====");
                 System.out.println("1. Manage Users");
                 System.out.println("2. Manage Items");
                 System.out.println("3. Manage Shopping List");

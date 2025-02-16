@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ItemTest {
 
+    /**
+     *
+     */
     @Test
     void testConstructorWithAllFields() {
         Item item = new Item(1, "Apple", "Fruit", 1.99, 1.5);
@@ -16,6 +19,9 @@ class ItemTest {
         assertEquals(1.5, item.getQuantity());
     }
 
+    /**
+     *
+     */
     @Test
     void testConstructorWithShoppingListId() {
         Item item = new Item("Apple", "Fruit", 1.99, 1.5, 1);
@@ -26,6 +32,9 @@ class ItemTest {
         assertEquals(1, item.getShoppingListId());
     }
 
+    /**
+     *
+     */
     @Test
     void testConstructorWithDifferentOrder() {
         Item item = new Item("Apple", 1, 2.5, 1.99, "Fruit");
@@ -36,12 +45,18 @@ class ItemTest {
         assertEquals("Fruit", item.getCategory());
     }
 
+    /**
+     *
+     */
     @Test
     void testDefaultConstructor(){
         Item item = new Item();
         assertNotNull(item);
     }
 
+    /**
+     *
+     */
     @Test
     void testGetAndSetId() {
         Item item = new Item();
@@ -49,6 +64,9 @@ class ItemTest {
         assertEquals(1, item.getId());
     }
 
+    /**
+     *
+     */
     @Test
     void testGetAndSetName() {
         Item item = new Item();
@@ -56,6 +74,9 @@ class ItemTest {
         assertEquals("Chris", item.getName());
     }
 
+    /**
+     *
+     */
     @Test
     void testGetAndSetCategory() {
         Item item = new Item();
@@ -63,6 +84,9 @@ class ItemTest {
         assertEquals("Fruit", item.getCategory());
     }
 
+    /**
+     *
+     */
     @Test
     void testGetAndSetPrice() {
         Item item = new Item();
@@ -70,6 +94,9 @@ class ItemTest {
         assertEquals(2.99, item.getPrice());
     }
 
+    /**
+     *
+     */
     @Test
     void testGetAndSetQuantity() {
         Item item = new Item();
@@ -77,6 +104,9 @@ class ItemTest {
         assertEquals(1, item.getQuantity());
     }
 
+    /**
+     *
+     */
     @Test
     void testGetAndSetShoppingListId() {
         Item item = new Item();
@@ -84,6 +114,9 @@ class ItemTest {
         assertEquals(3, item.getShoppingListId());
     }
 
+    /**
+     *
+     */
     @Test
     void testToString() {
         Item item = new Item(1, "Apple", "Fruit", 1.99, 1.5);

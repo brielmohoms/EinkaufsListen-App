@@ -8,8 +8,25 @@ import java.util.Scanner;
 
 public class ItemController {
 
-    private final ItemService itemService = new ItemService();
-    private final Scanner scanner = new Scanner(System.in);
+    private ItemService itemService = new ItemService();
+    private Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Default constructor
+     */
+    public ItemController() {
+    }
+
+    /**
+     * Constructor used in the test classes
+     *
+     * @param itemService the itemService object
+     * @param scanner the scanner object
+     */
+    public ItemController(ItemService itemService, Scanner scanner) {
+        this.itemService = itemService;
+        this.scanner = scanner;
+    }
 
     /**
      * adds an item in a specific shopping list
@@ -117,5 +134,4 @@ public class ItemController {
             System.err.println("Error: " + e.getMessage());
         }
     }
-
 }
