@@ -28,5 +28,7 @@
 hs_err_pid*
 replay_pid*
 
+target/
+
 # db.properties
 EinkaufsListen/src/main/resources/db.properties
