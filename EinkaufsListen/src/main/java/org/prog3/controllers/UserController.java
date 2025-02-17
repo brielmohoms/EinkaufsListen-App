@@ -15,13 +15,6 @@ public class UserController {
     // Scanner instance to read user input
     private static final Scanner scanner = new Scanner(System.in);
     private final UserService userService = new UserService();
-    // Instance of the UserService for business logic operations
-   // private final UserService userService;
-
-    /**
-     * Default constructor that initializes the UserService instance.
-     */
-
 
 
     /**
@@ -34,14 +27,33 @@ public class UserController {
         String username = scanner.next();
         System.out.println("Enter password: ");
         String password = scanner.next();
+        scanner.nextLine();
 
         // Delegate to the UserService to create the user
         try {
             userService.createUser(username, password);
-            System.out.println("User created successfully.");
         } catch (Exception e) {
             System.err.println("Error creating user: " + e.getMessage());
         }
+    }
+
+    public boolean loginUser() {
+        System.out.print("Enter username: ");
+        String username = scanner.next();
+        System.out.print("Enter password: ");
+        String password = scanner.next();
+        scanner.nextLine();
+
+        boolean success = userService.loginUser(username, password);
+        if (!success) {
+            System.out.println("❌ Login failed. Try again.");
+            return false;
+        }
+        return true;
+    }
+
+    public void logoutUser() {
+        userService.logout();
     }
 
     /**
@@ -53,6 +65,7 @@ public class UserController {
     public void deleteUser() throws Exception {
         System.out.print("Enter user ID to delete: ");
         int id = scanner.nextInt();
+
         try {
             userService.deleteUser(id);
         } catch (Exception e) {

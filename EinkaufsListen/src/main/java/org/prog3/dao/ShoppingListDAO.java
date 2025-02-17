@@ -1,9 +1,7 @@
 package org.prog3.dao;
 
-
 import org.prog3.models.Item;
 import org.prog3.models.ShoppingList;
-
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,36 +11,25 @@ import java.util.List;
  * Data access object for managing shopping lists database operations
  */
 public class ShoppingListDAO {
-      Connection connection = DatabaseConnection.getConnection() ;
 
-    public ShoppingListDAO() throws SQLException {
-    }
-
-    /**
-     *
-     *
-     * @param Connection
-     */
-    /**public ShoppingListDAO(Connection Connection ) throws SQLException {
-        this.connection = DatabaseConnection.getConnection();
-    }
-     **/
+    private Connection connection;
 
 
     /**
      *
      *
      * @return
-     * @throws SQLException
      */
-    public List<ShoppingList> getAllShoppingLists() throws SQLException {
+    public List<ShoppingList> getAllShoppingLists() {
+        String query = "SELECT id, name FROM ShoppingList";
         List<ShoppingList> shoppingsLists = new ArrayList<>();
-        String query = "SELECT id , name FROM shoppingList";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                shoppingsLists.add(new ShoppingList(rs.getInt("id"), rs.getString("name")));
+                shoppingsLists.add(new ShoppingList(rs.getString("id"), rs.getString("name")));
             }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
         return shoppingsLists;
     }
@@ -50,19 +37,41 @@ public class ShoppingListDAO {
 
 
     /**
-     *
+     * The shopping list to be created
      *
      * @param shoppingList
-     * @throws SQLException
      */
-    public void addShoppingList(ShoppingList shoppingList) throws SQLException {
-        connection= DatabaseConnection.getConnection();
-        String query = "INSERT INTO ShoppingList (user_id, name) VALUES (?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+    public void addShoppingList(ShoppingList shoppingList) {
+        String query = "INSERT INTO ShoppingList (user_name, name) VALUES (?, ?)";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, shoppingList.getUserName());
             stmt.setString(2, shoppingList.getName());
-            stmt.setInt(1,shoppingList.getUserId());
             stmt.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
+    }
+
+    /**
+     * Checks if a shopping list exists by name.
+     *
+     * @param shoppingListName The name of the shopping list.
+     * @return true if the shopping list exists, false otherwise.
+     */
+    public boolean shoppingListExists(String shoppingListName) {
+        String query = "SELECT COUNT(*) FROM ShoppingList WHERE name = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, shoppingListName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking shopping list existence: " + e.getMessage());
+        }
+        return false;
     }
 
 
@@ -70,13 +79,14 @@ public class ShoppingListDAO {
      *
      *
      * @param shoppingListId
-     * @throws SQLException
      */
-    public void deleteShoppingList(int shoppingListId) throws SQLException {
+    public void deleteShoppingList(int shoppingListId) {
         String query = "DELETE FROM ShoppingList  WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, shoppingListId);
             stmt.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 
@@ -86,9 +96,8 @@ public class ShoppingListDAO {
      *
      * @param shoppingListId
      * @return
-     * @throws SQLException
      */
-    public List<Item> getItems(int shoppingListId) throws SQLException {
+    public List<Item> getItems(int shoppingListId) {
         List<Item> items = new ArrayList<>();
         String query = "SELECT id, name, category, price, quantity FROM Item WHERE list_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -103,6 +112,8 @@ public class ShoppingListDAO {
                     items.add(new Item(id, name, category, price, quantity));
                 }
             }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
         return items;
     }

@@ -1,6 +1,5 @@
 package org.prog3.controllers;
 
-import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.ShoppingList;
 import org.prog3.services.ShoppingListService;
 
@@ -9,50 +8,40 @@ import java.util.Scanner;
 
 public class ShoppingListController {
 
-    private static ShoppingListService shoppingListService  =new ShoppingListService();
-    private static  Scanner scanner = new Scanner(System.in) ;
+    private ShoppingListService shoppingListService = new ShoppingListService();
+    private Scanner scanner = new Scanner(System.in) ;
 
 
     /**
      *
      */
-    /**public ShoppingListController() {
-        this.shoppingListService = shoppingListService ;
-        this.scanner = new Scanner(System.in);
-    }
-     **/
-
-
-    /**
-     *
-     */
-    public   void viewShoppingList(){
+    public void viewShoppingList() {
         try {
-            List<ShoppingList> shoppingLists = ShoppingListService.getAllShoppingLists();
+            List<ShoppingList> shoppingLists = shoppingListService.getAllShoppingLists();
             for (ShoppingList list : shoppingLists){
-                System.out.println("ID :" +list.id + "Name : " + list.name);
+                System.out.println("ID :" + list.id + "Name : " + list.name);
             }
-        }catch (Exception e ){
-            System.out.println("Error fetching shopping lists : " +e.getMessage());
+        } catch (Exception e){
+            System.out.println("Error fetching shopping lists: " + e.getMessage());
         }
     }
 
 
-
     /**
      *
      */
-    public static void addShoppingList(){
-        System.out.println("Enter a user Id ");
-        int userId = scanner.nextInt();
-        System.out.println("Enter a shopping list name : ");
+    public void addShoppingList() {
+        System.out.println("Enter a user name: ");
+        String userName = scanner.next();
+        System.out.println("Enter a shopping list name: ");
+        scanner.nextLine();
 
         String name = scanner.next();
         try {
-            shoppingListService.addShoppingList(userId,name);
-            System.out.println("shopping list added succesfully .");
-        }catch (Exception e){
-            System.out.println("Error adding shopping list  " + e.getMessage());
+            shoppingListService.addShoppingList(userName, name);
+            System.out.println("shopping list added successfully.");
+        } catch (Exception e){
+            System.out.println("Error adding shopping list: " + e.getMessage());
         }
     }
 
@@ -60,10 +49,11 @@ public class ShoppingListController {
     /**
      *
      */
-    public static void deleteShoppingList() {
+    public void deleteShoppingList() {
         System.out.print("Enter shopping list ID to delete: ");
         int id = scanner.nextInt();
         scanner.nextLine();
+
         try {
             shoppingListService.deleteShoppingListById(id);
             System.out.println("Shopping list deleted successfully.");

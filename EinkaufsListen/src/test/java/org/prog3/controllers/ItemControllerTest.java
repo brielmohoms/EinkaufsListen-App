@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.prog3.models.Item;
 import org.prog3.services.ItemService;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -28,7 +29,7 @@ class ItemControllerTest {
      *
      */
     @BeforeEach
-    void setUp() {
+    void setUp() throws SQLException {
         itemService = mock(ItemService.class);
         scanner = mock(Scanner.class);
         itemController = new ItemController(itemService, scanner);
@@ -39,13 +40,12 @@ class ItemControllerTest {
      */
     @Test
     void testAddItem() {
-        when(scanner.nextInt()).thenReturn(1); // Shopping list ID
-        when(scanner.next()).thenReturn("Fruit", "Apple");
+        when(scanner.next()).thenReturn("Kitchen","Fruit", "Apple"); // Shopping list name
         when(scanner.nextDouble()).thenReturn(2.99, 2.0);
 
         itemController.addItem();
 
-        verify(itemService).addItem(1, "Apple", "Fruit", 2.99, 2.0);
+        verify(itemService, times(1)).addItem("Kitchen", "Apple", "Fruit", 2.99, 2.0);
     }
 
     /**
@@ -53,12 +53,11 @@ class ItemControllerTest {
      */
     @Test
     void testRemoveItem() {
-        when(scanner.nextInt()).thenReturn(1); // Shopping list ID
-        when(scanner.next()).thenReturn("Apple", "YES");
+        when(scanner.next()).thenReturn("Kitchen", "Apple", "YES");
 
         itemController.removeItem();
 
-        verify(itemService).deleteItemByName(1, "Apple");
+        verify(itemService, times(1)).deleteItemByName("Kitchen", "Apple");
     }
 
     /**
@@ -66,12 +65,12 @@ class ItemControllerTest {
      */
     @Test
     void testRemoveItemCancelled() {
-        when(scanner.nextInt()).thenReturn(1);
+        when(scanner.next()).thenReturn("Kitchen");
         when(scanner.next()).thenReturn("Apple", "NO");
 
         itemController.removeItem();
 
-        verify(itemService, never()).deleteItemByName(anyInt(), anyString());
+        verify(itemService, never()).deleteItemByName(anyString(), anyString());
     }
 
     /**
@@ -79,12 +78,11 @@ class ItemControllerTest {
      */
     @Test
     void testFindItemByName() {
-        when(scanner.nextInt()).thenReturn(1);
-        when(scanner.next()).thenReturn("Apple");
+        when(scanner.next()).thenReturn("Kitchen", "Apple");
 
         itemController.findItemByName();
 
-        verify(itemService).findItemByName(1, "Apple");
+        verify(itemService).findItemByName("Kitchen", "Apple");
     }
 
     /**
@@ -92,13 +90,13 @@ class ItemControllerTest {
      */
     @Test
     void testUpdateItemQuantity() {
-        when(scanner.nextInt()).thenReturn(1);
-        when(scanner.next()).thenReturn("Apple");
+        when(scanner.next()).thenReturn("Kitchen", "Apple");
+
         when(scanner.nextDouble()).thenReturn(3.0);
 
         itemController.updateItemQuantity();
 
-        verify(itemService).updateItemQuantity(1, "Apple", 3.0);
+        verify(itemService).updateItemQuantity("Kitchen", "Apple", 3.0);
     }
 
     /**
@@ -106,13 +104,13 @@ class ItemControllerTest {
      */
     @Test
     void testViewAllItemsOfShoppingList() {
-        when(scanner.nextInt()).thenReturn(1);
-        List<Item> items = Arrays.asList(new Item("Apple", "Fruit", 2.99, 2.0, 1));
-        when(itemService.getAllItems(1)).thenReturn(items);
+        when(scanner.next()).thenReturn("Kitchen");
+        List<Item> items = Arrays.asList(new Item("Apple", "Fruit", 2.99, 2.0, "Kitchen"));
+        when(itemService.getAllItems("Kitchen")).thenReturn(items);
 
         itemController.viewAllItemsOfShoppingList();
 
-        verify(itemService).getAllItems(1);
+        verify(itemService).getAllItems("Kitchen");
     }
 
     /**
@@ -120,10 +118,10 @@ class ItemControllerTest {
      */
     @Test
     void testDeleteAllItemsOfShoppingList() {
-        when(scanner.nextInt()).thenReturn(1);
+        when(scanner.next()).thenReturn("Kitchen", "YES");
 
         itemController.deleteAllItemsOfShoppingList();
 
-        verify(itemService).deleteAllItemsOfAShoppingList(1);
+        verify(itemService).deleteAllItemsOfAShoppingList("Kitchen");
     }
 }

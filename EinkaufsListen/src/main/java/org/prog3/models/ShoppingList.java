@@ -1,9 +1,5 @@
 package org.prog3.models;
 
-import org.prog3.dao.ShoppingListDAO;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,46 +11,14 @@ public class ShoppingList {
     public List<Item> items ;
     public String name ;
     public int id;
-    private  int userId ;
+    private String userName ;
 
-    /**
-     * Constructor to initialize the  ShoppingList
-     *
-     * @param id
-     * @param name
-     */
-   /** public ShoppingList( int id , String name) {
-        this.id =id ;
+    public ShoppingList(String userName, String name) {
+        this.userName = userName;
         this.name = name ;
-        this.items= new ArrayList<>();
-        this.totalPrice=0.0;
-    }
-    **/
-    public ShoppingList(int userId ,String name ){
-        this.userId=userId;
-        this.name= name ;
     }
 
-
-    /**
-     * add an item to the Shopping List
-     *
-     * @param item
-     */
-    public void addShoppingList (Item item){
-        if (item!=null){
-            items.add(item);
-            updateTotalPrice();
-        }
-
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public ShoppingList() {
     }
 
     public List<Item> getItems() {
@@ -81,12 +45,12 @@ public class ShoppingList {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -126,20 +90,4 @@ public class ShoppingList {
             totalPrice += item.getPrice() * item.getQuantity();
         }
     }
-
-
-
-
-
-    /**
-     *
-     *
-     * @param dao
-     * @return
-     * @throws Exception
-     */
-    public List<Item> getItems(ShoppingListDAO dao) throws Exception {
-        return dao.getItems(this.id);
-    }
-
 }

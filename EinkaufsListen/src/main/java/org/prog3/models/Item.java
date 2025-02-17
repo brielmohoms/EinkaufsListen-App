@@ -11,7 +11,7 @@ public class Item {
     private String category;
     private double price;
     private double quantity;
-    private int shoppingListId;
+    private String shoppingListName;
 
     /**
      * Constructor
@@ -21,12 +21,12 @@ public class Item {
      * @param price the item price
      * @param quantity the item quantity
      */
-    public Item(String name, String category, double price, double quantity, int shoppingListId){
+    public Item(String name, String shoppingListName, double price, double quantity, String category){
         this.name = name;
-        this.category = category;
+        this.shoppingListName = shoppingListName;
         this.price = price;
         this.quantity = quantity;
-        this.shoppingListId = shoppingListId;
+        this.category = category;
     }
 
 
@@ -45,23 +45,6 @@ public class Item {
         this.category = category;
         this.price = price;
         this.quantity = quantity;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param name the item name
-     * @param shoppingListId the shopping list ID
-     * @param quantity the item quantity
-     * @param price the item price
-     * @param category the item category
-     */
-    public Item(String name, int shoppingListId, double quantity, double price, String category) {
-        this.name = name;
-        this.shoppingListId = shoppingListId;
-        this.quantity = quantity;
-        this.price = price;
-        this.category = category;
     }
 
     /**
@@ -172,22 +155,22 @@ public class Item {
 
 
     /**
-     * gets the shopping list ID
+     * gets the shopping list name
      *
-     * @return the shopping list ID
+     * @return the shopping list name
      */
-    public int getShoppingListId() {
-        return shoppingListId;
+    public String getShoppingListName() {
+        return shoppingListName;
     }
 
 
     /**
-     * sets the shopping list ID
+     * sets the shopping list name
      *
-     * @param shoppingListId the shopping list ID of the item
+     * @param shoppingListName the shopping list name of the item
      */
-    public void setShoppingListId(int shoppingListId) {
-        this.shoppingListId = shoppingListId;
+    public void setShoppingListName(String shoppingListName) {
+        this.shoppingListName = shoppingListName;
     }
 
 
@@ -204,7 +187,7 @@ public class Item {
                 ", category='" + category + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", shoppingListId=" + shoppingListId +
+                ", shoppingListName=" + shoppingListName +
                 '}';
     }
 }

@@ -3,51 +3,39 @@ package org.prog3.services;
 import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.ShoppingList;
 
-import java.sql.SQLException;
 import java.util.List;
 
 
 public class ShoppingListService {
 
-    private static ShoppingListDAO shoppingListDao;
-
-
-    static {
-        try {
-            shoppingListDao = new ShoppingListDAO();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Constructor to inject DAO dependency
-     *
-     * @param shoppingListDao
-     */
-    /**public ShoppingListService(ShoppingListDAO shoppingListDao) {
-        this.shoppingListDao = shoppingListDao;
-    }
-     **/
+    private ShoppingListDAO shoppingListDao = new ShoppingListDAO();
 
 
     /**
      * Retrieves all shopping lists.
      */
-    public static List<ShoppingList> getAllShoppingLists() throws Exception {
+    public List<ShoppingList> getAllShoppingLists() {
         return shoppingListDao.getAllShoppingLists();
     }
 
-
+    /**
+     * Checks if a shopping list exists by name.
+     *
+     * @param shoppingListName The name of the shopping list.
+     * @return true if the shopping list exists, false otherwise.
+     */
+    public boolean shoppingListExists(String shoppingListName) {
+        return shoppingListDao.shoppingListExists(shoppingListName);
+    }
 
     /**
      * Adds a new shopping list after validation.
      */
-    public void addShoppingList(int userId ,String name ) throws Exception {
+    public void addShoppingList(String userName ,String name ) {
         if ((name == null) || name.trim().isEmpty()){
             throw new IllegalArgumentException("Shopping list or items cannot be null.");
         }
-    ShoppingList shoppingList = new ShoppingList(userId, name );
+        ShoppingList shoppingList = new ShoppingList(userName, name );
         shoppingListDao.addShoppingList(shoppingList);
     }
 
@@ -57,16 +45,15 @@ public class ShoppingListService {
      *
      * @param shoppingListId the ID of the shopping list to delete.
      * @throws IllegalArgumentException if the ID is invalid.
-     * @throws Exception                if an error occurs during data deletion.
      */
-    public void deleteShoppingListById(int shoppingListId) throws Exception {
+    public void deleteShoppingListById(int shoppingListId) {
         if (shoppingListId <= 0) {
             throw new IllegalArgumentException("Invalid shopping list ID.");
         }
         try {
             shoppingListDao.deleteShoppingList(shoppingListId);
         } catch (Exception e) {
-            throw new Exception("Error deleting shopping list: " + e.getMessage(), e);
+            System.err.println("Error deleting shopping list: " + e.getMessage());
         }
     }
 }

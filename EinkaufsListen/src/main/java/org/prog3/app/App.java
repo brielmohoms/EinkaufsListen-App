@@ -2,8 +2,9 @@ package org.prog3.app;
 
 import org.prog3.dao.DatabaseInitializer;
 
+
 /**
- * entry point for the application
+ * entry point of the application
  */
 public class App {
 

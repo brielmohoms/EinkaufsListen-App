@@ -3,7 +3,10 @@ package org.prog3.app;
 import org.prog3.controllers.ItemController;
 import org.prog3.controllers.ShoppingListController;
 import org.prog3.controllers.UserController;
-
+import org.prog3.models.ShoppingList;
+import org.prog3.models.User;
+import org.prog3.services.ShoppingListService;
+import org.prog3.services.UserService;
 
 
 import java.util.Scanner;
@@ -28,36 +31,40 @@ public class CLI {
         while (running) {
             try {
                 System.out.println("==== MENU ====");
-                System.out.println("1. Manage Users");
-                System.out.println("2. Manage Items");
-                System.out.println("3. Manage Shopping List");
-                System.out.println("4. Exit");
-                System.out.println("choose an option");
+                System.out.println("1. New user");
+                System.out.println("2. Existing user");
+                System.out.println("3. Exit");
+                System.out.println("Choose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1 -> menuUser();
-                    case 2 -> startItemMenu();
-                    case 3 -> menuShopping();
-                    case 4 -> {
-                        System.out.println("Bye");
+                    case 1 -> userController.createUser();
+                    case 2 -> {
+                        boolean isLoggedIn = userController.loginUser();
+                        if (isLoggedIn) {
+                            menuShopping();
+                        }
+                    }
+                    case 3 -> {
+                        System.out.println("Bye!");
                         running = false;
                     }
-                    default -> System.out.println("Invalid Choice. Please try again");
+                    default -> System.out.println("Invalid Choice. Please try again.");
                 }
             } catch (Exception e) {
-                System.out.println("an error occurred : " + e.getMessage());
+                System.out.println("An error occurred : " + e.getMessage());
                 scanner.nextLine();
             }
         }
     }
 
 
+
     /**
      *
      */
-    public void menuUser () {
+    /*public void menuUser () {
         while (true) {
             try {
                 System.out.println("=====USER MENU===== ");
@@ -66,8 +73,8 @@ public class CLI {
                 System.out.println("3. Update users ");
                 System.out.println("4. Consult users ");
                 System.out.println("5. Find user by Id ");
-                System.out.println("6. Exit");
-                System.out.println("choose an option");
+                System.out.println("6. EXIT");
+                System.out.println("choose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -78,7 +85,7 @@ public class CLI {
                     case 4 -> userController.displayAllUsers();
                     case 5 -> userController.findUserById();
                     case 6 -> {
-                        System.out.println("Bye");
+                        System.out.println("Bye!");
                         start();
                         return;
                     }
@@ -91,7 +98,7 @@ public class CLI {
             }
         }
 
-    }
+    }*/
 
 
     /**
@@ -100,12 +107,13 @@ public class CLI {
     public void menuShopping (){
         while (true){
             try{
-                System.out.println("=====SHOPPING MENU===== ");
-                System.out.println("1. Consult the shopping list");
-                System.out.println("2. Add shopping list ");
-                System.out.println("3. Delete shopping list ");
-                System.out.println("4. Exit ");
-                System.out.println("choose an option");
+                System.out.println("===== SHOPPING MENU ===== ");
+                System.out.println("1. View Shopping Lists");
+                System.out.println("2. Add Shopping List");
+                System.out.println("3. Delete Shopping List");
+                System.out.println("4. Manage Shopping List");
+                System.out.println("5. Logout");
+                System.out.println("Choose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -113,8 +121,9 @@ public class CLI {
                     case 1 -> shoppingListController.viewShoppingList();
                     case 2 -> shoppingListController.addShoppingList();
                     case 3 -> shoppingListController.deleteShoppingList();
-                    case 4 ->{
-                        System.out.println("Bye");
+                    case 4 -> startItemMenu();
+                    case 5 -> {
+                        userController.logoutUser();
                         start();
                         return;
                     }
@@ -134,14 +143,14 @@ public class CLI {
     public void startItemMenu () {
         while (true) {
             try{
-                System.out.println("==== SHOPPING APP ====");
+                System.out.println("==== MANAGE SHOPPING LIST ====");
                 System.out.println("1. Add Item");
                 System.out.println("2. Delete Item");
                 System.out.println("3. Find item by it's name");
                 System.out.println("4. Update item quantity");
                 System.out.println("5. View all items in a shopping list");
                 System.out.println("6. Deletes all items in a shopping list");
-                System.out.println("7. Exit");
+                System.out.println("7. Back");
                 System.out.println("Choose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -154,11 +163,9 @@ public class CLI {
                     case 5 -> itemController.viewAllItemsOfShoppingList();
                     case 6 -> itemController.deleteAllItemsOfShoppingList();
                     case 7 -> {
-                        System.out.println("Bye");
-                        start();
                         return;
                     }
-                    default -> System.out.println("Invalid choice. Please try again");
+                    default -> System.out.println("Invalid choice. Please try again.");
                 }
             } catch (Exception e) {
                 System.err.println("An error occurred " + e.getMessage());

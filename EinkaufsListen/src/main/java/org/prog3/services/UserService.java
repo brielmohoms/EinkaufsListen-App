@@ -3,6 +3,7 @@ package org.prog3.services;
 import org.prog3.dao.UserDAO;
 import org.prog3.models.User;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service class for handling business logic related to users.
@@ -11,7 +12,31 @@ import java.util.List;
 public class UserService {
 
     // Instance of the UserDAO used for interacting with the database
-    private final UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO = new UserDAO();
+    private User loggedInUser = null;
+
+
+    public boolean loginUser(String username, String password) {
+        List<User> users = userDAO.findAll();
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                loggedInUser = user;
+                System.out.println("✅ Login successful! Welcome, " + loggedInUser.getUsername());
+                return true;
+            }
+        }
+        System.out.println("❌ Invalid username or password.");
+        return false;
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void logout() {
+        loggedInUser = null;
+        System.out.println("✅ Logged out successfully.");
+    }
 
     /**
      * Creates a new user in the system.
@@ -25,7 +50,18 @@ public class UserService {
         if ((username == null) || username.trim().isEmpty() || (password == null) || password.trim().isEmpty()  ){
             throw new IllegalArgumentException("Shopping list or items cannot be null.");
         }
+
+        List<User> existingUsers = userDAO.findAll();
+        Optional<User> existingUser = existingUsers.stream()
+                .filter(u -> u.getUsername().equalsIgnoreCase(username))
+                .findFirst();
+
+        if (existingUser.isPresent()) {
+            throw new IllegalArgumentException("Username already exists. Choose another.");
+        }
+
         userDAO.create(username,password);
+        System.out.println("✅ User registered successfully!");
     }
 
     /**
