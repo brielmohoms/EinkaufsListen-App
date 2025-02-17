@@ -14,6 +14,7 @@ public class ItemService {
     private ItemDAO itemDAO = new ItemDAO();
     private ShoppingListDAO shoppingListDAO = new ShoppingListDAO();
 
+
     /**
      * Constructor to enable dependency injection. Used for the tests
      *
@@ -23,9 +24,14 @@ public class ItemService {
         this.itemDAO = itemDAO;
     }
 
+
+    /**
+     * Default constructor
+     */
     public ItemService() {
 
     }
+
 
     /**
      * Adds a new item
@@ -50,6 +56,7 @@ public class ItemService {
         }
     }
 
+
     /**
      * Deletes an item by its name
      *
@@ -66,6 +73,7 @@ public class ItemService {
         return deleted;
     }
 
+
     /**
      * Finds an item by its name
      *
@@ -77,6 +85,7 @@ public class ItemService {
     public Item findItemByName (String shoppingListName, String name) {
         return itemDAO.findByName(shoppingListName, name);
     }
+
 
     /**
      * Updates an item quantity after finding by its name
@@ -101,6 +110,7 @@ public class ItemService {
         return item;
     }
 
+
     /**
      * Gets all the items
      *
@@ -110,6 +120,7 @@ public class ItemService {
     public List<Item> getAllItems (String shoppingListName) {
         return itemDAO.findAllItemsByShoppingListName(shoppingListName);
     }
+
 
     /**
      * deletes all the items of a specific shopping list

@@ -7,10 +7,15 @@ package org.prog3.models;
 public class Item {
 
     private int id;
+
     private String name;
+
     private String category;
+
     private double price;
+
     private double quantity;
+
     private String shoppingListName;
 
     /**

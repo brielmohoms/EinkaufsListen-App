@@ -2,6 +2,7 @@ package org.prog3.dao;
 
 import org.prog3.models.Item;
 import org.prog3.models.ShoppingList;
+import org.prog3.models.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +13,21 @@ import java.util.List;
  */
 public class ShoppingListDAO {
 
-    private Connection connection;
+    /**
+     * The shopping list to be created
+     *
+     * @param shoppingList
+     */
+    public void addShoppingList(ShoppingList shoppingList) {
+        String query = "INSERT INTO ShoppingList (name) VALUES (?)";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, shoppingList.getName());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
 
 
     /**
@@ -21,12 +36,16 @@ public class ShoppingListDAO {
      * @return
      */
     public List<ShoppingList> getAllShoppingLists() {
-        String query = "SELECT id, name FROM ShoppingList";
+        String query = "SELECT * FROM ShoppingList ORDER BY id ASC";
         List<ShoppingList> shoppingsLists = new ArrayList<>();
-        try (Statement stmt = connection.createStatement();
+        try (Connection connection = DatabaseConnection.getConnection();
+             Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                shoppingsLists.add(new ShoppingList(rs.getString("id"), rs.getString("name")));
+                ShoppingList shoppingList = new ShoppingList();
+                shoppingList.setId(rs.getInt("id"));
+                shoppingList.setName(rs.getString("name"));
+                shoppingsLists.add(shoppingList);
             }
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -35,23 +54,24 @@ public class ShoppingListDAO {
     }
 
 
-
     /**
-     * The shopping list to be created
      *
-     * @param shoppingList
+     *
+     * @param shoppingListName
      */
-    public void addShoppingList(ShoppingList shoppingList) {
-        String query = "INSERT INTO ShoppingList (user_name, name) VALUES (?, ?)";
+    public void deleteShoppingList(String shoppingListName) {
+        String query = "DELETE FROM ShoppingList WHERE name = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, shoppingList.getUserName());
-            stmt.setString(2, shoppingList.getName());
+
+            stmt.setString(1, shoppingListName);
             stmt.executeUpdate();
+
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
     }
+
 
     /**
      * Checks if a shopping list exists by name.
@@ -72,50 +92,6 @@ public class ShoppingListDAO {
             System.err.println("Error checking shopping list existence: " + e.getMessage());
         }
         return false;
-    }
-
-
-    /**
-     *
-     *
-     * @param shoppingListId
-     */
-    public void deleteShoppingList(int shoppingListId) {
-        String query = "DELETE FROM ShoppingList  WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, shoppingListId);
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-    }
-
-
-    /**
-     *
-     *
-     * @param shoppingListId
-     * @return
-     */
-    public List<Item> getItems(int shoppingListId) {
-        List<Item> items = new ArrayList<>();
-        String query = "SELECT id, name, category, price, quantity FROM Item WHERE list_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, shoppingListId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String name = rs.getString("name");
-                    String category = rs.getString("category");
-                    double price = rs.getDouble("price");
-                    int quantity = rs.getInt("quantity");
-                    items.add(new Item(id, name, category, price, quantity));
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        return items;
     }
 }
 

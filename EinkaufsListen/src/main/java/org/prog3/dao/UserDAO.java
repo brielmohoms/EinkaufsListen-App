@@ -12,22 +12,26 @@ import java.util.List;
  */
 public class UserDAO {
 
+
     /**
      * Inserts a new user record into the database.
      *
-     * @param username the username of the new user.
+     * @param name the name of the new user
+     * @param username the unique username of the new user.
      * @param password the password of the new user.
      * @return the created User object with an assigned id, or null if creation failed.
      */
-    public User create(final String username, final String password) {
+    public User create(String name, String username, String password, String role) {
         // SQL query to insert a new user
-        final String sql = "INSERT INTO User (username, password) VALUES (?, ?)";
+        final String sql = "INSERT INTO User (name, username, password, role) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             // Set the parameters for the SQL statement
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            pstmt.setString(1, name);
+            pstmt.setString(2, username);
+            pstmt.setString(3, password);
+            pstmt.setString(4, role);
 
             // Execute the insertion and check if any rows were affected
             final int affectedRows = pstmt.executeUpdate();
@@ -36,7 +40,7 @@ public class UserDAO {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         final int generatedId = generatedKeys.getInt(1);
-                        return new User(generatedId, username, password);
+                        return new User(generatedId, name, username, password, role);
                     }
                 }
             }
@@ -46,26 +50,22 @@ public class UserDAO {
         return null;
     }
 
+
     /**
      * Retrieves a user record by its id.
      *
-     * @param id the id of the user to retrieve.
+     * @param name the id of the user to retrieve.
      * @return the matching User object, or null if no user is found.
      */
-    public User findById(final int id) {
-        final String sql = "SELECT * FROM User WHERE id = ?";
+    public User findByName(String name) {
+        final String sql = "SELECT * FROM User WHERE name = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, id);
+            pstmt.setString(1, name);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    final User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setUsername(rs.getString("username"));
-                    user.setPassword(rs.getString("password"));
-                    // Optionally, load shopping lists or other related entities here if needed.
-                    return user;
+                    return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("role"));
                 }
             }
         } catch (SQLException e) {
@@ -73,6 +73,7 @@ public class UserDAO {
         }
         return null;
     }
+
 
     /**
      * Retrieves all users from the database.
@@ -100,22 +101,23 @@ public class UserDAO {
         return users;
     }
 
+
     /**
      * Updates an existing user record in the database.
      *
      * @param username the new username to set for the user.
      * @param password the new password to set for the user.
-     * @param id       the id of the user to update.
+     * @param name     the name of the user to update.
      * @return true if the update was successful, false otherwise.
      */
-    public boolean update(final String username, final String password, final int id) {
-        final String sql = "UPDATE User SET username = ?, password = ? WHERE id = ?";
+    public boolean update(final String username, final String password, final String name) {
+        final String sql = "UPDATE User SET username = ?, password = ? WHERE name = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, username);
             pstmt.setString(2, password);
-            pstmt.setInt(3, id);
+            pstmt.setString(3, name);
 
             final int affectedRows = pstmt.executeUpdate();
             return affectedRows == 1;
@@ -124,6 +126,7 @@ public class UserDAO {
         }
         return false;
     }
+
 
     /**
      * Deletes a user record from the database.
@@ -141,6 +144,26 @@ public class UserDAO {
             return affectedRows == 1;
         } catch (SQLException e) {
             System.err.println("Failed to delete user: " + e.getMessage());
+        }
+        return false;
+    }
+
+
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public boolean promoteUserToAdmin(String name) {
+        final String sql = "UPDATE User SET role = 'admin' WHERE name = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            int updatedRows = pstmt.executeUpdate();
+            return updatedRows == 1; // Returns true if exactly 1 row was updated
+        } catch (SQLException e) {
+            System.err.println("Failed to promote user to admin: " + e.getMessage());
         }
         return false;
     }

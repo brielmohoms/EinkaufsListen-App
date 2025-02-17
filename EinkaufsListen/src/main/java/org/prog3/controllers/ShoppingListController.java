@@ -18,8 +18,12 @@ public class ShoppingListController {
     public void viewShoppingList() {
         try {
             List<ShoppingList> shoppingLists = shoppingListService.getAllShoppingLists();
+            if (shoppingLists.isEmpty()) {
+                System.out.println("No shopping lists found.");
+                return;
+            }
             for (ShoppingList list : shoppingLists){
-                System.out.println("ID :" + list.id + "Name : " + list.name);
+                System.out.println("ID: " + list.getId() + " | Name: " + list.getName());
             }
         } catch (Exception e){
             System.out.println("Error fetching shopping lists: " + e.getMessage());
@@ -31,14 +35,12 @@ public class ShoppingListController {
      *
      */
     public void addShoppingList() {
-        System.out.println("Enter a user name: ");
-        String userName = scanner.next();
         System.out.println("Enter a shopping list name: ");
+        String name = scanner.next();
         scanner.nextLine();
 
-        String name = scanner.next();
         try {
-            shoppingListService.addShoppingList(userName, name);
+            shoppingListService.addShoppingList(name);
             System.out.println("shopping list added successfully.");
         } catch (Exception e){
             System.out.println("Error adding shopping list: " + e.getMessage());
@@ -50,12 +52,12 @@ public class ShoppingListController {
      *
      */
     public void deleteShoppingList() {
-        System.out.print("Enter shopping list ID to delete: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Enter shopping list name to delete: ");
+        String name = scanner.nextLine();
+        //scanner.nextLine();
 
         try {
-            shoppingListService.deleteShoppingListById(id);
+            shoppingListService.deleteShoppingListByName(name);
             System.out.println("Shopping list deleted successfully.");
         } catch (Exception e) {
             System.out.println("Error deleting shopping list: " + e.getMessage());

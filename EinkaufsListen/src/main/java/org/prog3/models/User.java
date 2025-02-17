@@ -4,57 +4,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a user of the application.
- * Each user has a unique identifier, a username, a password,
+ * Represents a user of the application. Each user has a unique identifier, a username, a password,
  * and a list of shopping lists associated with the user.
  */
 public class User {
 
-    // Unique identifier for the user (e.g., from the database)
     private int id;
 
-    // The username for login purposes
     private String username;
 
-    // The password for the user (should be stored securely in a production system)
+    private String name;
+
     private String password;
 
-    // A list of shopping lists owned by the user
     private List<ShoppingList> shoppingLists;
 
+    private String role;
+
     /**
-     * Default constructor.
-     * Initializes the shoppingLists list as an empty ArrayList.
+     * Default constructor. Initializes the shoppingLists list as an empty ArrayList.
      */
     public User() {
-        this.shoppingLists = new ArrayList<>();
+
     }
 
+
     /**
-     * Parameterized constructor that accepts all fields.
      *
-     * @param id            the unique identifier for the user
-     * @param username      the username of the user
-     * @param password      the password of the user
-     * @param shoppingLists the list of shopping lists associated with the user
+     *
+     * @param id
+     * @param username
+     * @param name
+     * @param password
+     * @param role
      */
-    public User(int id, String username, String password, List<ShoppingList> shoppingLists) {
+    public User(int id, String username, String name, String password, String role) {
         this.id = id;
         this.username = username;
+        this.name = name;
         this.password = password;
-        this.shoppingLists = shoppingLists;
+        this.role = role;
     }
 
-    /**
-     * Parameterized constructor without shoppingLists.
-     * Creates an empty list for shoppingLists.
-     *
-     * @param id       the unique identifier for the user
-     * @param username the username of the user
-     * @param password the password of the user
-     */
-    public User(int id, String username, String password) {
-        this(id, username, password, new ArrayList<>());
+    public User(int id, String username, String name, String role) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.role = role;
     }
 
     /**
@@ -66,6 +62,7 @@ public class User {
         return id;
     }
 
+
     /**
      * Sets the unique identifier for the user.
      *
@@ -74,6 +71,7 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
 
     /**
      * Gets the username of the user.
@@ -84,6 +82,25 @@ public class User {
         return username;
     }
 
+
+    /**
+     *
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
+
+
+    /**
+     *
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
     /**
      * Sets the username for the user.
      *
@@ -92,6 +109,7 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
 
     /**
      * Gets the password of the user.
@@ -102,6 +120,7 @@ public class User {
         return password;
     }
 
+
     /**
      * Sets the password for the user.
      *
@@ -111,6 +130,27 @@ public class User {
         this.password = password;
     }
 
+
+    /**
+     *
+     *
+     * @return
+     */
+    public String getRole() {
+        return role;
+    }
+
+
+    /**
+     *
+     *
+     * @param role
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+
     /**
      * Gets the list of shopping lists associated with the user.
      *
@@ -119,6 +159,7 @@ public class User {
     public List<ShoppingList> getShoppingLists() {
         return shoppingLists;
     }
+
 
     /**
      * Sets the shopping lists for the user.

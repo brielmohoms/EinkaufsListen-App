@@ -23,15 +23,17 @@ public class UserController {
      */
     public void createUser() {
         // Ask the user for username and password
-        System.out.println("Enter username: ");
-        String username = scanner.next();
+        System.out.println("Enter your name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter a unique username: ");
+        String username = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.next();
         scanner.nextLine();
 
         // Delegate to the UserService to create the user
         try {
-            userService.createUser(username, password);
+            userService.createUser(name, username, password);
         } catch (Exception e) {
             System.err.println("Error creating user: " + e.getMessage());
         }
@@ -97,13 +99,13 @@ public class UserController {
      * Retrieves a user by their ID.
      * Delegates to the UserService to fetch the user.
      */
-    public void findUserById() {
-        System.out.println("Enter user ID: ");
-        int id = scanner.nextInt();
+    public void findUserByName() {
+        System.out.println("Enter user name: ");
+        String name = scanner.next();
 
         // Fetch the user by ID and display the result
         try {
-            User user = userService.getUserById(id);
+            User user = userService.findByName(name);
             if (user!= null) {
                 System.out.println("User found: ID: " + user.getId() + ", Username: " + user.getUsername());
             } else {
@@ -119,18 +121,36 @@ public class UserController {
      * Delegates the update logic to the UserService.
      */
     public void updateUser() {
-        System.out.print("Enter user ID: ");
-        int id = scanner.nextInt();
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
         System.out.println("Enter new username: ");
         String username = scanner.next();
         System.out.println("Enter new password: ");
         String password = scanner.next();
-        boolean success = userService.updateUser(username,password,id);
+
+        boolean success = userService.updateUser(username, password, name);
         if (success) {
             System.out.println("User successfully updated!");
         } else {
             System.out.println("Failed to update user.");
         }
     }
-    }
+
+
+    /**
+     *
+     */
+    /*public void promoteUserToAdmin() {
+        System.out.print("Enter username to promote to admin: ");
+        String username = scanner.next();
+
+        boolean success = userService.promoteUserToAdmin(username);
+        if (success) {
+            System.out.println("✅ User " + username + " is now an admin!");
+        } else {
+            System.out.println("❌ Failed to promote user. Either user not found or already an admin.");
+        }
+    }*/
+
+}
 

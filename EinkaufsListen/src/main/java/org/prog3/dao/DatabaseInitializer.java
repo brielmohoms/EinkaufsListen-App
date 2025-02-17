@@ -25,8 +25,10 @@ public class DatabaseInitializer {
             DSLContext create = DSL.using(conn, SQLDialect.SQLITE);
             create.createTableIfNotExists("User")
                     .column("id", SQLDataType.INTEGER.identity(true))
+                    .column("name", SQLDataType.VARCHAR.length(255).nullable(false))
                     .column("username", SQLDataType.VARCHAR.length(255).nullable(false))
                     .column("password", SQLDataType.VARCHAR.length(255).nullable(false))
+                    .column("role", SQLDataType.VARCHAR.length(50).nullable(false).defaultValue("regular"))
                     .constraint(DSL.constraint("PK_User").primaryKey("id"))
                     .constraint(DSL.constraint("UQ_User_Username").unique("username"))
                     .execute();
@@ -35,9 +37,7 @@ public class DatabaseInitializer {
             create.createTableIfNotExists("ShoppingList")
                     .column("id", SQLDataType.INTEGER.identity(true))
                     .column("name", SQLDataType.VARCHAR.length(255).nullable(false))
-                    .column("user_name", SQLDataType.VARCHAR.nullable(false))
                     .constraint(DSL.constraint("PK_ShoppingList").primaryKey("id"))
-                    .constraint(DSL.constraint("FK_User").foreignKey("user_name").references("User", "username"))
                     .execute();
 
             //Item Table (Linked to ShoppingList)
