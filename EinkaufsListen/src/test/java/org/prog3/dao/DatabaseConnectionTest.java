@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseConnectionTest {
 
+    /**
+     * tests the database connection
+     */
     @Test
     void testGetConnection() {
         try (Connection connection = DatabaseConnection.getConnection()) {

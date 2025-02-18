@@ -1,13 +1,20 @@
 package org.prog3.controllers;
 
 import org.prog3.models.Item;
-import org.prog3.models.ShoppingList;
 import org.prog3.services.ItemService;
-import org.prog3.services.ShoppingListService;
 
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Controller class responsible for handling user interactions related to items.
+ *
+ * <p>
+ * This class acts as an intermediary between the {@link ItemService} and the user,
+ * processing input and forwarding requests to the service layer. It manages
+ * operations such as adding, deleting, updating, and retrieving items.
+ * </p>
+ */
 public class ItemController {
 
     private ItemService itemService = new ItemService();
@@ -16,8 +23,9 @@ public class ItemController {
     /**
      * Default constructor
      */
-    public ItemController() {
+    public ItemController () {
     }
+
 
     /**
      * Constructor used in the test classes
@@ -25,15 +33,16 @@ public class ItemController {
      * @param itemService the itemService object
      * @param scanner the scanner object
      */
-    public ItemController(ItemService itemService, Scanner scanner) {
+    public ItemController (ItemService itemService, Scanner scanner) {
         this.itemService = itemService;
         this.scanner = scanner;
     }
 
+
     /**
-     * adds an item in a specific shopping list
+     * Adds an item in a specific shopping list
      */
-    public void addItem() {
+    public void addItem () {
         System.out.print("Enter the shopping list name: ");
         String shoppingListName = scanner.next();
         System.out.println("Enter item category: ");
@@ -54,10 +63,11 @@ public class ItemController {
         }
     }
 
+
     /**
-     * remove an item from a specific shopping list given its name
+     * Remove an item from a specific shopping list given its name
      */
-    public void removeItem() {
+    public void removeItem () {
         System.out.println("Enter item shopping list name: ");
         String shoppingListName = scanner.next();
         System.out.println("Enter item name: ");
@@ -77,10 +87,11 @@ public class ItemController {
         }
     }
 
+
     /**
-     * finds an item of a specific shopping list
+     * Finds an item of a specific shopping list
      */
-    public void findItemByName() {
+    public void findItemByName () {
         System.out.println("Enter item shopping list name: ");
         String shoppingListName = scanner.next();
         System.out.println("Enter item name: ");
@@ -91,10 +102,11 @@ public class ItemController {
         System.out.println();
     }
 
+
     /**
-     * updates the quantity of an item in a specific shopping list
+     * Updates the quantity of an item in a specific shopping list
      */
-    public void updateItemQuantity() {
+    public void updateItemQuantity () {
         System.out.println("Enter item shopping list name: ");
         String shoppingListName = scanner.next();
         System.out.println("Enter item name: ");
@@ -110,10 +122,11 @@ public class ItemController {
         }
     }
 
+
     /**
-     * displays all the items of a specific shopping list
+     * Displays all the items of a specific shopping list
      */
-    public void viewAllItemsOfShoppingList(){
+    public void viewAllItemsOfShoppingList () {
         System.out.println("Enter shopping list name: ");
         String shoppingListName = scanner.next();
         List<Item> items = itemService.getAllItems(shoppingListName);
@@ -127,10 +140,11 @@ public class ItemController {
         }
     }
 
+
     /**
-     * deletes all the items of a specific shopping list
+     * Deletes all the items of a specific shopping list
      */
-    public void deleteAllItemsOfShoppingList() {
+    public void deleteAllItemsOfShoppingList () {
         System.out.println("Enter shopping list name: ");
         String shoppingListName = scanner.next();
         System.out.println("Are you sure you want to delete the Item? YES/NO");
@@ -140,12 +154,12 @@ public class ItemController {
         if (response.equalsIgnoreCase("YES")) {
             try {
                 itemService.deleteAllItemsOfAShoppingList(shoppingListName);
-                System.out.println("All items deleted from the shopping list successfully.");
+                System.out.println("✅ All items deleted from the shopping list successfully.");
             } catch (IllegalArgumentException e) {
                 System.err.println("Error: " + e.getMessage());
             }
         } else {
-            System.out.println("OK. Cancelled!");
+            System.out.println("OK! Cancelled.");
         }
     }
 }

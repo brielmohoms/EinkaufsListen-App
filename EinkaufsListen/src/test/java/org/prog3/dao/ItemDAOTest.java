@@ -4,114 +4,128 @@ import org.junit.jupiter.api.*;
 import org.prog3.models.Item;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link ItemDAO} class
+ */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ItemDAOTest {
 
     private ItemDAO itemDAO;
     private Connection connection;
 
-    @BeforeEach
-    void openConnection() throws Exception {
+
+    /**
+     * Sets up the test environment by initializing database and ItemDAO instance all the tests
+     *
+     * @throws SQLException if an error occurs during the database connection
+     */
+    @BeforeAll
+    void setUpTheDatabase () throws SQLException {
         connection = DatabaseConnection.getConnection();
-        Statement statement = connection.createStatement();
-        statement.execute("CREATE TABLE IF NOT EXISTS Item (id INTEGER PRIMARY KEY AUTOINCREMENT, shopping_list_name TEXT, category TEXT, name TEXT, price REAL, quantity REAL)");
-        statement.close();
-
-        itemDAO = new ItemDAO();  // Use the default constructor so it also uses DatabaseConnection
+        DatabaseInitializer.initialise();
+        itemDAO = new ItemDAO();
     }
-
-
-    @AfterEach
-    void closeConnection() throws Exception {
-        connection.createStatement().execute("DROP TABLE Item");
-        connection.close();
-    }
-
-
-    //TODO Fix
-    /*@Test
-    void testSaveItem() {
-        Item item = new Item("Milk", "Dairy", 2.5, 1, "Kitchen");
-        itemDAO.saveItem(item);
-
-        // Debugging: Print database contents
-        List<Item> items = itemDAO.findAllItemsByShoppingListName("Kitchen");
-        System.out.println("Items in DB: " + items.size());
-
-        assertEquals(1, items.size(), "Expected one item in the shopping list");
-        assertEquals("Milk", items.get(0).getName(), "Expected item name to be 'Milk'");
-    }*/
-
 
 
     /**
+     * Cleans up the database before each test to ensure test isolation
+     * and prevent data contamination
      *
+     * @throws SQLException if an error occurs during the process
+     */
+    @BeforeEach
+    void cleanUpTheDatabase () throws SQLException {
+        connection.createStatement().execute("DELETE FROM Item");
+    }
+
+
+    /**
+     * Tests saving an item to the database.
      */
     @Test
-    void testDeleteByName() {
-        Item item = new Item("Apple", "Fruit", 2.99,1.0, "Kitchen");
-        itemDAO.saveItem(item);
+    void testSaveItem () {
+        Item item = new Item("Apple", "Groceries", 2.99, 5, "Fruit");
+        itemDAO.addItem(item);
 
-        boolean deleted = itemDAO.deleteByName("Kitchen","Apple");
+        Item found = itemDAO.findByName("Groceries", "Apple");
+        assertNotNull(found);
+        assertEquals("Apple", found.getName());
+    }
+
+
+    /**
+     * Tests deleting an item by name.
+     */
+    @Test
+    void testDeleteByName () {
+        Item item = new Item("Apple", "Fruit", 2.99,1.0, "Kitchen");
+        itemDAO.addItem(item);
+
+        boolean deleted = itemDAO.deleteItemByName("Kitchen","Apple");
         Item deletedItem = itemDAO.findByName("Kitchen", "Apple");
 
         assertTrue(deleted, "Item deleted successfully.");
         assertNull(deletedItem, "Deleted item should not be found.");
     }
 
-    /**
-     *
-     */
-    /*@Test
-    void testFindByName() {
-        Item item = new Item("Apple", "Fruit", 1.99, 1.0, "Kitchen");
-        itemDAO.saveItem(item);
 
-        Item foundItem = itemDAO.findByName("Kitchen", "Apple");
+    /**
+     * Tests finding an item by its name.
+     */
+    @Test
+    void testFindByName () {
+        Item item = new Item("Apple", "Groceries", 1.99, 1.0, "Fruit");
+        itemDAO.addItem(item);
+
+        Item foundItem = itemDAO.findByName("Groceries", "Apple");
 
         assertNotNull(foundItem);
         assertEquals("Apple", foundItem.getName());
-    }*/ // TODO Fix
+    }
+
 
     /**
-     *
-     */
-    /*@Test
-    void testUpdateQuantity() {
-        Item item = new Item("Apple", "Fruit", 3.00, 2, "Kitchen");
-        itemDAO.saveItem(item);
-
-        boolean updated = itemDAO.updateQuantity("Kitchen", "Apple", 5);
-        Item updatedItem = itemDAO.findByName("Kitchen", "Apple");
-
-        assertTrue(updated, "Quantity should be updated.");
-        assertNotNull(updatedItem, "Apple should be found in the database.");
-        assertEquals(5, updatedItem.getQuantity(), "Updated quantity should be 5.");
-    }*/ // TODO Fix
-
-    /**
-     *
-     */
-    /*@Test
-    void testFindAllItemsByShoppingListName_ItemsExist() {
-        itemDAO.saveItem(new Item("Milk", "Dairy", 2.5, 1, "Kitchen"));
-        itemDAO.saveItem(new Item("Bread", "Bakery", 1.5, 2, "Kitchen"));
-        List<Item> items = itemDAO.findAllItemsByShoppingListName("Kitchen");
-        assertEquals(2, items.size());
-    }*/ // TODO Fix
-
-    /**
-     *
+     * Tests updating the quantity of an item.
      */
     @Test
-    void testDeleteAllItems() {
-        itemDAO.saveItem(new Item("Apple", "Fruit", 1.99, 1.0, "Kitchen"));
-        itemDAO.saveItem(new Item("Banane", "Fruit", 1.99, 1.0, "Kitchen"));
+    void testUpdateQuantity () {
+        Item item = new Item("Apple", "Groceries", 3.00, 2, "Fruits");
+        itemDAO.addItem(item);
+
+        boolean updated = itemDAO.updateQuantity("Groceries", "Apple", 5);
+        assertTrue(updated, "Quantity should be updated.");
+
+        Item updatedQuantityItem = itemDAO.findByName("Groceries", "Apple");
+        assertNotNull(updatedQuantityItem, "Apple should be found in the database.");
+        assertEquals(5, updatedQuantityItem.getQuantity(), "Updated quantity should be 5.");
+    }
+
+
+    /**
+     * Tests retrieving all items from a shopping list when items exist.
+     */
+    @Test
+    void testFindAllItemsByShoppingListName () {
+        itemDAO.addItem(new Item("Apple", "Groceries", 2.5, 1, "Fruit"));
+        itemDAO.addItem(new Item("Banane", "Groceries", 1.5, 2, "Fruit"));
+
+        List<Item> items = itemDAO.findAllItemsByShoppingListName("Groceries");
+        assertEquals(2, items.size());
+    }
+
+
+    /**
+     * Tests deleting all items from a shopping list.
+     */
+    @Test
+    void testDeleteAllItems () {
+        itemDAO.addItem(new Item("Apple", "Fruit", 1.99, 1.0, "Kitchen"));
+        itemDAO.addItem(new Item("Banane", "Fruit", 1.99, 1.0, "Kitchen"));
         itemDAO.deleteAllItems("Kitchen");
         List<Item> items = itemDAO.findAllItemsByShoppingListName("Kitchen");
         assertTrue(items.isEmpty());

@@ -4,7 +4,7 @@ import org.prog3.dao.DatabaseInitializer;
 
 
 /**
- * entry point of the application
+ * Entry point of the application
  */
 public class App {
 

@@ -16,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the {@link ItemService} class using mockito
+ */
 class ItemServiceTest {
 
     @Mock
@@ -24,51 +27,63 @@ class ItemServiceTest {
     @InjectMocks
     private ItemService itemService;
 
+    @InjectMocks
+    private ShoppingListService shoppingListService;
+
+    /**
+     * sets up the mock dependency before each test
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     /**
-     *
+     * tests adding an item to a shopping list with a valid input
      */
-    /*@Test
+    @Test
     void testAddItemWithValidInput() {
-        doNothing().when(itemDAO).saveItem(any(Item.class));
-        itemService.addItem("Kitchen", "Apple", "Fruit", 1.99, 1);
-        verify(itemDAO, times(1)).saveItem(any(Item.class));
-    }*/
+        doNothing().when(itemDAO).addItem(any(Item.class));
+        shoppingListService.addShoppingList("Groceries");
+        itemService.addItem("Groceries", "Apple", "Fruit", 1.99, 1);
+        verify(itemDAO, times(1)).addItem(any(Item.class));
+    }
+
 
     /**
-     *
+     * tests adding an item to a shopping list with an invalid input
      */
-    /*@Test
+    @Test
     void testAddItemWithInvalidPriceOrQuantity() {
-        assertThrows(IllegalArgumentException.class, () -> itemService.addItem("Kitchen", "Banane", "Fruit", 0, 1));
-        assertThrows(IllegalArgumentException.class, () -> itemService.addItem("Kitchen", "Banane", "Fruit", 1.99, 0));
-    }*/
+        shoppingListService.addShoppingList("Groceries");
+        assertThrows(IllegalArgumentException.class, () -> itemService.addItem("Groceries", "Banane", "Fruit", 0, 1));
+        assertThrows(IllegalArgumentException.class, () -> itemService.addItem("Groceries", "Banane", "Fruit", 1.99, 0));
+    }
+
 
     /**
-     *
+     * tests deleting an item from a shopping list when the item exist
      */
     @Test
     void testDeleteItemByNameWhenItemExists() {
-        when(itemDAO.deleteByName("Kitchen", "Banane")).thenReturn(true);
+        when(itemDAO.deleteItemByName("Kitchen", "Banane")).thenReturn(true);
         assertTrue(itemService.deleteItemByName("Kitchen", "Banane"));
-        verify(itemDAO, times(1)).deleteByName("Kitchen", "Banane");
+        verify(itemDAO, times(1)).deleteItemByName("Kitchen", "Banane");
     }
 
+
     /**
-     *
+     * tests deleting an item from a shopping list when the item does not exist
      */
     @Test
     void testDeleteItemByNameWhenItemDoesNotExists() {
-        when(itemDAO.deleteByName("Kitchen", "Milk")).thenReturn(false);
+        when(itemDAO.deleteItemByName("Kitchen", "Milk")).thenReturn(false);
         assertFalse(itemService.deleteItemByName("Kitchen", "Milk"));
     }
 
+
     /**
-     *
+     * tests finding an item when the item exist
      */
     @Test
     void testFindItemByNameWhenItemExists() {
@@ -77,55 +92,61 @@ class ItemServiceTest {
         assertEquals(item, itemService.findItemByName("Kitchen","Banane"));
     }
 
+
     /**
-     *
+     * tests finding an item when the item does not exist
      */
     @Test
     void testFindItemByNameWhenItemDoesNotExists() {
-        when(itemDAO.findByName("Kitchen","Banane")).thenReturn(null);
-        assertNull(itemService.findItemByName("Kitchen","Banane"));
+        when(itemDAO.findByName("Groceries","Banane")).thenReturn(null);
+        assertNull(itemService.findItemByName("Groceries","Banane"));
     }
 
+
     /**
-     *
+     * tests updating an item quantity with valid input
      */
     @Test
     void testUpdateItemQuantityWithValidInput() {
-        when(itemDAO.updateQuantity("Kitchen", "Banane", 3)).thenReturn(true);
-        assertTrue(itemService.updateItemQuantity("Kitchen", "Banane", 3));
-        verify(itemDAO, times(1)).updateQuantity("Kitchen", "Banane", 3);
+        when(itemDAO.updateQuantity("Groceries", "Banane", 3)).thenReturn(true);
+        assertTrue(itemService.updateItemQuantity("Groceries", "Banane", 3));
+        verify(itemDAO, times(1)).updateQuantity("Groceries", "Banane", 3);
     }
 
+
     /**
-     *
+     * tests updating an item quantity with invalid input
      */
     @Test
     void testUpdateItemQuantityWithInvalidInput() {
-        assertFalse(itemService.updateItemQuantity("Kitchen", "Banane", 0));
+        assertFalse(itemService.updateItemQuantity("Groceries", "Banane", 0));
         verify(itemDAO, never()).updateQuantity(anyString(), anyString(), anyInt());
     }
 
+
     /**
-     *
+     * tests getting all the items of a non-empty shopping list
      */
     @Test
     void testGetAllItemsWhenItemsExist() {
-        List<Item> items = Arrays.asList(new Item("Milk", "Dairy", 2.5, 1, "Kitchen"));
-        when(itemDAO.findAllItemsByShoppingListName("Kitchen")).thenReturn(items);
-        assertEquals(items, itemService.getAllItems("Kitchen"));
+        List<Item> items = Arrays.asList(new Item("Apple", "Groceries", 2.5, 1, "Fruit"));
+        when(itemDAO.findAllItemsByShoppingListName("Groceries")).thenReturn(items);
+        assertEquals(items, itemService.getAllItems("Groceries"));
     }
 
+
     /**
-     *
+     * tests getting all the items of an empty shopping list
      */
     @Test
     void testGetAllItemsWhenItemsDoesNotExist() {
-        when(itemDAO.findAllItemsByShoppingListName("Kitchen")).thenReturn(Collections.emptyList());
-        assertTrue(itemService.getAllItems("Kitchen").isEmpty());
+        when(itemDAO.findAllItemsByShoppingListName("Groceries")).thenReturn(Collections.emptyList());
+        assertTrue(itemService.getAllItems("Groceries").isEmpty());
     }
 
+
     /**
-     *
+     * tests deleting all the items of a non-empty shopping list
      */
     @Test
     void testDeleteAllItemsOfAShoppingListWhenItemsExist() {
@@ -136,8 +157,9 @@ class ItemServiceTest {
         verify(itemDAO, times(1)).deleteAllItems("Kitchen");
     }
 
+
     /**
-     *
+     * tests deleting all the items of an empty shopping list
      */
     @Test
     void testDeleteAllItemsOfAShoppingListWhenItemsDoesNotExist() {

@@ -18,7 +18,7 @@ public class ItemDAO {
      *
      * @param item the item to be added
      */
-    public void saveItem (Item item){
+    public void addItem (Item item) {
         String SQL = "INSERT INTO Item (shopping_list_name, category, name, price, quantity) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL)){
@@ -36,12 +36,12 @@ public class ItemDAO {
 
 
     /**
-     * deletes an item by its name
+     * Deletes an item by its name
      *
      * @param shoppingListName The name of the shopping list
      * @param name the item name
      */
-    public boolean deleteByName (String shoppingListName, String name) {
+    public boolean deleteItemByName (String shoppingListName, String name) {
         String SQL = "DELETE FROM Item WHERE shopping_list_name = ? AND name = ? ";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL)){
@@ -57,7 +57,7 @@ public class ItemDAO {
 
 
     /**
-     * finds an item by its name
+     * Finds an item by its name
      *
      * @param shoppingListName the shopping list name
      * @param name the item name
@@ -90,7 +90,7 @@ public class ItemDAO {
 
 
     /**
-     * updates the quantity of an item
+     * Updates the quantity of an item
      *
      * @param shoppingListName the name of the shopping list
      * @param name the item name

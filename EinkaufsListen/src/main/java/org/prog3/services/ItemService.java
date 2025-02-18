@@ -8,6 +8,11 @@ import java.util.List;
 
 /**
  * Service for managing item related operations
+ *
+ * <p>
+ * This acts as an intermediary between {@link ItemDAO} the data access layer and
+ * {@link org.prog3.controllers.ItemController} the controller layer.
+ * </p>
  */
 public class ItemService {
 
@@ -16,7 +21,7 @@ public class ItemService {
 
 
     /**
-     * Constructor to enable dependency injection. Used for the tests
+     * Constructor to enable dependency injection. Used in the test classes
      *
      * @param itemDAO an itemDAO object
      */
@@ -52,7 +57,7 @@ public class ItemService {
             throw new IllegalArgumentException("Price and quantity cannot be zero or negative");
         } else {
             Item item = new Item(name, shoppingListName, quantity, price, category);
-            itemDAO.saveItem(item);
+            itemDAO.addItem(item);
         }
     }
 
@@ -64,7 +69,7 @@ public class ItemService {
      * @param name the item name
      */
     public boolean deleteItemByName (String shoppingListName, String name){
-        boolean deleted = itemDAO.deleteByName(shoppingListName, name);
+        boolean deleted = itemDAO.deleteItemByName(shoppingListName, name);
         if (deleted) {
             System.out.println("✅ Item " + name + " deleted successfully.");
         } else {
@@ -123,7 +128,7 @@ public class ItemService {
 
 
     /**
-     * deletes all the items of a specific shopping list
+     * Deletes all the items of a specific shopping list
      *
      * @param shoppingListName the shopping list name
      */

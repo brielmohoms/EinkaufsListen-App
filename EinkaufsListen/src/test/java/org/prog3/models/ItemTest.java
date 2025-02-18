@@ -4,10 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link Item} class
+ */
 class ItemTest {
 
     /**
-     *
+     * tests the constructor with the item ID
      */
     @Test
     void testConstructorWithAllFields() {
@@ -19,8 +22,9 @@ class ItemTest {
         assertEquals(1.5, item.getQuantity());
     }
 
+
     /**
-     *
+     * tests the constructor with the shopping list name
      */
     @Test
     void testConstructorWithShoppingListName() {
@@ -32,8 +36,9 @@ class ItemTest {
         assertEquals("Kitchen", item.getShoppingListName());
     }
 
+
     /**
-     *
+     * tests the default constructor
      */
     @Test
     void testDefaultConstructor(){
@@ -41,8 +46,9 @@ class ItemTest {
         assertNotNull(item);
     }
 
+
     /**
-     *
+     * tests the getter and setter for ID
      */
     @Test
     void testGetAndSetId() {
@@ -51,8 +57,9 @@ class ItemTest {
         assertEquals(1, item.getId());
     }
 
+
     /**
-     *
+     * tests the getter and setter for item name
      */
     @Test
     void testGetAndSetName() {
@@ -61,8 +68,9 @@ class ItemTest {
         assertEquals("Chris", item.getName());
     }
 
+
     /**
-     *
+     * tests the getter and setter for item category
      */
     @Test
     void testGetAndSetCategory() {
@@ -71,8 +79,9 @@ class ItemTest {
         assertEquals("Fruit", item.getCategory());
     }
 
+
     /**
-     *
+     * tests the getter and setter for item price
      */
     @Test
     void testGetAndSetPrice() {
@@ -81,8 +90,9 @@ class ItemTest {
         assertEquals(2.99, item.getPrice());
     }
 
+
     /**
-     *
+     * tests the getter and setter for item quantity
      */
     @Test
     void testGetAndSetQuantity() {
@@ -91,18 +101,20 @@ class ItemTest {
         assertEquals(1, item.getQuantity());
     }
 
+
     /**
-     *
+     * tests the getter and setter for the item's shopping list name
      */
     @Test
-    void testGetAndSetShoppingListId() {
+    void testGetAndSetShoppingListName() {
         Item item = new Item();
         item.setShoppingListName("Kitchen");
         assertEquals("Kitchen", item.getShoppingListName());
     }
 
+
     /**
-     *
+     * tests the String representation of the item object
      */
     @Test
     void testToString() {
