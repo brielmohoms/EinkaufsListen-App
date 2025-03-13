@@ -57,7 +57,7 @@ public class ItemService {
         if (price <= 0 || quantity <= 0) {
             throw new IllegalArgumentException("Price and quantity cannot be zero or negative");
         } else {
-            Item item = new Item(name, shoppingListName, quantity, price, category);
+            Item item = new Item(name, shoppingListName, price, quantity, category);
             itemDAO.addItem(item);
         }
     }

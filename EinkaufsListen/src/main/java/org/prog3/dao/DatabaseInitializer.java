@@ -47,7 +47,7 @@ public class DatabaseInitializer {
                     .column("category", SQLDataType.VARCHAR.length(255).nullable(false))
                     .column("name", SQLDataType.VARCHAR.length(255).nullable(false))
                     .column("price", SQLDataType.DOUBLE.precision(10, 2).nullable(false))
-                    .column("quantity", SQLDataType.INTEGER.nullable(false))
+                    .column("quantity", SQLDataType.DOUBLE.precision(10, 2).nullable(false))
                     .constraint(DSL.constraint("PK_Item").primaryKey("id"))
                     .constraint(DSL.constraint("FK_ShoppingList").foreignKey("shopping_list_name").references("ShoppingList", "name"))
                     .execute();
