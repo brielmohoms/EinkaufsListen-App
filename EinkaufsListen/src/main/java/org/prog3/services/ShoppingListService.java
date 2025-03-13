@@ -63,5 +63,20 @@ public class ShoppingListService {
             System.err.println("Error deleting shopping list." + e.getMessage());
         }
     }
+
+
+    /**
+     *
+     *
+     * @param shoppingListName
+     * @return
+     */
+    public double getTotalPrice(String shoppingListName) {
+        if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
+            System.out.println("Error: Shopping list does not exist.");
+        }
+        return shoppingListDAO.getTotalPrice(shoppingListName);
+    }
+
 }
 

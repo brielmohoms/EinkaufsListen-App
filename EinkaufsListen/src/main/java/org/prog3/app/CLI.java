@@ -69,8 +69,9 @@ public class CLI {
                 System.out.println(" 2. Add Shopping List");
                 System.out.println(" 3. Delete Shopping List");
                 System.out.println(" 4. Manage Shopping List");
-                System.out.println(" 5. Manage username and password");
-                System.out.println(" 6. Logout");
+                System.out.println(" 5. Total price of Shopping List");
+                System.out.println(" 6. Manage username and password");
+                System.out.println(" 7. Logout");
                 System.out.println("\nChoose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -80,8 +81,9 @@ public class CLI {
                     case 2 -> shoppingListController.addShoppingList();
                     case 3 -> shoppingListController.deleteShoppingList();
                     case 4 -> startItemMenu();
-                    case 5 -> userController.updateUser();
-                    case 6 -> {
+                    case 5 -> shoppingListController.viewTotalPrice();
+                    case 6 -> userController.updateUser();
+                    case 7 -> {
                         userController.logoutUser();
                         start();
                         return;

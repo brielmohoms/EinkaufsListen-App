@@ -61,4 +61,21 @@ public class ShoppingListController {
             System.out.println("Error deleting shopping list: " + e.getMessage());
         }
     }
+
+
+    /**
+     *
+     */
+    public void viewTotalPrice() {
+        System.out.println("Enter shopping list name: ");
+        String shoppingListName = scanner.nextLine();
+
+        try {
+            double totalPrice = shoppingListService.getTotalPrice(shoppingListName);
+            System.out.printf("Total price of '%s' is: €%.2f%n", shoppingListName, totalPrice);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
 }

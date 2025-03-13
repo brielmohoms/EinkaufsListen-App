@@ -93,5 +93,29 @@ public class ShoppingListDAO {
         }
         return false;
     }
+
+    /**
+     *
+     *
+     * @param shoppingListName
+     * @return
+     */
+    public double getTotalPrice(String shoppingListName) {
+        String query = "SELECT SUM(price * quantity) AS total FROM Item WHERE shopping_list_name = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, shoppingListName);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                double totalDollars = rs.getDouble("total");
+                double totalEuros = totalDollars * 0.92;  // Convert to EUR
+                return Math.round(totalEuros * 100.0) / 100.0;
+            }
+        } catch (Exception e) {
+            System.err.println("Error calculating total price: " + e.getMessage());
+        }
+        return 0.0;  // Return 0 if there are no items or an error occurs
+    }
+
 }
 
