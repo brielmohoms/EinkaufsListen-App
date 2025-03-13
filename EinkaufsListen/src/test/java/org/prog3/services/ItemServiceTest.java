@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.prog3.dao.ItemDAO;
+import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.Item;
 
 import java.util.Arrays;
@@ -24,6 +25,9 @@ class ItemServiceTest {
     @Mock
     private ItemDAO itemDAO;
 
+    @Mock
+    private ShoppingListDAO shoppingListDAO;
+
     @InjectMocks
     private ItemService itemService;
 
@@ -36,6 +40,8 @@ class ItemServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        itemService = new ItemService(itemDAO, shoppingListDAO);
+        when(shoppingListDAO.shoppingListExists(anyString())).thenReturn(true);
     }
 
     /**
@@ -43,8 +49,9 @@ class ItemServiceTest {
      */
     @Test
     void testAddItemWithValidInput() {
+        when(shoppingListDAO.shoppingListExists("Groceries")).thenReturn(true);
         doNothing().when(itemDAO).addItem(any(Item.class));
-        shoppingListService.addShoppingList("Groceries");
+
         itemService.addItem("Groceries", "Apple", "Fruit", 1.99, 1);
         verify(itemDAO, times(1)).addItem(any(Item.class));
     }
@@ -67,6 +74,7 @@ class ItemServiceTest {
     @Test
     void testDeleteItemByNameWhenItemExists() {
         when(itemDAO.deleteItemByName("Kitchen", "Banane")).thenReturn(true);
+        when(shoppingListDAO.shoppingListExists("Kitchen")).thenReturn(true);
         assertTrue(itemService.deleteItemByName("Kitchen", "Banane"));
         verify(itemDAO, times(1)).deleteItemByName("Kitchen", "Banane");
     }
@@ -150,6 +158,7 @@ class ItemServiceTest {
      */
     @Test
     void testDeleteAllItemsOfAShoppingListWhenItemsExist() {
+        when(shoppingListDAO.shoppingListExists("Dairy")).thenReturn(true);
         List<Item> items = Arrays.asList(new Item("Milk", "Dairy", 2.5, 1, "Kitchen"));
         when(itemDAO.findAllItemsByShoppingListName("Kitchen")).thenReturn(items);
         doNothing().when(itemDAO).deleteAllItems("Kitchen");

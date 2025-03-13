@@ -49,14 +49,18 @@ public class ShoppingListService {
      * @throws IllegalArgumentException if the ID is invalid.
      */
     public void deleteShoppingListByName(String shoppingListName) {
-        if (shoppingListName == null) {
-            throw new IllegalArgumentException("Invalid shopping list ID.");
+        if (shoppingListName == null || shoppingListName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid shopping list name.");
+        }
+
+        if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
+            throw new IllegalArgumentException("Error: Shopping list does not exist.");
         }
 
         try {
             shoppingListDAO.deleteShoppingList(shoppingListName);
         } catch (Exception e) {
-            System.err.println("Error deleting shopping list: " + e.getMessage());
+            System.err.println("Error deleting shopping list." + e.getMessage());
         }
     }
 }

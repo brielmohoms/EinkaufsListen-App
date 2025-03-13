@@ -3,10 +3,6 @@ package org.prog3.app;
 import org.prog3.controllers.ItemController;
 import org.prog3.controllers.ShoppingListController;
 import org.prog3.controllers.UserController;
-import org.prog3.models.ShoppingList;
-import org.prog3.models.User;
-import org.prog3.services.ShoppingListService;
-import org.prog3.services.UserService;
 
 
 import java.util.Scanner;
@@ -30,11 +26,13 @@ public class CLI {
     public void start() {
         while (running) {
             try {
-                System.out.println("==== MENU ====");
-                System.out.println("1. New user");
-                System.out.println("2. Existing user");
-                System.out.println("3. Exit");
-                System.out.println("Choose an option: ");
+                System.out.println("\n==================");
+                System.out.println("\033[1;34m     WELCOME!  \033[0m");
+                System.out.println("==================");
+                System.out.println(" 1. Register");
+                System.out.println(" 2. Login");
+                System.out.println(" 3. Exit");
+                System.out.println("\nChoose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -60,61 +58,20 @@ public class CLI {
     }
 
 
-
-    /**
-     *
-     */
-    /*public void menuUser () {
-        while (true) {
-            try {
-                System.out.println("=====USER MENU===== ");
-                System.out.println("1. Add user");
-                System.out.println("2. Delete user ");
-                System.out.println("3. Update users ");
-                System.out.println("4. Consult users ");
-                System.out.println("5. Find user by Id ");
-                System.out.println("6. EXIT");
-                System.out.println("choose an option: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine();
-
-                switch (choice) {
-                    case 1 -> userController.createUser();
-                    case 2 -> userController.deleteUser();
-                    case 3 -> userController.updateUser();
-                    case 4 -> userController.displayAllUsers();
-                    case 5 -> userController.findUserById();
-                    case 6 -> {
-                        System.out.println("Bye!");
-                        start();
-                        return;
-                    }
-                    default -> System.out.println("Invalid choice. Please try again");
-
-                }
-            } catch (Exception e) {
-                System.err.println("An error occurred " + e.getMessage());
-                scanner.nextLine();
-            }
-        }
-
-    }*/
-
-
     /**
      *
      */
     public void menuShopping (){
         while (true){
             try{
-                System.out.println("===== SHOPPING MENU ===== ");
-                System.out.println("1. View Shopping Lists");
-                System.out.println("2. Add Shopping List");
-                System.out.println("3. Delete Shopping List");
-                System.out.println("4. Manage Shopping List");
-                System.out.println("5. Manage username and password");
-                System.out.println("6. Logout");
-                System.out.println("Choose an option: ");
+                System.out.println("\n\033[1;36m----- SHOPPING MENU -----\033[0m");
+                System.out.println(" 1. View Shopping Lists");
+                System.out.println(" 2. Add Shopping List");
+                System.out.println(" 3. Delete Shopping List");
+                System.out.println(" 4. Manage Shopping List");
+                System.out.println(" 5. Manage username and password");
+                System.out.println(" 6. Logout");
+                System.out.println("\nChoose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -145,15 +102,15 @@ public class CLI {
     public void startItemMenu () {
         while (true) {
             try{
-                System.out.println("==== MANAGE SHOPPING LIST ====");
-                System.out.println("1. Add Item");
-                System.out.println("2. Delete Item");
-                System.out.println("3. Find item by it's name");
-                System.out.println("4. Update item quantity");
-                System.out.println("5. View all items in a shopping list");
-                System.out.println("6. Deletes all items in a shopping list");
-                System.out.println("7. Back");
-                System.out.println("Choose an option: ");
+                System.out.println("\n\033[1;36m----- MANAGE SHOPPING LISTS -----\033[0m");
+                System.out.println(" 1. Add Item");
+                System.out.println(" 2. Delete Item");
+                System.out.println(" 3. Find item by it's name");
+                System.out.println(" 4. Update item quantity");
+                System.out.println(" 5. View all items in a shopping list");
+                System.out.println(" 6. Deletes all items in a shopping list");
+                System.out.println(" 7. Back");
+                System.out.println("\nChoose an option: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 

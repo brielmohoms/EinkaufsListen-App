@@ -1,5 +1,6 @@
 package org.prog3.controllers;
 
+import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.Item;
 import org.prog3.services.ItemService;
 
@@ -18,6 +19,7 @@ import java.util.Scanner;
 public class ItemController {
 
     private ItemService itemService = new ItemService();
+    private ShoppingListDAO shoppingListDAO = new ShoppingListDAO();
     private Scanner scanner = new Scanner(System.in);
 
     /**
@@ -26,6 +28,9 @@ public class ItemController {
     public ItemController () {
     }
 
+    public ItemController(ShoppingListDAO shoppingListDAO) {
+        this.shoppingListDAO = shoppingListDAO;
+    }
 
     /**
      * Constructor used in the test classes
@@ -43,15 +48,15 @@ public class ItemController {
      * Adds an item in a specific shopping list
      */
     public void addItem () {
-        System.out.print("Enter the shopping list name: ");
-        String shoppingListName = scanner.next();
-        System.out.println("Enter item category: ");
-        String category = scanner.next();
-        System.out.println("Enter item name: ");
-        String name = scanner.next();
-        System.out.println("Enter item price: ");
+        System.out.print("Enter the shopping list name: \n");
+        String shoppingListName = scanner.nextLine();
+        System.out.println("\nEnter item category: ");
+        String category = scanner.nextLine();
+        System.out.println("\nEnter item name: ");
+        String name = scanner.nextLine();
+        System.out.println("\nEnter item price: ");
         double price = scanner.nextDouble();
-        System.out.println("Enter item quantity: ");
+        System.out.println("\nEnter item quantity: ");
         double quantity = scanner.nextDouble();
         scanner.nextLine();
 
@@ -69,12 +74,11 @@ public class ItemController {
      */
     public void removeItem () {
         System.out.println("Enter item shopping list name: ");
-        String shoppingListName = scanner.next();
+        String shoppingListName = scanner.nextLine();
         System.out.println("Enter item name: ");
-        String name = scanner.next();
+        String name = scanner.nextLine();
         System.out.println("Are you sure you want to delete the Item? YES/NO");
-        String response = scanner.next();
-        scanner.nextLine();
+        String response = scanner.nextLine();
 
         if (response.equalsIgnoreCase("YES")) {
             try {
@@ -94,6 +98,11 @@ public class ItemController {
     public void findItemByName () {
         System.out.println("Enter item shopping list name: ");
         String shoppingListName = scanner.next();
+        if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
+            System.out.println("Error: Shopping list does not exist.");
+            return;
+        }
+
         System.out.println("Enter item name: ");
         String name = scanner.next();
         scanner.nextLine();

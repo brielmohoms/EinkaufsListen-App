@@ -23,13 +23,12 @@ public class UserController {
      */
     public void createUser() {
         // Ask the user for username and password
-        System.out.println("Enter your name: ");
+        System.out.println("\nEnter your name: ");
         String name = scanner.nextLine();
-        System.out.println("Enter a unique username: ");
+        System.out.println("\nEnter a unique username: ");
         String username = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String password = scanner.next();
-        scanner.nextLine();
+        System.out.println("\nEnter password: ");
+        String password = scanner.nextLine();
 
         // Delegate to the UserService to create the user
         try {
@@ -40,11 +39,10 @@ public class UserController {
     }
 
     public boolean loginUser() {
-        System.out.print("Enter username: ");
-        String username = scanner.next();
-        System.out.print("Enter password: ");
-        String password = scanner.next();
-        scanner.nextLine();
+        System.out.print("\nEnter username: ");
+        String username = scanner.nextLine();
+        System.out.print("\nEnter password: ");
+        String password = scanner.nextLine();
 
         boolean success = userService.loginUser(username, password);
         if (!success) {

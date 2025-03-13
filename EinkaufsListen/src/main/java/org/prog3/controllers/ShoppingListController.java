@@ -35,13 +35,12 @@ public class ShoppingListController {
      *
      */
     public void addShoppingList() {
-        System.out.println("Enter a shopping list name: ");
-        String name = scanner.next();
-        scanner.nextLine();
+        System.out.println("\nEnter a shopping list name: ");
+        String name = scanner.nextLine();
 
         try {
             shoppingListService.addShoppingList(name);
-            System.out.println("shopping list added successfully.");
+            System.out.println("Shopping list added successfully.");
         } catch (Exception e){
             System.out.println("Error adding shopping list: " + e.getMessage());
         }
@@ -52,9 +51,8 @@ public class ShoppingListController {
      *
      */
     public void deleteShoppingList() {
-        System.out.print("Enter shopping list name to delete: ");
+        System.out.print("\nEnter shopping list name to delete: ");
         String name = scanner.nextLine();
-        //scanner.nextLine();
 
         try {
             shoppingListService.deleteShoppingListByName(name);

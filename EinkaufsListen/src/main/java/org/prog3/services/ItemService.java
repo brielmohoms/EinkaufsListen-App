@@ -25,8 +25,9 @@ public class ItemService {
      *
      * @param itemDAO an itemDAO object
      */
-    public ItemService(ItemDAO itemDAO) {
+    public ItemService(ItemDAO itemDAO, ShoppingListDAO shoppingListDAO) {
         this.itemDAO = itemDAO;
+        this.shoppingListDAO = shoppingListDAO;
     }
 
 
@@ -69,7 +70,21 @@ public class ItemService {
      * @param name the item name
      */
     public boolean deleteItemByName (String shoppingListName, String name){
+        if (shoppingListName == null || shoppingListName.trim().isEmpty()) {
+            System.out.println("Shopping list name cannot be empty.");
+        }
+
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("Item name cannot be empty.");
+        }
+
+        if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
+            System.out.println("Error: Shopping list does not exist!");
+            return false;
+        }
+
         boolean deleted = itemDAO.deleteItemByName(shoppingListName, name);
+
         if (deleted) {
             System.out.println("✅ Item " + name + " deleted successfully.");
         } else {
@@ -88,6 +103,17 @@ public class ItemService {
      * @return the item found
      */
     public Item findItemByName (String shoppingListName, String name) {
+        if (shoppingListName == null || shoppingListName.trim().isEmpty()) {
+            System.out.println("Shopping list name cannot be empty.");
+        }
+
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("Item name cannot be empty.");
+        }
+
+        if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
+            System.out.println("Error: Shopping list does not exist.");
+        }
         return itemDAO.findByName(shoppingListName, name);
     }
 
@@ -133,6 +159,10 @@ public class ItemService {
      * @param shoppingListName the shopping list name
      */
     public void deleteAllItemsOfAShoppingList (String shoppingListName) {
+        if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
+            throw new IllegalArgumentException("Error: Shopping list does not exist.");
+        }
+
         List<Item> items = itemDAO.findAllItemsByShoppingListName(shoppingListName);
         if(items.isEmpty()) {
             throw new IllegalArgumentException("No items found in shopping list");
