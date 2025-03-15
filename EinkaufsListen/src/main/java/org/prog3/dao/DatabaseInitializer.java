@@ -1,11 +1,7 @@
 package org.prog3.dao;
 
-import java.io.InputStream;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -23,6 +19,8 @@ public class DatabaseInitializer {
     public static void initialise() {
         try (Connection conn = DatabaseConnection.getConnection()) {
             DSLContext create = DSL.using(conn, SQLDialect.SQLITE);
+
+            // User Table
             create.createTableIfNotExists("User")
                     .column("id", SQLDataType.INTEGER.identity(true))
                     .column("name", SQLDataType.VARCHAR.length(255).nullable(false))
@@ -33,14 +31,14 @@ public class DatabaseInitializer {
                     .constraint(DSL.constraint("UQ_User_Username").unique("username"))
                     .execute();
 
-            //ShoppingList Table
+            // ShoppingList Table
             create.createTableIfNotExists("ShoppingList")
                     .column("id", SQLDataType.INTEGER.identity(true))
                     .column("name", SQLDataType.VARCHAR.length(255).nullable(false))
                     .constraint(DSL.constraint("PK_ShoppingList").primaryKey("id"))
                     .execute();
 
-            //Item Table (Linked to ShoppingList)
+            // Item Table (Linked to ShoppingList)
             create.createTableIfNotExists("Item")
                     .column("id", SQLDataType.INTEGER.identity(true))
                     .column("shopping_list_name", SQLDataType.VARCHAR.nullable(false))

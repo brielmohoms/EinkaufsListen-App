@@ -9,19 +9,27 @@ import java.util.Scanner;
 
 /**
  * Command line interface for the Einkaufslisten application
+ * <p>
+ * This class provides an interactive console-based user interface for
+ * managing shopping lists, items and user accounts.
+ * </p>
  */
 public class CLI {
 
-    UserController userController = new UserController();
-    ItemController itemController = new ItemController();
-    ShoppingListController shoppingListController = new ShoppingListController();
+    private final UserController userController = new UserController();
+    private final ItemController itemController = new ItemController();
+    private final ShoppingListController shoppingListController = new ShoppingListController();
 
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private boolean running = true;
 
 
     /**
-     *
+     * Starts the CLI application and displays the menu.
+     * <p>
+     * This method keeps running until the user chooses to exit.
+     * It provides options for user registration, login and exiting the application.
+     * </p>
      */
     public void start() {
         while (running) {
@@ -48,10 +56,10 @@ public class CLI {
                         System.out.println("Bye!");
                         running = false;
                     }
-                    default -> System.out.println("Invalid Choice. Please try again.");
+                    default -> System.out.println("⚠️ Invalid Choice. Please try again.");
                 }
             } catch (Exception e) {
-                System.out.println("An error occurred : " + e.getMessage());
+                System.out.println("❌ An error occurred : " + e.getMessage());
                 scanner.nextLine();
             }
         }
@@ -59,7 +67,11 @@ public class CLI {
 
 
     /**
-     *
+     * Displays the shopping menu for logged-in users.
+     * <p>
+     * Users can manage shopping lists, view total prices, update account details,
+     * and log out from their session.
+     * </p>
      */
     public void menuShopping (){
         while (true){
@@ -74,7 +86,7 @@ public class CLI {
                 System.out.println(" 7. Logout");
                 System.out.println("\nChoose an option: ");
                 int choice = scanner.nextInt();
-                scanner.nextLine();
+                scanner.nextLine(); // Consume new line
 
                 switch (choice){
                     case 1 -> shoppingListController.viewShoppingList();
@@ -88,18 +100,22 @@ public class CLI {
                         start();
                         return;
                     }
-                    default -> System.out.println("Invalid choice. Please try again");
+                    default -> System.out.println("⚠️ Invalid choice. Please try again");
                 }
             } catch (Exception e) {
-                System.err.println("An error occurred " + e.getMessage());
-                scanner.nextLine();
+                System.err.println("❌ An error occurred " + e.getMessage());
+                scanner.nextLine(); // Consume invalid input
             }
         }
     }
 
 
     /**
-     *
+     * Displays the item management menu.
+     * <p>
+     * Users can add, delete, search, update quantity and view items of a shopping list.
+     * They can also delete all items of a shopping list.
+     * </p>
      */
     public void startItemMenu () {
         while (true) {
@@ -124,13 +140,13 @@ public class CLI {
                     case 5 -> itemController.viewAllItemsOfShoppingList();
                     case 6 -> itemController.deleteAllItemsOfShoppingList();
                     case 7 -> {
-                        return;
+                        return; // Go back to the shopping menu
                     }
-                    default -> System.out.println("Invalid choice. Please try again.");
+                    default -> System.out.println("⚠️ Invalid choice. Please try again.");
                 }
             } catch (Exception e) {
-                System.err.println("An error occurred " + e.getMessage());
-                scanner.nextLine();
+                System.err.println("❌ An error occurred " + e.getMessage());
+                scanner.nextLine(); // Consume invalid input
             }
         }
     }
