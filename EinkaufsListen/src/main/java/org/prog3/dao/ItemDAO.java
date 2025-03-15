@@ -30,7 +30,7 @@ public class ItemDAO {
             statement.executeUpdate();
 
         } catch (Exception e) {
-            System.err.println("Failed to add the item: " + e.getMessage());
+            System.err.println("❌ Failed to add the item: " + e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class ItemDAO {
             statement.executeUpdate();
 
         } catch (Exception e) {
-            System.err.println("Failed to delete item by name: " + e.getMessage());
+            System.err.println("❌ Failed to delete item by name: " + e.getMessage());
         }
         return true;
     }
@@ -77,13 +77,14 @@ public class ItemDAO {
                 item.setPrice(resultSet.getDouble("price"));
                 item.setQuantity(resultSet.getInt("quantity"));
                 item.setShoppingListName(shoppingListName);
-                System.out.println("Item found: " + item);
+                System.out.println("Name: " + item.getName() + " | Category: " + item.getCategory() +
+                        " | Price: " + item.getPrice() + " | Quantity: " + item.getQuantity());
                 return item;
             } else {
-                System.out.println("No items found with name: " + name + " in your shopping list");
+                System.out.println("❌ No items found with name: " + name + " in your shopping list");
             }
         } catch (Exception e) {
-            System.err.println("Failed to find the item: " + e.getMessage());
+            System.err.println("❌ Failed to find the item: " + e.getMessage());
         }
         return null;
     }
@@ -107,7 +108,7 @@ public class ItemDAO {
             int update = statement.executeUpdate();
             return update > 0;
         } catch (Exception e) {
-            System.err.println("Failed to update item quantity: " + e.getMessage());
+            System.err.println("❌ Failed to update item quantity: " + e.getMessage());
             return false;
         }
     }
@@ -137,7 +138,7 @@ public class ItemDAO {
                 items.add(item);
             }
         } catch (Exception e) {
-            System.err.println("Failed to retrieve items: " + e.getMessage());
+            System.err.println("❌ Failed to retrieve items: " + e.getMessage());
         }
         return items;
     }
@@ -155,7 +156,7 @@ public class ItemDAO {
             statement.setString(1, shoppingListName);
             statement.executeUpdate();
         } catch (Exception e) {
-            System.err.println("Failed to clear items in the shopping list: " + e.getMessage());
+            System.err.println("❌ Failed to clear items in the shopping list: " + e.getMessage());
         }
     }
 }

@@ -118,7 +118,7 @@ public class CLI {
 
                 switch (choice) {
                     case 1 -> itemController.addItem();
-                    case 2 -> itemController.removeItem();
+                    case 2 -> itemController.deleteItem();
                     case 3 -> itemController.findItemByName();
                     case 4 -> itemController.updateItemQuantity();
                     case 5 -> itemController.viewAllItemsOfShoppingList();

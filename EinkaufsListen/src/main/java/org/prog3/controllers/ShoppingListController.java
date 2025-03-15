@@ -30,7 +30,7 @@ public class ShoppingListController {
                 return;
             }
             for (ShoppingList list : shoppingLists){
-                System.out.println("ID: " + list.getId() + " | Name: " + list.getName());
+                System.out.println("Name: " + list.getName() + " | Total price: " + shoppingListService.getTotalPrice(list.getName()));
             }
         } catch (Exception e){
             System.out.println("Error fetching shopping lists: " + e.getMessage());

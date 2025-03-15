@@ -63,8 +63,8 @@ class ItemServiceTest {
     @Test
     void testAddItemWithInvalidPriceOrQuantity() {
         shoppingListService.addShoppingList("Groceries");
-        assertThrows(IllegalArgumentException.class, () -> itemService.addItem("Groceries", "Banane", "Fruit", 0, 1));
-        assertThrows(IllegalArgumentException.class, () -> itemService.addItem("Groceries", "Banane", "Fruit", 1.99, 0));
+        assertFalse(itemService.addItem("Groceries", "Banane", "Fruit", 0, 1));
+        assertFalse(itemService.addItem("Groceries", "Banane", "Fruit", 1.99, 0));
     }
 
 
@@ -173,6 +173,6 @@ class ItemServiceTest {
     @Test
     void testDeleteAllItemsOfAShoppingListWhenItemsDoesNotExist() {
         when(itemDAO.findAllItemsByShoppingListName("Kitchen")).thenReturn(Collections.emptyList());
-        assertThrows(IllegalArgumentException.class, () -> itemService.deleteAllItemsOfAShoppingList("Kitchen"));
+        assertFalse(itemService.deleteAllItemsOfAShoppingList("Kitchen"));
     }
 }

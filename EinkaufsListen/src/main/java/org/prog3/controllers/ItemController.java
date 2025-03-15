@@ -50,21 +50,24 @@ public class ItemController {
     public void addItem () {
         System.out.print("Enter the shopping list name: \n");
         String shoppingListName = scanner.nextLine();
+
         System.out.println("\nEnter item category: ");
         String category = scanner.nextLine();
+
         System.out.println("\nEnter item name: ");
         String name = scanner.nextLine();
+
         System.out.println("\nEnter item price: ");
         double price = scanner.nextDouble();
+
         System.out.println("\nEnter item quantity: ");
         double quantity = scanner.nextDouble();
         scanner.nextLine();
 
-        try {
-            itemService.addItem(shoppingListName, name, category, price, quantity);
+        if (itemService.addItem(shoppingListName, name, category, price, quantity)) {
             System.out.println("✅ Item successfully added to your shopping list!");
-        } catch (IllegalArgumentException e) {
-            System.err.println("Error: " + e.getMessage());
+        } else {
+            System.out.println("❌ Failed to add item. Please try again.");
         }
     }
 
@@ -72,19 +75,19 @@ public class ItemController {
     /**
      * Remove an item from a specific shopping list given its name
      */
-    public void removeItem () {
+    public void deleteItem () {
         System.out.println("Enter item shopping list name: ");
         String shoppingListName = scanner.nextLine();
-        System.out.println("Enter item name: ");
+        System.out.println("\nEnter item name: ");
         String name = scanner.nextLine();
         System.out.println("Are you sure you want to delete the Item? YES/NO");
         String response = scanner.nextLine();
 
         if (response.equalsIgnoreCase("YES")) {
-            try {
-                itemService.deleteItemByName(shoppingListName, name);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+            if (itemService.deleteItemByName(shoppingListName, name)) {
+                System.out.println("✅ Item " + name + " deleted successfully.");
+            } else {
+                System.out.println("❌ Item " + name + " not found.");
             }
         } else {
             System.out.println("OK. Cancelled!");
@@ -96,16 +99,11 @@ public class ItemController {
      * Finds an item of a specific shopping list
      */
     public void findItemByName () {
-        System.out.println("Enter item shopping list name: ");
-        String shoppingListName = scanner.next();
-        if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
-            System.out.println("Error: Shopping list does not exist.");
-            return;
-        }
+        System.out.println("\nEnter item shopping list name: ");
+        String shoppingListName = scanner.nextLine();
 
-        System.out.println("Enter item name: ");
-        String name = scanner.next();
-        scanner.nextLine();
+        System.out.println("\nEnter item name: ");
+        String name = scanner.nextLine();
 
         itemService.findItemByName(shoppingListName, name);
         System.out.println();
@@ -116,18 +114,17 @@ public class ItemController {
      * Updates the quantity of an item in a specific shopping list
      */
     public void updateItemQuantity () {
-        System.out.println("Enter item shopping list name: ");
-        String shoppingListName = scanner.next();
-        System.out.println("Enter item name: ");
-        String name = scanner.next();
-        System.out.println("Enter item new quantity: ");
-        double quantity = scanner.nextDouble();
-        scanner.nextLine();
+        System.out.println("\nEnter item shopping list name: ");
+        String shoppingListName = scanner.nextLine();
+        System.out.println("\nEnter item name: ");
+        String name = scanner.nextLine();
+        System.out.println("\nEnter item new quantity: ");
+        double newQuantity = scanner.nextDouble();
 
-        try {
-            itemService.updateItemQuantity(shoppingListName, name, quantity);
-        } catch (IllegalArgumentException e) {
-            System.err.println("Error: " + e.getMessage());
+        if(itemService.updateItemQuantity(shoppingListName, name, newQuantity)) {
+            System.out.println("✅ Quantity updated for " + name + " to " + newQuantity);
+        } else {
+            System.out.println("❌ Error: Item not found or update failed");
         }
     }
 
@@ -136,16 +133,19 @@ public class ItemController {
      * Displays all the items of a specific shopping list
      */
     public void viewAllItemsOfShoppingList () {
-        System.out.println("Enter shopping list name: ");
-        String shoppingListName = scanner.next();
+        System.out.println("\nEnter shopping list name: ");
+        String shoppingListName = scanner.nextLine();
         List<Item> items = itemService.getAllItems(shoppingListName);
-        scanner.nextLine();
 
         if (items.isEmpty()) {
             System.out.println("❌ No item found!");
         } else {
-            System.out.println("====ITEMS====");
-            items.forEach(System.out::println);
+            System.out.println("\n\033[1;33m---------------------- Items of " + shoppingListName + " ----------------------\033[0m");
+            for(Item item : items) {
+                System.out.println("Name: " + item.getName() + " | Category: " + item.getCategory() +
+                        " | Price: " + item.getPrice() + " | Quantity: " + item.getQuantity());
+            }
+            System.out.println("\033[1;33m----------------------------------------------------------\033[0m");
         }
     }
 
@@ -154,19 +154,14 @@ public class ItemController {
      * Deletes all the items of a specific shopping list
      */
     public void deleteAllItemsOfShoppingList () {
-        System.out.println("Enter shopping list name: ");
-        String shoppingListName = scanner.next();
-        System.out.println("Are you sure you want to delete the Item? YES/NO");
-        String response = scanner.next();
-        scanner.nextLine();
+        System.out.println("\nEnter shopping list name: ");
+        String shoppingListName = scanner.nextLine();
+        System.out.println("\nAre you sure you want to delete the Item? YES/NO");
+        String response = scanner.nextLine();
 
         if (response.equalsIgnoreCase("YES")) {
-            try {
-                itemService.deleteAllItemsOfAShoppingList(shoppingListName);
-                System.out.println("✅ All items deleted from the shopping list successfully.");
-            } catch (IllegalArgumentException e) {
-                System.err.println("Error: " + e.getMessage());
-            }
+            itemService.deleteAllItemsOfAShoppingList(shoppingListName);
+            System.out.println("✅ All items deleted from the shopping list successfully.");
         } else {
             System.out.println("OK! Cancelled.");
         }
