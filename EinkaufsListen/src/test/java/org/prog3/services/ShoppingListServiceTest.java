@@ -15,11 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ShoppingListServiceTest {
+
     @Mock
     private ShoppingListDAO shoppingListDAO;
-    /**
-     * injekt the Mocks
-     */
+
     @InjectMocks
     private ShoppingListService shoppingListService ;
 
@@ -28,8 +27,9 @@ class ShoppingListServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
+
     /**
-     * Tets getting all the shopping Lists
+     * Test getting all the shopping Lists
      */
     @Test
     void testGetAllShoppingLists() {
@@ -42,10 +42,10 @@ class ShoppingListServiceTest {
         verify(shoppingListDAO, times(1)).getAllShoppingLists();
     }
 
+
     /**
      * Tests for the Existance of Shopping List
      */
-
     @Test
     void testShoppingListExists() {
         when(shoppingListDAO.shoppingListExists("Fruits")).thenReturn(true);
@@ -56,16 +56,17 @@ class ShoppingListServiceTest {
         verify(shoppingListDAO, times(2)).shoppingListExists(anyString());
     }
 
+
     /**
      * tests adding a  Shopping List by valid Name
      */
-
     @Test
     void testAddShoppingListValidName() {
         shoppingListService.addShoppingList("Fruits");
         verify(shoppingListDAO, times(1)).addShoppingList(any(ShoppingList.class));
 
     }
+
 
     /**
      * Tests adding a Shopping List when Name ist  null
@@ -78,16 +79,17 @@ class ShoppingListServiceTest {
         assertEquals("Shopping list or items cannot be null.", exception.getMessage());
     }
 
+
     /**
      * Tests deleting a shopping List by valid Name
      */
-
     @Test
     void testDeleteShoppingListByNameValid() {
         when(shoppingListDAO.shoppingListExists("Fruits")).thenReturn(true);
         shoppingListService.deleteShoppingListByName("Fruits");
         verify(shoppingListDAO, times(1)).deleteShoppingList("Fruits");
     }
+
 
     /**
      * Tests deleting the Shopping List when Name ist null
@@ -99,4 +101,5 @@ class ShoppingListServiceTest {
         });
         assertEquals("Invalid shopping list name.", exception.getMessage());
     }
+
 }

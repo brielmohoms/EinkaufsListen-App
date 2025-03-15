@@ -1,6 +1,5 @@
 package org.prog3.dao;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +21,10 @@ class DatabaseInitializerTest {
         }
     }
 
+
     /**
      * Test for the User Table
+     *
      * @throws SQLException
      */
     @Test
@@ -40,6 +41,7 @@ class DatabaseInitializerTest {
         }
 
     }
+
 
     /**
      * Test for the ShoppingList table
@@ -59,6 +61,7 @@ class DatabaseInitializerTest {
         }
 
     }
+
 
     /**
      * Test for the Item Table

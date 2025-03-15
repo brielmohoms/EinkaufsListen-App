@@ -16,16 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class ShoppingListTest {
 
     private ShoppingList shoppingList;
+
     @BeforeEach
     void setUp(){
         shoppingList = new ShoppingList();
     }
+
+
     @Test
     void TestDefaultConstructor (){
         assertNull(shoppingList.getName(),"Name shoulb be null");
         assertEquals(0 ,shoppingList.getId());
         assertNull(shoppingList.getItems() ,"Items liste sollte initial null sein  ");
     }
+
 
     @Test
     void testParametriziedConstructor(){
@@ -34,10 +38,10 @@ public class ShoppingListTest {
         assertEquals(name,listName.getName());
     }
 
+
     /**
      * Tests setting and getting the Name
      */
-
     @Test
     void testSetAndGetName (){
         String name ="kitchen";
@@ -45,6 +49,7 @@ public class ShoppingListTest {
         assertEquals(name,shoppingList.getName());
 
     }
+
 
     /**
      * Tests setting and getting the Id
@@ -56,10 +61,10 @@ public class ShoppingListTest {
         assertEquals(id, shoppingList.getId());
     }
 
+
     /**
      * Tests Setting and getting Items
      */
-
     @Test
     void SetAndGetItems(){
         Item item1 = new Item("cooking pot ","kitchen" ,19.5,1.0 , "kitchen ");

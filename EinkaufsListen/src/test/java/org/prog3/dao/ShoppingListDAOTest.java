@@ -13,7 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShoppingListDAOTest {
+
     private ShoppingListDAO shoppingListDAO;
+
     @BeforeEach
     void SetUp () throws Exception{
         shoppingListDAO = new ShoppingListDAO();
@@ -22,6 +24,8 @@ public class ShoppingListDAOTest {
             stmt.execute("DELETE FROM ShoppingList");
         }
     }
+
+
     @AfterEach
     void tearDown () throws Exception{
         try (Connection connection =DatabaseConnection.getConnection();
@@ -29,6 +33,7 @@ public class ShoppingListDAOTest {
             stmt.execute("DELETE FROM ShoppingList");
         }
     }
+
 
     /**
      * Tests adding and getting all the ShoppingLists
@@ -45,6 +50,7 @@ public class ShoppingListDAOTest {
 
     }
 
+
     /**
      * Tests deleting the ShoppingList
      */
@@ -58,6 +64,7 @@ public class ShoppingListDAOTest {
         assertFalse(shoppingListDAO.shoppingListExists("ToDelete"),"after delete , the list must not exists");
     }
 
+
     /**
      * Tests to verify an existing ShoppingList
      */
@@ -68,6 +75,5 @@ public class ShoppingListDAOTest {
         shoppingListDAO.addShoppingList(list);
         assertTrue(shoppingListDAO.shoppingListExists("ExistingList")," the list Existinglist must be exist after Insertion");
     }
-
 
 }
