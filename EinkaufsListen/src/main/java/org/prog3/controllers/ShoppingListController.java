@@ -10,6 +10,13 @@ public class ShoppingListController {
 
     private ShoppingListService shoppingListService = new ShoppingListService();
     private Scanner scanner = new Scanner(System.in) ;
+    public ShoppingListController(){
+
+    }
+    public ShoppingListController(ShoppingListService shoppingListService, Scanner scanner) {
+        this.shoppingListService = shoppingListService;
+        this.scanner = scanner;
+    }
 
 
     /**
