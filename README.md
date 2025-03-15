@@ -1,5 +1,7 @@
 # EinkaufsListen-App
 
+## Noel Vanelle Tchinda Kuegouo, Serge Talla Tamoukou, Chrislie Briel Mohomye Yotchouen
+
 ### 1. Projektbeschreibung
 
 Dies ist eine Java-basierte Einkaufslisten-Anwendung, die eine SQLite-Datenbank 
@@ -27,12 +29,21 @@ bietet eine textbasierte Benutzeroberfläche (CLI) und ist plattformunabhängig.
 ### 6. Anwendungsbeispiele
 * Nach dem Start der Anwendung kann sich der Benutzer entweder registrieren oder mit vorhandenen Anmeldedaten einloggen.
 * **Neue Einkaufsliste erstellen:** Benutzer gibt den Namen der Einkaufsliste ein, und erhält eine Bestätigungsmeldung.
-* **Einkaufsliste verwalten:** Benutzer gibt den Namen einer bestehenden Einkaufsliste ein, um Artikel hinzuzufügen, zu löschen, zu finden, die Menge eines Artikels zu aktualisieren oder alle Artikeln eine bestimmte Einkaufsliste aufzulisten.
+* **Einkaufsliste verwalten:** Benutzer gibt den Namen einer bestehenden Einkaufsliste ein, um Artikel hinzuzufügen, zu löschen, zu finden, die Menge eines Artikels zu aktualisieren, alle Artikeln einer Liste zu löschen oder alle Artikeln eine bestimmte Einkaufsliste aufzulisten.
 
-### 7. Bekannte Einschränkungen
+### 7. Tests
+Dieses Projekt verwendet folgende Test-Frameworks:
+
+* JUnit 5 (JUnit Jupiter) – für Unit-Tests
+* Mockito – für das Mocken von Abhängigkeiten in Unit-Tests
+* EasyMock – für zusätzliche Mocking-Funktionalitäten
+
+Die Tests können mit `mvn test` ausgeführt werden.
+
+### 8. Bekannte Einschränkungen
 * Passwörter werden aktuell nicht gehasht.
 * Keine GUI, nur textbasierte CLI.
 
-### 8. Weiterentwicklung
+### 9. Weiterentwicklung
 * Passwort Hash
 * Einführung einer GUI als alternative Benutzeroberfläche.
