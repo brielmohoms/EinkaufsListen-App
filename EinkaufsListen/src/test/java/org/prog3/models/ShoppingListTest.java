@@ -82,5 +82,13 @@ public class ShoppingListTest {
         shoppingList.setItems(items);
         assertEquals(items ,shoppingList.getItems());
     }
+    /**
+     * Tests setting and getting the total price.
+     */
+    @Test
+    void testSetAndGetTotalPrice() {
+        shoppingList.setTotalPrice(15.75);
+        assertEquals(15.75, shoppingList.getTotalPrice(), 0.01);
+    }
 
 }

@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.prog3.models.ShoppingList;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the {@link ShoppingListDAO} class.
@@ -36,7 +36,9 @@ public class ShoppingListDAOTest {
         shoppingListDAO = new ShoppingListDAO();
         try (Connection connection =DatabaseConnection.getConnection();
              Statement stmt = connection.createStatement()){
+            stmt.execute("DELETE FROM Item");
             stmt.execute("DELETE FROM ShoppingList");
+
         }
     }
 
@@ -96,5 +98,38 @@ public class ShoppingListDAOTest {
         shoppingListDAO.addShoppingList(list, "TestUser");
         assertTrue(shoppingListDAO.shoppingListExists("ExistingList")," the list Existinglist must be exist after Insertion");
     }
+    /**
+     * Tests retrieving the total price from the database.
+     */
+    @Test
+    void testGetTotalPriceSuccess() throws Exception {
+        try (Connection connection = DatabaseConnection.getConnection();
+             Statement stmt = connection.createStatement()) {
 
+            // Insert a shopping list
+            stmt.execute("INSERT INTO ShoppingList (name,username) VALUES ('Groceries','Van')");
+
+            // Insert items into the shopping list
+            stmt.execute("INSERT INTO Item (shopping_list_name,category ,name ,price ,quantity) " +
+                    "VALUES ('Groceries','bakery Items','Milk',1.50,2), ('Groceries','seafood','fisch',2.50,3)");
+
+            // Verify the inserted data
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Item WHERE shopping_list_name = 'Groceries'");
+            while (rs.next()) {
+                System.out.println("Item: " + rs.getString("name") +
+                        ", Price: " + rs.getDouble("price") +
+                        ", Quantity: " + rs.getInt("quantity"));
+            }
+        }
+
+    }
+
+    /**
+     * Tests retrieving the total price of a non-existent shopping list.
+     */
+    @Test
+    void testGetTotalPrice_NonExistentList() {
+        double totalPrice = shoppingListDAO.getTotalPrice("NonExistentList");
+        assertEquals(0.0, totalPrice, 0.01);
+    }
 }

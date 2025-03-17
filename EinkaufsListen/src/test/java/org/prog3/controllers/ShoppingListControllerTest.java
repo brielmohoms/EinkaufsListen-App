@@ -89,5 +89,30 @@ class ShoppingListControllerTest {
         verify(shoppingListService, times(1)).deleteShoppingListByName("Kitchen");
 
     }
+    /**
+     * Tests calculating the total price of a shopping list successfully.
+     */
+    @Test
+    void testViewTotalPrice_Success() {
+        when(scanner.nextLine()).thenReturn("Groceries");
+        when(shoppingListService.getTotalPrice("Groceries")).thenReturn(20.50);
+
+        shoppingListController.viewTotalPrice();
+
+        verify(shoppingListService, times(1)).getTotalPrice("Groceries");
+    }
+    /**
+     * Tests when the shopping list does not exist.
+     */
+    @Test
+    void testViewTotalPrice_ListDoesNotExist() {
+        when(scanner.nextLine()).thenReturn("NonExistentList");
+        when(shoppingListService.getTotalPrice("NonExistentList"))
+                .thenThrow(new IllegalArgumentException("Shopping list does not exist."));
+
+        shoppingListController.viewTotalPrice();
+
+        verify(shoppingListService, times(1)).getTotalPrice("NonExistentList");
+    }
 }
 

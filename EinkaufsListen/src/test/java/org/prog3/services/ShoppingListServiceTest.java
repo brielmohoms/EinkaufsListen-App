@@ -120,5 +120,19 @@ class ShoppingListServiceTest {
         });
         assertEquals("Invalid shopping list name.", exception.getMessage());
     }
+    /**
+     * Tests retrieving the total price of a valid shopping list.
+     */
+    @Test
+    void testGetTotalPrice_Success() {
+        when(shoppingListDAO.shoppingListExists("Groceries")).thenReturn(true);
+        when(shoppingListDAO.getTotalPrice("Groceries")).thenReturn(20.50);
+
+        double totalPrice = shoppingListService.getTotalPrice("Groceries");
+
+        assertEquals(20.50, totalPrice, 0.01);
+        verify(shoppingListDAO, times(1)).getTotalPrice("Groceries");
+    }
+
 
 }
