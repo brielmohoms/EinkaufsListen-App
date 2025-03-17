@@ -41,18 +41,17 @@ public class CLI {
                 System.out.println(" 2. Login");
                 System.out.println(" 3. Exit");
                 System.out.println("\nChoose an option: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine();
+                String choice = getUserInput().trim();
 
                 switch (choice) {
-                    case 1 -> userController.createUser();
-                    case 2 -> {
+                    case "1" -> userController.createUser();
+                    case "2" -> {
                         boolean isLoggedIn = userController.loginUser();
                         if (isLoggedIn) {
                             menuShopping();
                         }
                     }
-                    case 3 -> {
+                    case "3" -> {
                         System.out.println("Bye!");
                         running = false;
                     }
@@ -85,17 +84,16 @@ public class CLI {
                 System.out.println(" 6. Manage username and password");
                 System.out.println(" 7. Logout");
                 System.out.println("\nChoose an option: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Consume new line
+                String choice = getUserInput().trim();
 
                 switch (choice){
-                    case 1 -> shoppingListController.viewShoppingList();
-                    case 2 -> shoppingListController.addShoppingList();
-                    case 3 -> shoppingListController.deleteShoppingList();
-                    case 4 -> startItemMenu();
-                    case 5 -> shoppingListController.viewTotalPrice();
-                    case 6 -> userController.updateUser();
-                    case 7 -> {
+                    case "1" -> shoppingListController.viewShoppingList();
+                    case "2" -> shoppingListController.addShoppingList();
+                    case "3" -> shoppingListController.deleteShoppingList();
+                    case "4" -> startItemMenu();
+                    case "5" -> shoppingListController.viewTotalPrice();
+                    case "6" -> userController.updateUser();
+                    case "7" -> {
                         userController.logoutUser();
                         start();
                         return;
@@ -129,17 +127,16 @@ public class CLI {
                 System.out.println(" 6. Deletes all items in a shopping list");
                 System.out.println(" 7. Back");
                 System.out.println("\nChoose an option: ");
-                int choice = scanner.nextInt();
-                scanner.nextLine();
+                String choice = getUserInput().trim();
 
                 switch (choice) {
-                    case 1 -> itemController.addItem();
-                    case 2 -> itemController.deleteItem();
-                    case 3 -> itemController.findItemByName();
-                    case 4 -> itemController.updateItemQuantity();
-                    case 5 -> itemController.viewAllItemsOfShoppingList();
-                    case 6 -> itemController.deleteAllItemsOfShoppingList();
-                    case 7 -> {
+                    case "1" -> itemController.addItem();
+                    case "2" -> itemController.deleteItem();
+                    case "3" -> itemController.findItemByName();
+                    case "4" -> itemController.updateItemQuantity();
+                    case "5" -> itemController.viewAllItemsOfShoppingList();
+                    case "6" -> itemController.deleteAllItemsOfShoppingList();
+                    case "7" -> {
                         return; // Go back to the shopping menu
                     }
                     default -> System.out.println("⚠️ Invalid choice. Please try again.");
@@ -149,5 +146,15 @@ public class CLI {
                 scanner.nextLine(); // Consume invalid input
             }
         }
+    }
+
+    /**
+     * Requests a line of text from the user.
+     *
+     * @return the text of the user
+     */
+    public String getUserInput() {
+        System.out.print("> ");
+        return scanner.nextLine();
     }
 }

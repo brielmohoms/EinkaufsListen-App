@@ -84,7 +84,7 @@ public class UserController {
 
         // Display the users or a message if none are found
         if (users.isEmpty()) {
-            System.out.println("No users found.");
+            System.out.println("⚠️ No users found.");
         } else {
             System.out.println("List of users:");
             for (User user : users) {
@@ -98,19 +98,19 @@ public class UserController {
      * Delegates to the UserService to fetch the user.
      */
     public void findUserByName() {
-        System.out.println("Enter user name: ");
+        System.out.println("\nEnter user name: ");
         String name = scanner.next();
 
         // Fetch the user by ID and display the result
         try {
             User user = userService.findByName(name);
             if (user!= null) {
-                System.out.println("User found: ID: " + user.getId() + ", Username: " + user.getUsername());
+                System.out.println("✅ User found: ID: " + user.getId() + ", Username: " + user.getUsername());
             } else {
-                System.out.println("User not found.");
+                System.out.println("⚠️ User not found.");
             }
         } catch (Exception e) {
-            System.err.println("Error retrieving user: " + e.getMessage());
+            System.err.println("❌ Error retrieving user: " + e.getMessage());
         }
     }
 
@@ -119,18 +119,18 @@ public class UserController {
      * Delegates the update logic to the UserService.
      */
     public void updateUser() {
-        System.out.print("Enter your name: ");
+        System.out.print("\nEnter your name: ");
         String name = scanner.nextLine();
-        System.out.println("Enter new username: ");
+        System.out.println("\nEnter new username: ");
         String username = scanner.next();
-        System.out.println("Enter new password: ");
+        System.out.println("\nEnter new password: ");
         String password = scanner.next();
 
         boolean success = userService.updateUser(username, password, name);
         if (success) {
-            System.out.println("User successfully updated!");
+            System.out.println("✅ User successfully updated!");
         } else {
-            System.out.println("Failed to update user.");
+            System.out.println("❌ Failed to update user.");
         }
     }
 
