@@ -10,6 +10,14 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ Utility class for initializing the database schema and inserting initial data.
+ *
+ * <p>
+ * This class is responsible for creating necessary tables and populating them
+ * It ensures that the database is properly set up before application startup.
+ * </p>
+ */
 class DatabaseInitializerTest {
 
     @BeforeEach

@@ -9,14 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data access object for managing shopping lists database operations
+ * Data access object (DAO) class responsible for managing shopping lists database operations
+ *
+ * <p>
+ * this class provides methods for adding ,deleting , getting all shopping lists and getting total price shopping list data from the database ,
+ * It ensures data integrity and abstracts database operations from the service layer.
+ * </p>
  */
 public class ShoppingListDAO {
 
     /**
      * The shopping list to be created
      *
-     * @param shoppingList
+     * @param shoppingList the shopping list to add
      */
     public void addShoppingList(ShoppingList shoppingList, String username) {
         String query = "INSERT INTO ShoppingList (name, username) VALUES (?, ?)";
@@ -32,9 +37,9 @@ public class ShoppingListDAO {
 
 
     /**
+     *getting all the shopping list
      *
-     *
-     * @return
+     * @return the shoppinglist
      */
     public List<ShoppingList> getAllShoppingLists(String username) {
         String query = "SELECT * FROM ShoppingList WHERE username = ? ORDER BY id ASC";
@@ -59,9 +64,9 @@ public class ShoppingListDAO {
 
 
     /**
+     *deleting the shopping list
      *
-     *
-     * @param shoppingListName
+     * @param shoppingListName name of the shopping list
      */
     public void deleteShoppingList(String shoppingListName) {
         String query = "DELETE FROM ShoppingList WHERE name = ?";
@@ -99,10 +104,10 @@ public class ShoppingListDAO {
     }
 
     /**
+     *getting the totalPrice
      *
-     *
-     * @param shoppingListName
-     * @return
+     * @param shoppingListName the name of the shopping list
+     * @return 0 if there are no items or an error occurs
      */
     public double getTotalPrice(String shoppingListName) {
         String query = "SELECT SUM(price * quantity) AS total FROM Item WHERE shopping_list_name = ?";

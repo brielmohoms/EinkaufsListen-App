@@ -12,9 +12,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Unit tests for the {@link ShoppingListDAO} class.
+ *
+ *<p>
+ *This class tests the persistence layer for handling shopping lists.
+ *It verifies that shopping lists can be added, retrieved, deleted,
+ *and checked for existence in the database.
+ * </p>
+ */
+
 public class ShoppingListDAOTest {
 
     private ShoppingListDAO shoppingListDAO;
+
+    /**
+     * Sets up the database connection and clears the shopping list table before each test.
+     * @throws Exception  if a database connection or SQL execution error occurs.
+     */
 
     @BeforeEach
     void SetUp () throws Exception{
@@ -25,7 +40,10 @@ public class ShoppingListDAOTest {
         }
     }
 
-
+    /**
+     * Cleans up the database by removing all shopping lists after each test.
+     * @throws Exception if a database connection or SQL execution error occurs.
+     */
     @AfterEach
     void tearDown () throws Exception{
         try (Connection connection =DatabaseConnection.getConnection();
@@ -36,7 +54,8 @@ public class ShoppingListDAOTest {
 
 
     /**
-     * Tests adding and getting all the ShoppingLists
+     *Tests adding a new shopping list and retrieving all shopping lists.
+     * Ensures that after insertion, the list is present in the database.
      */
     @Test
     void testAddAndGetAllShoppingLists(){
@@ -53,6 +72,7 @@ public class ShoppingListDAOTest {
 
     /**
      * Tests deleting the ShoppingList
+     *  Ensures that the shopping list is removed from the database after deletion.
      */
     @Test
     void testDeleteShoppingList(){
@@ -67,6 +87,7 @@ public class ShoppingListDAOTest {
 
     /**
      * Tests to verify an existing ShoppingList
+     * Ensures that checking an existing list returns true and a non-existing one returns false.
      */
     @Test
     void testShoppingListsExist(){

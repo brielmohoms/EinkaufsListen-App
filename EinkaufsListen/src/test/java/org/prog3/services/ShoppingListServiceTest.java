@@ -15,6 +15,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ *  Unit tests for the {@link ShoppingListService} class.
+ *
+ *<p>
+ *This class tests the business logic of handling shopping lists, ensuring data
+ *is correctly retrieved, added, and deleted.
+ *</p>
+ */
+
 class ShoppingListServiceTest {
 
     @Mock
@@ -26,6 +35,9 @@ class ShoppingListServiceTest {
     @InjectMocks
     private ShoppingListService shoppingListService ;
 
+    /**
+     * * Sets up mock dependencies before each test.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -35,7 +47,7 @@ class ShoppingListServiceTest {
 
 
     /**
-     * Test getting all the shopping Lists
+     * Test retrieving all the shopping Lists
      */
     @Test
     void testGetAllShoppingLists() {
@@ -50,7 +62,7 @@ class ShoppingListServiceTest {
 
 
     /**
-     * Tests for the Existance of Shopping List
+     *Tests checking the existence of a shopping list
      */
     @Test
     void testShoppingListExists() {
@@ -64,7 +76,7 @@ class ShoppingListServiceTest {
 
 
     /**
-     * tests adding a  Shopping List by valid Name
+     * tests adding a  Shopping List with a valid name
      */
     @Test
     void testAddShoppingListValidName() {
@@ -76,7 +88,7 @@ class ShoppingListServiceTest {
 
 
     /**
-     * Tests adding a Shopping List when Name ist  null
+     * Tests adding a Shopping List when  the Name ist  null
      */
     @Test
     void testAddShoppingListWithNullName(){
@@ -88,7 +100,7 @@ class ShoppingListServiceTest {
 
 
     /**
-     * Tests deleting a shopping List by valid Name
+     * Tests deleting a shopping List by a valid Name
      */
     @Test
     void testDeleteShoppingListByNameValid() {
@@ -99,7 +111,7 @@ class ShoppingListServiceTest {
 
 
     /**
-     * Tests deleting the Shopping List when Name ist null
+     * Tests deleting the Shopping List when  the Name ist null
      */
     @Test
     void testDeleteShoppingListByNameWithNull(){

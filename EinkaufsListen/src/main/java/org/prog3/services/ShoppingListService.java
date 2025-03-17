@@ -5,11 +5,27 @@ import org.prog3.models.ShoppingList;
 
 import java.util.List;
 
+/**
+ * Service class responsible for business logic related to shopping lists
+ *
+ * <p>
+ * This class contains methods for handling shopping list operations such as
+ *  adding ,deleting, and getting shopping lists. It acts as an
+ *  intermediary between the {@link ShoppingListDAO}
+ * </p>
+ */
 
 public class ShoppingListService {
 
     private final ShoppingListDAO shoppingListDAO;
     private final UserService userService;
+
+    /**
+     * Constructor
+     * @param shoppingListDAO the data access object for shopping list
+     * @param userService the service handling user authentication and authorization, ensuring that
+     *only authorized users can access or modify their shopping lists
+     */
 
     public ShoppingListService(ShoppingListDAO shoppingListDAO, UserService userService) {
         this.shoppingListDAO = shoppingListDAO;
@@ -75,7 +91,7 @@ public class ShoppingListService {
     /**
      *
      *
-     * @param shoppingListName
+     * @param shoppingListName the name of the shopping list
      * @return
      */
     public double getTotalPrice(String shoppingListName) {

@@ -13,6 +13,14 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
+/**
+ * Unit tests for the {@link ShoppingListController} class
+ *
+ * <p>
+ * This class tests the functionality of viewing, adding, and deleting shopping lists.
+ * The {@link ShoppingListService} is mocked to isolate the controller logic.
+ * </p>
+ */
 
 class ShoppingListControllerTest {
 
@@ -25,6 +33,9 @@ class ShoppingListControllerTest {
     @InjectMocks
     ShoppingListController shoppingListController;
 
+    /**
+     * Sets up the mock dependencies before each test
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -33,7 +44,8 @@ class ShoppingListControllerTest {
 
 
     /**
-     * Test seeing the Shopping List
+     *Tests retrieving and displaying all shopping lists.
+     * Ensures the {@code getAllShoppingLists()} method is called once.
      */
     @Test
     void testViewShoppingList() {
@@ -48,7 +60,8 @@ class ShoppingListControllerTest {
 
 
     /**
-     * Tests adding the shopping List
+     * Tests adding a new shopping list.
+     * Ensures the {@code addShoppingList()} method correctly processes user input.
      */
     @Test
     void testAddShoppingList() {
@@ -63,7 +76,8 @@ class ShoppingListControllerTest {
 
 
     /**
-     * Tests deleting the ShoppingList
+     * Tests deleting a shopping list by name.
+     * Ensures the correct service method is called with the correct parameter.
      */
     @Test
     void TestDeleteShoppingList() {

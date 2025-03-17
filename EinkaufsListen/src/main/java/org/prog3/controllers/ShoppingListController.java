@@ -6,10 +6,26 @@ import org.prog3.services.ShoppingListService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ *Controller Class responsible for handling user interactions related to shopping lists .
+ *
+ * <p>
+ * This class serves as an intermediary between the {@link ShoppingListService},
+ * It manages operations such as adding , deleting ,viewing shopping lists .
+ * </p>
+ */
+
 public class ShoppingListController {
 
     private ShoppingListService shoppingListService;
     private Scanner scanner = new Scanner(System.in) ;
+
+    /**
+     *constructs a new ShoppingListController with a specified service
+     *
+     * @param shoppingListService the service layer for handling shopping list operations
+     * @param scanner the scanner object
+     */
 
     public ShoppingListController(ShoppingListService shoppingListService, Scanner scanner) {
         this.shoppingListService = shoppingListService;
@@ -18,7 +34,7 @@ public class ShoppingListController {
 
 
     /**
-     *
+     * views and displays a shopping list
      */
     public void viewShoppingList () {
         try {
@@ -37,7 +53,7 @@ public class ShoppingListController {
 
 
     /**
-     *
+     * Adds a new shopping list
      */
     public void addShoppingList() {
         System.out.println("\nEnter a shopping list name: ");
@@ -53,7 +69,7 @@ public class ShoppingListController {
 
 
     /**
-     *
+     *deletes a shopping list
      */
     public void deleteShoppingList() {
         System.out.print("\nEnter shopping list name to delete: ");
@@ -69,7 +85,7 @@ public class ShoppingListController {
 
 
     /**
-     *
+     * viewing the totalPrice
      */
     public void viewTotalPrice() {
         System.out.println("\n Enter shopping list name: ");
