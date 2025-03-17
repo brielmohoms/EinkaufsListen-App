@@ -14,8 +14,15 @@ public class UserController {
 
     // Scanner instance to read user input
     private static final Scanner scanner = new Scanner(System.in);
-    private final UserService userService = new UserService();
+    private final UserService userService;
 
+    public UserController() {
+        this.userService = new UserService();
+    }
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Creates a new user by receiving the username and password.
@@ -25,22 +32,24 @@ public class UserController {
         // Ask the user for username and password
         System.out.println("\nEnter your name: ");
         String name = scanner.nextLine();
+
         System.out.println("\nEnter a unique username: ");
         String username = scanner.nextLine();
+
         System.out.println("\nEnter password: ");
         String password = scanner.nextLine();
 
-        // Delegate to the UserService to create the user
-        try {
-            userService.createUser(name, username, password);
-        } catch (Exception e) {
-            System.err.println("Error creating user: " + e.getMessage());
+        if(userService.createUser(name, username, password)) {
+            System.out.println("✅ User registered successfully!");
+        } else {
+            System.out.println("❌ Failed to register. Please try again.");
         }
     }
 
     public boolean loginUser() {
         System.out.print("\nEnter username: ");
         String username = scanner.nextLine();
+
         System.out.print("\nEnter password: ");
         String password = scanner.nextLine();
 
@@ -59,19 +68,16 @@ public class UserController {
     /**
      * Deletes a user by their ID.
      * Delegates to the UserService to handle the deletion logic.
-     *
-     * @throws Exception if an error occurs during user deletion
      */
-    public void deleteUser() throws Exception {
-        System.out.print("Enter user ID to delete: ");
-        int id = scanner.nextInt();
+    public void deleteUser() {
+        System.out.print("\nEnter the username to the user to delete: ");
+        String username = scanner.nextLine();
 
-        try {
-            userService.deleteUser(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (userService.deleteUser(username)) {
+            System.out.println("User deleted successfully.");
+        } else {
+            System.out.println("❌ Failed to delete user. Please try again.");
         }
-        System.out.println("User deleted successfully.");
     }
 
     /**
@@ -86,9 +92,9 @@ public class UserController {
         if (users.isEmpty()) {
             System.out.println("⚠️ No users found.");
         } else {
-            System.out.println("List of users:");
+            System.out.println("\n\033[1;33m---------------- Registered Users ----------------\033[0m");
             for (User user : users) {
-                System.out.println("ID: " + user.getId() + ", Username: " + user.getUsername());
+                System.out.println("Name: " + user.getName() + "; Username: " + user.getUsername() + "; Role: " + user.getRole());
             }
         }
     }
@@ -97,13 +103,13 @@ public class UserController {
      * Retrieves a user by their ID.
      * Delegates to the UserService to fetch the user.
      */
-    public void findUserByName() {
+    public void findUser() {
         System.out.println("\nEnter user name: ");
         String name = scanner.next();
 
         // Fetch the user by ID and display the result
         try {
-            User user = userService.findByName(name);
+            User user = userService.findUser(name);
             if (user!= null) {
                 System.out.println("✅ User found: ID: " + user.getId() + ", Username: " + user.getUsername());
             } else {

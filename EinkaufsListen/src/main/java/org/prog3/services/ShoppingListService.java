@@ -8,14 +8,20 @@ import java.util.List;
 
 public class ShoppingListService {
 
-    private ShoppingListDAO shoppingListDAO = new ShoppingListDAO();
+    private final ShoppingListDAO shoppingListDAO;
+    private final UserService userService;
 
+    public ShoppingListService(ShoppingListDAO shoppingListDAO, UserService userService) {
+        this.shoppingListDAO = shoppingListDAO;
+        this.userService = userService;
+    }
 
     /**
      * Retrieves all shopping lists.
      */
     public List<ShoppingList> getAllShoppingLists() {
-        return shoppingListDAO.getAllShoppingLists();
+        String username = userService.getLoggedInUser().getUsername();
+        return shoppingListDAO.getAllShoppingLists(username);
     }
 
 
@@ -33,12 +39,13 @@ public class ShoppingListService {
     /**
      * Adds a new shopping list after validation.
      */
-    public void addShoppingList(String name ) {
+    public void addShoppingList(String name) {
         if ((name == null) || name.trim().isEmpty()){
             throw new IllegalArgumentException("Shopping list or items cannot be null.");
         }
         ShoppingList shoppingList = new ShoppingList(name);
-        shoppingListDAO.addShoppingList(shoppingList);
+        String username = userService.getLoggedInUser().getUsername();
+        shoppingListDAO.addShoppingList(shoppingList, username);
     }
 
 

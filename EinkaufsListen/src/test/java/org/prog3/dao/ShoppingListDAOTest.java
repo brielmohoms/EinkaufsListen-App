@@ -41,9 +41,9 @@ public class ShoppingListDAOTest {
     @Test
     void testAddAndGetAllShoppingLists(){
         ShoppingList list = new ShoppingList("Testlist");
-        shoppingListDAO.addShoppingList(list);
+        shoppingListDAO.addShoppingList(list, "TestUser");
 
-        List<ShoppingList> lists = shoppingListDAO.getAllShoppingLists();
+        List<ShoppingList> lists = shoppingListDAO.getAllShoppingLists("TestUser");
         assertFalse(lists.isEmpty()," the list should be not empty after insertion");
         boolean found = lists.stream().anyMatch(l -> "Testlist".equals(l.getName()));
         assertTrue(found ," die liste existiert schon ");
@@ -57,7 +57,7 @@ public class ShoppingListDAOTest {
     @Test
     void testDeleteShoppingList(){
         ShoppingList list = new ShoppingList("ToDelete");
-        shoppingListDAO.addShoppingList(list);
+        shoppingListDAO.addShoppingList(list, "TestUser");
 
         assertTrue(shoppingListDAO.shoppingListExists("ToDelete")," die liste muss existieren bevor delete");
         shoppingListDAO.deleteShoppingList("ToDelete");
@@ -72,7 +72,7 @@ public class ShoppingListDAOTest {
     void testShoppingListsExist(){
         assertFalse(shoppingListDAO.shoppingListExists("NonExisting"),"the list NonExisting must not exist");
         ShoppingList list = new ShoppingList("ExistingList");
-        shoppingListDAO.addShoppingList(list);
+        shoppingListDAO.addShoppingList(list, "TestUser");
         assertTrue(shoppingListDAO.shoppingListExists("ExistingList")," the list Existinglist must be exist after Insertion");
     }
 

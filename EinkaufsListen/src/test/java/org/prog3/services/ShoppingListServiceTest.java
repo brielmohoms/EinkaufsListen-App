@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.ShoppingList;
+import org.prog3.models.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,12 +20,17 @@ class ShoppingListServiceTest {
     @Mock
     private ShoppingListDAO shoppingListDAO;
 
+    @Mock
+    private UserService userService;
+
     @InjectMocks
     private ShoppingListService shoppingListService ;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
+        // Set up the mock to return a user with username "TestUser"
+        when(userService.getLoggedInUser()).thenReturn(new User(1, "TestUser", "Test Name", "password", "regular"));
     }
 
 
@@ -34,12 +40,12 @@ class ShoppingListServiceTest {
     @Test
     void testGetAllShoppingLists() {
         List<ShoppingList> mockLists = Arrays.asList(new ShoppingList("Fruits"),new ShoppingList("furnitures"));
-        when(shoppingListDAO.getAllShoppingLists()).thenReturn(mockLists);
+        when(shoppingListDAO.getAllShoppingLists("TestUser")).thenReturn(mockLists);
         List<ShoppingList> result = shoppingListService.getAllShoppingLists();
         assertEquals(2,result.size());
         assertEquals("Fruits",result.get(0).getName());
         assertEquals("furnitures",result.get(1).getName());
-        verify(shoppingListDAO, times(1)).getAllShoppingLists();
+        verify(shoppingListDAO, times(1)).getAllShoppingLists("TestUser");
     }
 
 
@@ -63,7 +69,8 @@ class ShoppingListServiceTest {
     @Test
     void testAddShoppingListValidName() {
         shoppingListService.addShoppingList("Fruits");
-        verify(shoppingListDAO, times(1)).addShoppingList(any(ShoppingList.class));
+        //verify(shoppingListDAO, times(1)).addShoppingList(any(ShoppingList.class), "TestUser");
+        verify(shoppingListDAO, times(1)).addShoppingList(any(ShoppingList.class), eq("TestUser"));
 
     }
 

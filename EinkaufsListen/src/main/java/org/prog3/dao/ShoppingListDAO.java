@@ -18,11 +18,12 @@ public class ShoppingListDAO {
      *
      * @param shoppingList
      */
-    public void addShoppingList(ShoppingList shoppingList) {
-        String query = "INSERT INTO ShoppingList (name) VALUES (?)";
+    public void addShoppingList(ShoppingList shoppingList, String username) {
+        String query = "INSERT INTO ShoppingList (name, username) VALUES (?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, shoppingList.getName());
+            stmt.setString(2, username);
             stmt.executeUpdate();
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -35,17 +36,20 @@ public class ShoppingListDAO {
      *
      * @return
      */
-    public List<ShoppingList> getAllShoppingLists() {
-        String query = "SELECT * FROM ShoppingList ORDER BY id ASC";
+    public List<ShoppingList> getAllShoppingLists(String username) {
+        String query = "SELECT * FROM ShoppingList WHERE username = ? ORDER BY id ASC";
         List<ShoppingList> shoppingsLists = new ArrayList<>();
+
         try (Connection connection = DatabaseConnection.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            while (rs.next()) {
-                ShoppingList shoppingList = new ShoppingList();
-                shoppingList.setId(rs.getInt("id"));
-                shoppingList.setName(rs.getString("name"));
-                shoppingsLists.add(shoppingList);
+        PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ShoppingList shoppingList = new ShoppingList();
+                    shoppingList.setId(rs.getInt("id"));
+                    shoppingList.setName(rs.getString("name"));
+                    shoppingsLists.add(shoppingList);
+                }
             }
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

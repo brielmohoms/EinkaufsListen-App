@@ -54,7 +54,7 @@ class DatabaseInitializerTest {
             ResultSet resultSet= stmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='ShoppingList'");
             assertTrue(resultSet.next(),"Table ShoppingList was created");
 
-            String insertQueryShoppingList ="INSERT INTO ShoppingList (name) VALUES('Fruits')";
+            String insertQueryShoppingList ="INSERT INTO ShoppingList (name, username) VALUES('Fruits', 'TestUser')";
             stmt.executeUpdate(insertQueryShoppingList);
             ResultSet insertDataShoppingList= stmt.executeQuery("SELECT * FROM ShoppingList WHERE name = 'Fruits'");
             assertTrue(insertDataShoppingList.next(), " Insertion failed ");

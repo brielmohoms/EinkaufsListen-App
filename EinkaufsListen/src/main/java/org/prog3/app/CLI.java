@@ -3,6 +3,9 @@ package org.prog3.app;
 import org.prog3.controllers.ItemController;
 import org.prog3.controllers.ShoppingListController;
 import org.prog3.controllers.UserController;
+import org.prog3.dao.ShoppingListDAO;
+import org.prog3.services.ShoppingListService;
+import org.prog3.services.UserService;
 
 import java.util.Scanner;
 
@@ -15,9 +18,16 @@ import java.util.Scanner;
  */
 public class CLI {
 
-    private final UserController userController = new UserController();
+    private final UserService userService = new UserService();
+    private final ShoppingListDAO shoppingListDAO = new ShoppingListDAO();
+
+    private final ShoppingListService shoppingListService = new ShoppingListService(shoppingListDAO, userService);
+    // Inject the shared services into your controllers
+    private final UserController userController = new UserController(userService);
+    private final ShoppingListController shoppingListController = new ShoppingListController(shoppingListService, new Scanner(System.in));
     private final ItemController itemController = new ItemController();
-    private final ShoppingListController shoppingListController = new ShoppingListController();
+
+
 
     private final Scanner scanner = new Scanner(System.in);
     private boolean running = true;
@@ -119,7 +129,7 @@ public class CLI {
 
                 switch (choice) {
                     case "1" -> userController.displayAllUsers();
-                    case "2" -> userController.findUserByName();
+                    case "2" -> userController.findUser();
                     case "3" -> userController.deleteUser();
                     case "4" -> userController.promoteUserToAdmin();
                     case "5" -> {

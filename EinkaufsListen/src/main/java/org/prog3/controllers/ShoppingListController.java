@@ -8,11 +8,9 @@ import java.util.Scanner;
 
 public class ShoppingListController {
 
-    private ShoppingListService shoppingListService = new ShoppingListService();
+    private ShoppingListService shoppingListService;
     private Scanner scanner = new Scanner(System.in) ;
-    public ShoppingListController(){
 
-    }
     public ShoppingListController(ShoppingListService shoppingListService, Scanner scanner) {
         this.shoppingListService = shoppingListService;
         this.scanner = scanner;
@@ -22,18 +20,18 @@ public class ShoppingListController {
     /**
      *
      */
-    public void viewShoppingList() {
+    public void viewShoppingList () {
         try {
             List<ShoppingList> shoppingLists = shoppingListService.getAllShoppingLists();
             if (shoppingLists.isEmpty()) {
-                System.out.println("No shopping lists found.");
+                System.out.println("❌ No shopping lists found.");
                 return;
             }
             for (ShoppingList list : shoppingLists){
                 System.out.println("Name: " + list.getName() + " | Total price: " + shoppingListService.getTotalPrice(list.getName()));
             }
-        } catch (Exception e){
-            System.out.println("Error fetching shopping lists: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("❌ Error fetching shopping lists: " + e.getMessage());
         }
     }
 
@@ -47,9 +45,9 @@ public class ShoppingListController {
 
         try {
             shoppingListService.addShoppingList(name);
-            System.out.println("Shopping list added successfully.");
+            System.out.println("✅ Shopping list added successfully.");
         } catch (Exception e){
-            System.out.println("Error adding shopping list: " + e.getMessage());
+            System.out.println("❌ Error adding shopping list: " + e.getMessage());
         }
     }
 
@@ -63,9 +61,9 @@ public class ShoppingListController {
 
         try {
             shoppingListService.deleteShoppingListByName(name);
-            System.out.println("Shopping list deleted successfully.");
+            System.out.println("✅ Shopping list deleted successfully.");
         } catch (Exception e) {
-            System.out.println("Error deleting shopping list: " + e.getMessage());
+            System.out.println("❌ Error deleting shopping list: " + e.getMessage());
         }
     }
 
@@ -74,14 +72,14 @@ public class ShoppingListController {
      *
      */
     public void viewTotalPrice() {
-        System.out.println("Enter shopping list name: ");
+        System.out.println("\n Enter shopping list name: ");
         String shoppingListName = scanner.nextLine();
 
         try {
             double totalPrice = shoppingListService.getTotalPrice(shoppingListName);
             System.out.printf("Total price of '%s' is: €%.2f%n", shoppingListName, totalPrice);
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("❌ Error: " + e.getMessage());
         }
     }
 

@@ -57,7 +57,7 @@ public class UserDAO {
      * @param name the id of the user to retrieve.
      * @return the matching User object, or null if no user is found.
      */
-    public User findByName(String name) {
+    public User findUser(String name) {
         final String sql = "SELECT * FROM User WHERE name = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -80,9 +80,10 @@ public class UserDAO {
      *
      * @return a List of User objects. Returns an empty list if no users are found.
      */
-    public List<User> findAll() {
-        final List<User> users = new ArrayList<>();
-        final String sql = "SELECT * FROM User";
+    public List<User> displayAllUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM User";
+
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -90,6 +91,7 @@ public class UserDAO {
             while (rs.next()) {
                 final User user = new User();
                 user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(rs.getString("role"));
@@ -97,7 +99,7 @@ public class UserDAO {
                 users.add(user);
             }
         } catch (SQLException e) {
-            System.err.println("Failed to list all users: " + e.getMessage());
+            System.err.println("❌ Failed to list all users: " + e.getMessage());
         }
         return users;
     }
@@ -132,15 +134,15 @@ public class UserDAO {
     /**
      * Deletes a user record from the database.
      *
-     * @param id the id of the user to delete.
+     * @param username the name of the user to delete.
      * @return true if the deletion was successful, false otherwise.
      */
-    public boolean delete(final int id) {
-        final String sql = "DELETE FROM User WHERE id = ?";
+    public boolean delete(String username) {
+        final String sql = "DELETE FROM User WHERE username = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, id);
+            pstmt.setString(1, username);
             final int affectedRows = pstmt.executeUpdate();
             return affectedRows == 1;
         } catch (SQLException e) {

@@ -1,6 +1,6 @@
 # EinkaufsListen-App
 
-## Noel Vanelle Tchinda Kuegouo, Serge Talla Tamoukou, Chrislie Briel Mohomye Yotchouen
+## Noel V. Tchinda K., Serge Talla T., Chrislie B. Mohomye Y.
 
 ### 1. Projektbeschreibung
 

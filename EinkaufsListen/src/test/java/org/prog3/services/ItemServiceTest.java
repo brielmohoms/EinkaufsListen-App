@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.prog3.dao.ItemDAO;
 import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.Item;
+import org.prog3.models.User;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +22,9 @@ import static org.mockito.Mockito.*;
  * Unit tests for the {@link ItemService} class using mockito
  */
 class ItemServiceTest {
+
+    @Mock
+    private UserService userService;
 
     @Mock
     private ItemDAO itemDAO;
@@ -40,6 +44,9 @@ class ItemServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        shoppingListService = new ShoppingListService(shoppingListDAO, userService);
+        when(userService.getLoggedInUser()).thenReturn(new User(1, "TestUser", "Test Name", "password", "regular"));
+
         itemService = new ItemService(itemDAO, shoppingListDAO);
         when(shoppingListDAO.shoppingListExists(anyString())).thenReturn(true);
     }

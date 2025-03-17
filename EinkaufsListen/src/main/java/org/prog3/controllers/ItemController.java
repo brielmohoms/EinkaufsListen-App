@@ -76,11 +76,13 @@ public class ItemController {
      * Remove an item from a specific shopping list given its name
      */
     public void deleteItem () {
-        System.out.println("Enter item shopping list name: ");
+        System.out.println("\nEnter item shopping list name: ");
         String shoppingListName = scanner.nextLine();
+
         System.out.println("\nEnter item name: ");
         String name = scanner.nextLine();
-        System.out.println("Are you sure you want to delete the Item? YES/NO");
+
+        System.out.println("\nAre you sure you want to delete the Item? YES/NO");
         String response = scanner.nextLine();
 
         if (response.equalsIgnoreCase("YES")) {
@@ -90,7 +92,7 @@ public class ItemController {
                 System.out.println("❌ Item " + name + " not found.");
             }
         } else {
-            System.out.println("OK. Cancelled!");
+            System.out.println("You choose not to delete the item. Item not deleted.");
         }
     }
 
@@ -116,12 +118,14 @@ public class ItemController {
     public void updateItemQuantity () {
         System.out.println("\nEnter item shopping list name: ");
         String shoppingListName = scanner.nextLine();
+
         System.out.println("\nEnter item name: ");
         String name = scanner.nextLine();
+
         System.out.println("\nEnter item new quantity: ");
         double newQuantity = scanner.nextDouble();
 
-        if(itemService.updateItemQuantity(shoppingListName, name, newQuantity)) {
+        if (itemService.updateItemQuantity(shoppingListName, name, newQuantity)) {
             System.out.println("✅ Quantity updated for " + name + " to " + newQuantity);
         } else {
             System.out.println("❌ Error: Item not found or update failed");
@@ -156,6 +160,7 @@ public class ItemController {
     public void deleteAllItemsOfShoppingList () {
         System.out.println("\nEnter shopping list name: ");
         String shoppingListName = scanner.nextLine();
+
         System.out.println("\nAre you sure you want to delete the Item? YES/NO");
         String response = scanner.nextLine();
 

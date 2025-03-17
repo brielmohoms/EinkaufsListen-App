@@ -35,6 +35,7 @@ public class DatabaseInitializer {
             create.createTableIfNotExists("ShoppingList")
                     .column("id", SQLDataType.INTEGER.identity(true))
                     .column("name", SQLDataType.VARCHAR.length(255).nullable(false))
+                    .column("username", SQLDataType.VARCHAR.length(255).nullable(false))
                     .constraint(DSL.constraint("PK_ShoppingList").primaryKey("id"))
                     .execute();
 

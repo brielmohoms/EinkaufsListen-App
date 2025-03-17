@@ -17,7 +17,7 @@ public class UserService {
 
 
     public boolean loginUser(String username, String password) {
-        List<User> users = userDAO.findAll();
+        List<User> users = userDAO.displayAllUsers();
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 loggedInUser = user;
@@ -40,25 +40,26 @@ public class UserService {
 
 
     /**
-     * Creates a new user in the system. This method contains the business logic for creating a new user, such as checking for duplicate usernames (if applicable).
+     * Creates a new user in the system. This method contains the business logic for creating a new user,
+     * such as checking for duplicate usernames (if applicable).
      *
      * @param name
      * @param username
      * @param password
-     * @throws Exception
      */
-    public void createUser(String name, String username, String password) throws Exception {
+    public boolean createUser (String name, String username, String password) {
         if ((name == null) || (username == null) || username.trim().isEmpty() || (password == null) || password.trim().isEmpty()  ){
-            throw new IllegalArgumentException("name or password cannot be null.");
+            System.out.println("name or password cannot be null.");
+            return false;
         }
 
-        List<User> existingUsers = userDAO.findAll();
+        List<User> existingUsers = userDAO.displayAllUsers();
         Optional<User> existingUser = existingUsers.stream()
                 .filter(u -> u.getUsername().equalsIgnoreCase(username))
                 .findFirst();
 
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("Username already exists. Choose another.");
+            System.out.println("Username already exists. Choose another.");
         }
 
         String role;
@@ -70,7 +71,7 @@ public class UserService {
         }
 
         userDAO.create(name, username, password, role);
-        System.out.println("✅ User registered successfully!");
+        return true;
     }
 
 
@@ -88,15 +89,15 @@ public class UserService {
      * Retrieves a user by its unique id.
      * This method allows fetching a user based on their database id.
      *
-     * @param name the id of the user to retrieve
+     * @param userName the id of the user to retrieve
      * @return the User object if found, or null if the user does not exist
      */
-    public User findByName(String name) throws Exception {
-        if (name == null) {
-            throw new IllegalArgumentException("Invalid User ID.");
+    public User findUser(String userName) throws Exception {
+        if (userName == null) {
+            System.out.println("Invalid username");
         }
         try {
-            return userDAO.findByName(name);
+            return userDAO.findUser(userName);
         } catch (Exception e) {
             throw new Exception("Error returning User: " + e.getMessage(), e);
         }
@@ -110,7 +111,7 @@ public class UserService {
      * @return a List of all User objects in the system
      */
     public List<User> getAllUsers() {
-        return userDAO.findAll();
+        return userDAO.displayAllUsers();
     }
 
 
@@ -130,18 +131,15 @@ public class UserService {
 
     /**
      *
-     * @param id
-     * @throws Exception
+     * @param username
      */
-    public void deleteUser(int id) throws Exception {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Invalid shopping list ID.");
-        }
+    public boolean deleteUser(String username) {
         try {
-            userDAO.delete(id);
+            userDAO.delete(username);
         } catch (Exception e) {
-            throw new Exception("Error deleting shopping list: " + e.getMessage(), e);
+            System.out.println("❌ Error deleting user: " + e.getMessage());
         }
+        return true;
     }
 
     public boolean promoteUserToAdmin(String username) {
