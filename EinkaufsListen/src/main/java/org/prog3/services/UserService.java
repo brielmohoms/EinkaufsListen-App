@@ -143,5 +143,15 @@ public class UserService {
             throw new Exception("Error deleting shopping list: " + e.getMessage(), e);
         }
     }
+
+    public boolean promoteUserToAdmin(String username) {
+        // Check that the logged-in user is an admin
+        if (loggedInUser == null || !isAdmin(loggedInUser)) {
+            System.out.println("❌ Only an admin can promote users.");
+            return false;
+        }
+        return userDAO.promoteUserToAdmin(username);
+    }
+
 }
 

@@ -92,6 +92,7 @@ public class UserDAO {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
                 // Optionally, load shopping lists or other related entities here if needed.
                 users.add(user);
             }
@@ -151,15 +152,15 @@ public class UserDAO {
 
     /**
      *
-     * @param name
+     * @param username
      * @return
      */
-    public boolean promoteUserToAdmin(String name) {
-        final String sql = "UPDATE User SET role = 'admin' WHERE name = ?";
+    public boolean promoteUserToAdmin(String username) {
+        final String sql = "UPDATE User SET role = 'admin' WHERE username = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, name);
+            pstmt.setString(1, username);
             int updatedRows = pstmt.executeUpdate();
             return updatedRows == 1; // Returns true if exactly 1 row was updated
         } catch (SQLException e) {

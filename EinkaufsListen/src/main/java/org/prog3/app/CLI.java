@@ -4,7 +4,6 @@ import org.prog3.controllers.ItemController;
 import org.prog3.controllers.ShoppingListController;
 import org.prog3.controllers.UserController;
 
-
 import java.util.Scanner;
 
 /**
@@ -48,7 +47,11 @@ public class CLI {
                     case "2" -> {
                         boolean isLoggedIn = userController.loginUser();
                         if (isLoggedIn) {
-                            menuShopping();
+                            if (userController.isAdmin()) {
+                                adminMenu();
+                            } else {
+                                userMenuShopping();
+                            }
                         }
                     }
                     case "3" -> {
@@ -65,6 +68,73 @@ public class CLI {
     }
 
 
+    public void adminMenu() {
+        while (true) {
+            try {
+                displayMessage("\n\033[1;33m----- ADMIN MENU -----\033[0m");
+                displayMessage(" 1. My Shopping Lists");
+                displayMessage(" 2. Add a shopping list");
+                displayMessage(" 3. Delete shopping list");
+                displayMessage(" 4. Manage shopping list");
+                displayMessage(" 5. Total price of shopping list");
+                displayMessage(" 6. Manage Username and Password");
+                displayMessage(" 7. Admin Panel");
+                displayMessage(" 8. Logout");
+                displayMessage("\nChoose an option: ");
+                String choice = getUserInput().trim();
+
+                switch (choice) {
+                    case "1" -> shoppingListController.viewShoppingList();
+                    case "2" -> shoppingListController.addShoppingList();
+                    case "3" -> shoppingListController.deleteShoppingList();
+                    case "4" -> startItemMenu();
+                    case "5" -> shoppingListController.viewTotalPrice();
+                    case "6" -> userController.updateUser();
+                    case "7" -> adminPanel();
+                    case "8" -> {
+                        userController.logoutUser();
+                        start();
+                        return;
+                    }
+                    default -> System.out.println("⚠️ Invalid choice. Please try again.");
+                }
+            } catch (Exception e) {
+                System.err.println("❌ An error occurred: " + e.getMessage());
+                scanner.nextLine();
+            }
+        }
+    }
+
+    public void adminPanel (){
+        while (true) {
+            try {
+                displayMessage("\n\033[1;35m----- ADMIN PANEL -----\033[0m");
+                displayMessage(" 1. Display All Users");
+                displayMessage(" 2. Find user by name");
+                displayMessage(" 3. Delete a user");
+                displayMessage(" 4. Promote a User to Admin");
+                displayMessage(" 5. Back");
+                displayMessage("\nChoose an option: ");
+                String choice = getUserInput().trim();
+
+                switch (choice) {
+                    case "1" -> userController.displayAllUsers();
+                    case "2" -> userController.findUserByName();
+                    case "3" -> userController.deleteUser();
+                    case "4" -> userController.promoteUserToAdmin();
+                    case "5" -> {
+                        return; // Go back to admin main menu
+                    }
+                    default -> System.out.println("⚠️ Invalid choice. Please try again.");
+                }
+            } catch (Exception e) {
+                System.err.println("❌ An error occurred: " + e.getMessage());
+                scanner.nextLine();
+            }
+        }
+    }
+
+
     /**
      * Displays the shopping menu for logged-in users.
      * <p>
@@ -72,7 +142,7 @@ public class CLI {
      * and log out from their session.
      * </p>
      */
-    public void menuShopping (){
+    public void userMenuShopping (){
         while (true){
             try{
                 System.out.println("\n\033[1;36m----- SHOPPING MENU -----\033[0m");
@@ -157,4 +227,9 @@ public class CLI {
         System.out.print("> ");
         return scanner.nextLine();
     }
+
+    public void displayMessage(String msg) {
+        System.out.println(msg);
+    }
+
 }

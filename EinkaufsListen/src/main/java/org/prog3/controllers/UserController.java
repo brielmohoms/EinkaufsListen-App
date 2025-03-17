@@ -138,7 +138,7 @@ public class UserController {
     /**
      *
      */
-    /*public void promoteUserToAdmin() {
+    public void promoteUserToAdmin() {
         System.out.print("Enter username to promote to admin: ");
         String username = scanner.next();
 
@@ -148,7 +148,12 @@ public class UserController {
         } else {
             System.out.println("❌ Failed to promote user. Either user not found or already an admin.");
         }
-    }*/
+    }
+
+    public boolean isAdmin() {
+        User currentUser = userService.getLoggedInUser();
+        return currentUser != null && userService.isAdmin(currentUser);
+    }
 
 }
 
