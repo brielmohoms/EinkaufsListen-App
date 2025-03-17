@@ -100,12 +100,9 @@ public class ItemService {
      * @return the item found
      */
     public Item findItemByName (String shoppingListName, String name) {
-        if (shoppingListName == null || shoppingListName.trim().isEmpty()) {
-            System.out.println("❌ Error: Shopping list name cannot be empty.");
-        }
-
-        if (name == null || name.trim().isEmpty()) {
-            System.out.println("❌ Error: Item name cannot be empty.");
+        if (shoppingListName == null || shoppingListName.trim().isEmpty() ||
+                name == null || name.trim().isEmpty()) {
+            System.out.println("❌ Error: Item name or Shopping list name cannot be empty.");
         }
 
         if (!shoppingListDAO.shoppingListExists(shoppingListName)) {
