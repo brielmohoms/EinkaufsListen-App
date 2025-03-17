@@ -19,36 +19,38 @@ import java.util.List;
 public class ShoppingListDAO {
 
     /**
-     * The shopping list to be created
+     * Adds a new shopping list to the database.
      *
-     * @param shoppingList the shopping list to add
+     * @param shoppingList the shopping list object to add
+     * @param username the username of the user to whom the shopping list belongs
      */
     public void addShoppingList(ShoppingList shoppingList, String username) {
         String query = "INSERT INTO ShoppingList (name, username) VALUES (?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, shoppingList.getName());
-            stmt.setString(2, username);
-            stmt.executeUpdate();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, shoppingList.getName());
+            statement.setString(2, username);
+            statement.executeUpdate();
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("❌ Error: " + e.getMessage());
         }
     }
 
 
     /**
-     *getting all the shopping list
+     * Retrieves all shopping lists for a given user.
      *
-     * @return the shoppinglist
+     * @param username the username whose shopping lists are to be retrieved
+     * @return a list of shopping lists belonging to the specified user
      */
-    public List<ShoppingList> getAllShoppingLists(String username) {
+    public List<ShoppingList> getAllShoppingLists (String username) {
         String query = "SELECT * FROM ShoppingList WHERE username = ? ORDER BY id ASC";
         List<ShoppingList> shoppingsLists = new ArrayList<>();
 
         try (Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, username);
-            try (ResultSet rs = stmt.executeQuery()) {
+        PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     ShoppingList shoppingList = new ShoppingList();
                     shoppingList.setId(rs.getInt("id"));
@@ -57,24 +59,24 @@ public class ShoppingListDAO {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("❌ Error: " + e.getMessage());
         }
         return shoppingsLists;
     }
 
 
     /**
-     *deleting the shopping list
+     * Deletes a shopping list from the database.
      *
-     * @param shoppingListName name of the shopping list
+     * @param shoppingListName the name of the shopping list to delete
      */
-    public void deleteShoppingList(String shoppingListName) {
+    public void deleteShoppingList (String shoppingListName) {
         String query = "DELETE FROM ShoppingList WHERE name = ?";
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
-            stmt.setString(1, shoppingListName);
-            stmt.executeUpdate();
+            statement.setString(1, shoppingListName);
+            statement.executeUpdate();
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -83,17 +85,17 @@ public class ShoppingListDAO {
 
 
     /**
-     * Checks if a shopping list exists by name.
+     * Checks if a shopping list exists in the database by its name.
      *
-     * @param shoppingListName The name of the shopping list.
-     * @return true if the shopping list exists, false otherwise.
+     * @param shoppingListName the name of the shopping list to check.
+     * @return true if the shopping list exists, false otherwise
      */
-    public boolean shoppingListExists(String shoppingListName) {
+    public boolean shoppingListExists (String shoppingListName) {
         String query = "SELECT COUNT(*) FROM ShoppingList WHERE name = ?";
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, shoppingListName);
-            ResultSet rs = stmt.executeQuery();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, shoppingListName);
+            ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1) > 0;
             }
@@ -104,12 +106,12 @@ public class ShoppingListDAO {
     }
 
     /**
-     *getting the totalPrice
+     * Calculates the total price of items in a specified shopping list.
      *
-     * @param shoppingListName the name of the shopping list
-     * @return 0 if there are no items or an error occurs
+     * @param shoppingListName the name of the shopping list.
+     * @return the total price in Euros. Returns 0.0 if there are no items or if an error occurs.
      */
-    public double getTotalPrice(String shoppingListName) {
+    public double getTotalPrice (String shoppingListName) {
         String query = "SELECT SUM(price * quantity) AS total FROM Item WHERE shopping_list_name = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
