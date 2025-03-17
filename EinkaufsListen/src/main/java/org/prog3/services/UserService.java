@@ -11,12 +11,25 @@ import java.util.Optional;
  */
 public class UserService {
 
-    // Instance of the UserDAO used for interacting with the database
-    private UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
     private User loggedInUser = null;
 
 
-    public boolean loginUser(String username, String password) {
+    /**
+     * Attempts to log in a user by validating the username and password
+     *
+     * @param username the username to log in with. Must not be empty or null
+     * @param password the password to log in with. Must not be empty or null
+     * @return true if login was successful and false otherwise
+     */
+    public boolean loginUser (String username, String password) {
+        if (username == null || username.trim().isEmpty() ||
+                password == null || password.trim().isEmpty()) {
+            System.out.println("❌ Username or password cannot be empty or null");
+            return false;
+        }
+
+
         List<User> users = userDAO.displayAllUsers();
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
@@ -29,10 +42,20 @@ public class UserService {
         return false;
     }
 
+
+    /**
+     * Retrieves the currently logged-in user.
+     *
+     * @return the logged-in user, or null if no user is logged in.
+     */
     public User getLoggedInUser() {
         return loggedInUser;
     }
 
+
+    /**
+     * Logs out the current user.
+     */
     public void logout() {
         loggedInUser = null;
         System.out.println("✅ Logged out successfully.");
@@ -40,16 +63,17 @@ public class UserService {
 
 
     /**
-     * Creates a new user in the system. This method contains the business logic for creating a new user,
-     * such as checking for duplicate usernames (if applicable).
+     * Creates a new user in the system.
      *
-     * @param name
-     * @param username
-     * @param password
+     * @param name the full name of the user. Must not be empty or null.
+     * @param username the unique username. Must not be null empty.
+     * @param password true if the user is created successfully and false otherwise.
      */
     public boolean createUser (String name, String username, String password) {
-        if ((name == null) || (username == null) || username.trim().isEmpty() || (password == null) || password.trim().isEmpty()  ){
-            System.out.println("name or password cannot be null.");
+        if ((name == null) || name.trim().isEmpty() ||
+                (username == null) || username.trim().isEmpty() ||
+                (password == null) || password.trim().isEmpty()  ){
+            System.out.println("❌ Name, username or password cannot be empty or null.");
             return false;
         }
 
@@ -59,7 +83,7 @@ public class UserService {
                 .findFirst();
 
         if (existingUser.isPresent()) {
-            System.out.println("Username already exists. Choose another.");
+            System.out.println("⚠️ Username already exists. Please choose a different one.");
         }
 
         String role;
@@ -76,39 +100,40 @@ public class UserService {
 
 
     /**
+     * Checks if a user has an admin role.
      *
-     * @param user
-     * @return
+     * @param user the User to check. Must not be null.
+     * @return true if the user is an admin and false otherwise.
      */
     public boolean isAdmin(User user) {
+        if (user == null) {
+            System.out.println("❌ User cannot be null.");
+            return false;
+        }
+
         return "admin".equalsIgnoreCase(user.getRole());
     }
 
 
     /**
-     * Retrieves a user by its unique id.
-     * This method allows fetching a user based on their database id.
+     * Retrieves a user by their name.
      *
-     * @param userName the id of the user to retrieve
-     * @return the User object if found, or null if the user does not exist
+     * @param userName the username of the user to retrieve. Must not be null or empty.
+     * @return the User object if found or null if the user does not exist
      */
-    public User findUser(String userName) throws Exception {
-        if (userName == null) {
-            System.out.println("Invalid username");
+    public User findUser (String userName) {
+        if (userName == null || userName.trim().isEmpty()) {
+            System.out.println("❌ Invalid username. Please enter a valid username.");
         }
-        try {
-            return userDAO.findUser(userName);
-        } catch (Exception e) {
-            throw new Exception("Error returning User: " + e.getMessage(), e);
-        }
+
+        return userDAO.findUser(userName);
     }
 
 
     /**
      * Retrieves all users in the system.
-     * This method allows fetching a list of all users from the database.
      *
-     * @return a List of all User objects in the system
+     * @return a List of all User objects.
      */
     public List<User> getAllUsers() {
         return userDAO.displayAllUsers();
@@ -116,24 +141,37 @@ public class UserService {
 
 
     /**
-     * Updates an existing user in the system.
-     * This method contains the logic for updating user information, such as changing the username or password.
+     * Updates an existing user's details.
      *
-     * @param username the new username for the user
-     * @param password the new password for the user
-     * @param name the name of the user to update
-     * @return true if the user was successfully updated, or false if the update failed
+     * @param username the new username. Must not be empty or null.
+     * @param password the new password. Must not be empty or null.
+     * @param name the name of the user to update. Must not be empty or null.
+     * @return true if the update was successful.
      */
     public boolean updateUser(String username, String password, String name) {
+        if (username == null || username.trim().isEmpty() ||
+                password == null || password.trim().isEmpty() ||
+                name == null || name.trim().isEmpty()) {
+            System.out.println("❌ Username, password, or name cannot be null or empty.");
+            return false;
+        }
+
         return userDAO.update(username, password, name);
     }
 
 
     /**
+     * Deletes a user by username.
      *
-     * @param username
+     * @param username the username of the user. Must not be null or empty.
+     * @return true if the deletion was successful.
      */
-    public boolean deleteUser(String username) {
+    public boolean deleteUser (String username) {
+        if (username == null || username.trim().isEmpty()) {
+            System.out.println("❌ Username cannot be null or empty.");
+            return false;
+        }
+
         try {
             userDAO.delete(username);
         } catch (Exception e) {
@@ -142,8 +180,14 @@ public class UserService {
         return true;
     }
 
+
+    /**
+     * Promotes a regular user to admin status. Only a logged-in admin can perform this operation.
+     *
+     * @param username the username of the user to promote. Must not be null or empty.
+     * @return true if the promotion is successful and false otherwise.
+     */
     public boolean promoteUserToAdmin(String username) {
-        // Check that the logged-in user is an admin
         if (loggedInUser == null || !isAdmin(loggedInUser)) {
             System.out.println("❌ Only an admin can promote users.");
             return false;
