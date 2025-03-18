@@ -79,13 +79,13 @@ class ItemControllerTest {
     /**
      * test to ensure that an item is found and displayed
      */
-    /*@Test
+    @Test
     void testFindItemByName() {
         when(scanner.nextLine()).thenReturn("Kitchen", "Apple");
         when(shoppingListDAO.shoppingListExists("Kitchen")).thenReturn(true);
         itemController.findItemByName();
         verify(itemService).findItemByName("Kitchen", "Apple");
-    }*/
+    }
 
 
     /**
