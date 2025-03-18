@@ -42,7 +42,7 @@ class ShoppingListServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         // Set up the mock to return a user with username "TestUser"
-        when(userService.getLoggedInUser()).thenReturn(new User(1, "TestUser", "Test Name", "password", "regular"));
+        when(userService.getLoggedInUser()).thenReturn(new User(1, "TestUser", "TestName", "password", "regular"));
     }
 
 
@@ -76,7 +76,7 @@ class ShoppingListServiceTest {
 
 
     /**
-     * tests adding a  Shopping List with a valid name
+     * Tests adding a Shopping List with a valid name
      */
     @Test
     void testAddShoppingListValidName() {
@@ -120,6 +120,8 @@ class ShoppingListServiceTest {
         });
         assertEquals("Invalid shopping list name.", exception.getMessage());
     }
+
+
     /**
      * Tests retrieving the total price of a valid shopping list.
      */
@@ -133,6 +135,5 @@ class ShoppingListServiceTest {
         assertEquals(20.50, totalPrice, 0.01);
         verify(shoppingListDAO, times(1)).getTotalPrice("Groceries");
     }
-
 
 }

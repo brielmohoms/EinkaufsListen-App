@@ -18,14 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
  * It ensures that the database is properly set up before application startup.
  * </p>
  */
-class DatabaseInitializerTest {
+public class DatabaseInitializerTest {
+
 
     @BeforeEach
     void setUp() throws Exception {
         DatabaseInitializer.initialise();
         try(Connection connection= DatabaseConnection.getConnection();
             Statement statement = connection.createStatement()){
-            statement.executeUpdate("DELETE FROM User");// clears the database before every test
+            statement.executeUpdate("DELETE FROM User"); // clears the database before every test
         }
     }
 
@@ -53,6 +54,7 @@ class DatabaseInitializerTest {
 
     /**
      * Test for the ShoppingList table
+     *
      * @throws SQLException
      */
     @Test
@@ -73,6 +75,7 @@ class DatabaseInitializerTest {
 
     /**
      * Test for the Item Table
+     *
      * @throws SQLException
      */
     @Test

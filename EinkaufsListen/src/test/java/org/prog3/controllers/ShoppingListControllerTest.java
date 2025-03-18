@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
+
+
 /**
  * Unit tests for the {@link ShoppingListController} class
  *
@@ -21,8 +23,7 @@ import static org.mockito.Mockito.*;
  * The {@link ShoppingListService} is mocked to isolate the controller logic.
  * </p>
  */
-
-class ShoppingListControllerTest {
+public class ShoppingListControllerTest {
 
     @Mock
     private ShoppingListService shoppingListService;
@@ -32,6 +33,7 @@ class ShoppingListControllerTest {
 
     @InjectMocks
     ShoppingListController shoppingListController;
+
 
     /**
      * Sets up the mock dependencies before each test
@@ -89,6 +91,8 @@ class ShoppingListControllerTest {
         verify(shoppingListService, times(1)).deleteShoppingListByName("Kitchen");
 
     }
+
+
     /**
      * Tests calculating the total price of a shopping list successfully.
      */
@@ -101,6 +105,8 @@ class ShoppingListControllerTest {
 
         verify(shoppingListService, times(1)).getTotalPrice("Groceries");
     }
+
+
     /**
      * Tests when the shopping list does not exist.
      */
@@ -114,5 +120,6 @@ class ShoppingListControllerTest {
 
         verify(shoppingListService, times(1)).getTotalPrice("NonExistentList");
     }
+
 }
 

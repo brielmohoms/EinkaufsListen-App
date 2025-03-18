@@ -9,7 +9,6 @@ import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.Item;
 import org.prog3.services.ItemService;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -123,4 +122,5 @@ class ItemControllerTest {
         itemController.deleteAllItemsOfShoppingList();
         verify(itemService).deleteAllItemsOfAShoppingList("Kitchen");
     }
+
 }

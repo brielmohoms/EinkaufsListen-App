@@ -26,11 +26,11 @@ public class ShoppingListDAOTest {
 
     private ShoppingListDAO shoppingListDAO;
 
+
     /**
      * Sets up the database connection and clears the shopping list table before each test.
      * @throws Exception  if a database connection or SQL execution error occurs.
      */
-
     @BeforeEach
     void SetUp () throws Exception{
         shoppingListDAO = new ShoppingListDAO();
@@ -41,6 +41,7 @@ public class ShoppingListDAOTest {
 
         }
     }
+
 
     /**
      * Cleans up the database by removing all shopping lists after each test.
@@ -98,6 +99,8 @@ public class ShoppingListDAOTest {
         shoppingListDAO.addShoppingList(list, "TestUser");
         assertTrue(shoppingListDAO.shoppingListExists("ExistingList")," the list Existinglist must be exist after Insertion");
     }
+
+
     /**
      * Tests retrieving the total price from the database.
      */
@@ -123,6 +126,7 @@ public class ShoppingListDAOTest {
         }
 
     }
+
 
     /**
      * Tests retrieving the total price of a non-existent shopping list.

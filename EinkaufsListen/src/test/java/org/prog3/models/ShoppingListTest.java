@@ -20,11 +20,11 @@ public class ShoppingListTest {
     /**
      * Initializes a new empty ShoppingList instance before each test.
      */
-
     @BeforeEach
     void setUp(){
         shoppingList = new ShoppingList();
     }
+
 
     /**
      *  Tests the default constructor.
@@ -35,6 +35,7 @@ public class ShoppingListTest {
         assertEquals(0 ,shoppingList.getId());
         assertNull(shoppingList.getItems() ,"Items liste sollte initial null sein  ");
     }
+
 
     /**
      * Tests the parameterized constructor.
@@ -82,6 +83,8 @@ public class ShoppingListTest {
         shoppingList.setItems(items);
         assertEquals(items ,shoppingList.getItems());
     }
+
+
     /**
      * Tests setting and getting the total price.
      */
