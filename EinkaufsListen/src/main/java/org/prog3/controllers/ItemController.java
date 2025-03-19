@@ -19,7 +19,6 @@ import java.util.Scanner;
 public class ItemController {
 
     private ItemService itemService = new ItemService();
-    private ShoppingListDAO shoppingListDAO = new ShoppingListDAO();
     private Scanner scanner = new Scanner(System.in);
 
     /**
@@ -28,12 +27,16 @@ public class ItemController {
     public ItemController () {
     }
 
+    /**
+     * Constructor for dependency injection
+     *
+     * @param shoppingListDAO the shopping list data access object
+     */
     public ItemController(ShoppingListDAO shoppingListDAO) {
-        this.shoppingListDAO = shoppingListDAO;
     }
 
     /**
-     * Constructor used in the test classes
+     * Constructor used in testing or when custom dependencies are needed.
      *
      * @param itemService the itemService object
      * @param scanner the scanner object
@@ -45,7 +48,12 @@ public class ItemController {
 
 
     /**
-     * Adds an item in a specific shopping list
+     * Adds an item to a specified shopping list.
+     *
+     * <p>
+     * Prompts the user for the shopping list name, item category, name, price, and quantity,
+     * then attempts to add the item using the service layer.
+     * </p>
      */
     public void addItem () {
         System.out.print("Enter the shopping list name: \n");
@@ -73,7 +81,11 @@ public class ItemController {
 
 
     /**
-     * Remove an item from a specific shopping list given its name
+     * Deletes a specific item from a shopping list by its name.
+     *
+     * <p>
+     * Prompts the user for the shopping list name and item name, then confirms the deletion.
+     * </p>
      */
     public void deleteItem () {
         System.out.println("\nEnter item shopping list name: ");
@@ -98,7 +110,11 @@ public class ItemController {
 
 
     /**
-     * Finds an item of a specific shopping list
+     * Finds and displays an item in a specified shopping list by its name.
+     *
+     * <p>
+     * Prompts the user for the shopping list name and item name, then delegates the search to the service layer.
+     * </p>
      */
     public void findItemByName () {
         System.out.println("\nEnter item shopping list name: ");
@@ -113,7 +129,12 @@ public class ItemController {
 
 
     /**
-     * Updates the quantity of an item in a specific shopping list
+     * Updates the quantity of a specific item in a shopping list.
+     *
+     * <p>
+     * Prompts the user for the shopping list name, item name, and new quantity,
+     * then attempts to update the item using the service layer.
+     * </p>
      */
     public void updateItemQuantity () {
         System.out.println("\nEnter item shopping list name: ");
@@ -134,7 +155,11 @@ public class ItemController {
 
 
     /**
-     * Displays all the items of a specific shopping list
+     * Displays all items in a specified shopping list.
+     *
+     * <p>
+     * Prompts the user for the shopping list name and displays the list of items along with their details.
+     * </p>
      */
     public void viewAllItemsOfShoppingList () {
         System.out.println("\nEnter shopping list name: ");
@@ -155,7 +180,11 @@ public class ItemController {
 
 
     /**
-     * Deletes all the items of a specific shopping list
+     * Deletes all items from a specified shopping list.
+     *
+     * <p>
+     * Prompts the user for the shopping list name and confirms the deletion before removing all items.
+     * </p>
      */
     public void deleteAllItemsOfShoppingList () {
         System.out.println("\nEnter shopping list name: ");

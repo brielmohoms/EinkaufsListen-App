@@ -17,16 +17,16 @@ public class ShoppingList {
 
 
     /**
-     *
+     * default constructor
      */
     public ShoppingList() {
     }
 
 
     /**
+     *Constructor
      *
-     *
-     * @param name
+     * @param name name of the shopping list
      */
     public ShoppingList(String name) {
         this.name = name;
@@ -34,8 +34,8 @@ public class ShoppingList {
 
 
     /**
-     *
-     * @return
+     * gets the Items
+     * @return items
      */
     public List<Item> getItems() {
         return items;
@@ -43,9 +43,9 @@ public class ShoppingList {
 
 
     /**
+     * sets the Items
      *
-     *
-     * @param items
+     * @param items the Item of the shopping List
      */
     public void setItems(List<Item> items) {
         this.items = items;
@@ -53,9 +53,9 @@ public class ShoppingList {
 
 
     /**
+     * gets the name of the shopping list
      *
-     *
-     * @return
+     * @return the name of the shopping list
      */
     public String getName() {
         return name;
@@ -63,9 +63,9 @@ public class ShoppingList {
 
 
     /**
+     * sets the name of the shopping list
      *
-     *
-     * @param name
+     * @param name name of the shopping list
      */
     public void setName(String name) {
         this.name = name;
@@ -73,9 +73,9 @@ public class ShoppingList {
 
 
     /**
+     *gets the shopping list id
      *
-     *
-     * @return
+     * @return the id of the shopping list
      */
     public int getId() {
         return id;
@@ -83,17 +83,27 @@ public class ShoppingList {
 
 
     /**
+     *sets the shopping list id
      *
-     *
-     * @param id
+     * @param id the id to set
      */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * gets the totalPrice
+     * @return the totalPrice
+     */
+
     public double getTotalPrice() {
         return totalPrice;
     }
+
+    /**
+     * sets the totalPrice
+     * @param totalPrice the total price
+     */
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;

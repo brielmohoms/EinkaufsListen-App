@@ -17,12 +17,18 @@ public class ShoppingListTest {
 
     private ShoppingList shoppingList;
 
+    /**
+     * Initializes a new empty ShoppingList instance before each test.
+     */
     @BeforeEach
     void setUp(){
         shoppingList = new ShoppingList();
     }
 
 
+    /**
+     *  Tests the default constructor.
+     */
     @Test
     void TestDefaultConstructor (){
         assertNull(shoppingList.getName(),"Name shoulb be null");
@@ -31,6 +37,9 @@ public class ShoppingListTest {
     }
 
 
+    /**
+     * Tests the parameterized constructor.
+     */
     @Test
     void testParametriziedConstructor(){
         String name = "wicked ";
@@ -52,7 +61,7 @@ public class ShoppingListTest {
 
 
     /**
-     * Tests setting and getting the Id
+     * Tests setting and getting the id
      */
     @Test
     void TestSetAndGetId (){
@@ -73,6 +82,16 @@ public class ShoppingListTest {
 
         shoppingList.setItems(items);
         assertEquals(items ,shoppingList.getItems());
+    }
+
+
+    /**
+     * Tests setting and getting the total price.
+     */
+    @Test
+    void testSetAndGetTotalPrice() {
+        shoppingList.setTotalPrice(15.75);
+        assertEquals(15.75, shoppingList.getTotalPrice(), 0.01);
     }
 
 }

@@ -5,19 +5,36 @@ import org.prog3.models.ShoppingList;
 
 import java.util.List;
 
+/**
+ * Service class responsible for handling business logic related to shopping lists.
+ *
+ * <p>
+ * This class acts as an intermediary between the data access layer {@link ShoppingListDAO} and higher-level components.
+ * It provides methods to add, delete, and retrieve shopping lists while ensuring that proper validations and user authorizations are enforced.
+ * </p>
+ */
 
 public class ShoppingListService {
 
     private final ShoppingListDAO shoppingListDAO;
     private final UserService userService;
 
+    /**
+     * Constructs a new ShoppingListService.
+     *
+     * @param shoppingListDAO the data access object for shopping list operations
+     * @param userService the service that handles user authentication and authorization, ensuring that
+     *                    only authorized users can access or modify their shopping lists
+     */
     public ShoppingListService(ShoppingListDAO shoppingListDAO, UserService userService) {
         this.shoppingListDAO = shoppingListDAO;
         this.userService = userService;
     }
 
     /**
-     * Retrieves all shopping lists.
+     * Retrieves all shopping lists associated with the currently logged-in user.
+     *
+     * @return a list of shopping lists for the current user
      */
     public List<ShoppingList> getAllShoppingLists() {
         String username = userService.getLoggedInUser().getUsername();
@@ -26,10 +43,10 @@ public class ShoppingListService {
 
 
     /**
-     * Checks if a shopping list exists by name.
+     * Checks if a shopping list exists by its name.
      *
-     * @param shoppingListName The name of the shopping list.
-     * @return true if the shopping list exists, false otherwise.
+     * @param shoppingListName the name of the shopping list to check.
+     * @return true if the shopping list exists and false otherwise.
      */
     public boolean shoppingListExists(String shoppingListName) {
         return shoppingListDAO.shoppingListExists(shoppingListName);
@@ -37,10 +54,12 @@ public class ShoppingListService {
 
 
     /**
-     * Adds a new shopping list after validation.
+     * Adds a new shopping list after validating the provided name.
+     *
+     * @param name the name of the new shopping list
      */
-    public void addShoppingList(String name) {
-        if ((name == null) || name.trim().isEmpty()){
+    public void addShoppingList (String name) {
+        if ((name == null) || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Shopping list or items cannot be null.");
         }
         ShoppingList shoppingList = new ShoppingList(name);
@@ -50,10 +69,9 @@ public class ShoppingListService {
 
 
     /**
-     * Deletes a shopping list by ID.
+     * Deletes a shopping list by its name.
      *
-     * @param shoppingListName the ID of the shopping list to delete.
-     * @throws IllegalArgumentException if the ID is invalid.
+     * @param shoppingListName the name of the shopping list to delete.
      */
     public void deleteShoppingListByName(String shoppingListName) {
         if (shoppingListName == null || shoppingListName.trim().isEmpty()) {
@@ -73,10 +91,10 @@ public class ShoppingListService {
 
 
     /**
+     * Retrieves the total price of the items in a specified shopping list.
      *
-     *
-     * @param shoppingListName
-     * @return
+     * @param shoppingListName the name of the shopping list
+     * @return the total price of the shopping list; returns 0.0 if the shopping list does not exist or if an error occurs
      */
     public double getTotalPrice(String shoppingListName) {
         if (!shoppingListDAO.shoppingListExists(shoppingListName)) {

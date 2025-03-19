@@ -9,7 +9,6 @@ import org.prog3.dao.ShoppingListDAO;
 import org.prog3.models.Item;
 import org.prog3.services.ItemService;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -80,13 +79,13 @@ class ItemControllerTest {
     /**
      * test to ensure that an item is found and displayed
      */
-    /*@Test
+    @Test
     void testFindItemByName() {
         when(scanner.nextLine()).thenReturn("Kitchen", "Apple");
         when(shoppingListDAO.shoppingListExists("Kitchen")).thenReturn(true);
         itemController.findItemByName();
         verify(itemService).findItemByName("Kitchen", "Apple");
-    }*/
+    }
 
 
     /**
@@ -123,4 +122,5 @@ class ItemControllerTest {
         itemController.deleteAllItemsOfShoppingList();
         verify(itemService).deleteAllItemsOfAShoppingList("Kitchen");
     }
+
 }

@@ -7,20 +7,36 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Controller class for handling user-related operations.
+ * Controller class responsible for handling user-related operations.
+ *
+ * <p>
+ * This class manages user interactions by reading inputs from the console and delegating user-related operations to the {@link UserService}.
+ * It covers functionalities such as user registration, login, logout, deletion, retrieval, update, and promotion.
+ * </p>
  */
 public class UserController {
 
-    private final Scanner scanner ;
+    private static final Scanner scanner = new Scanner(System.in);
     private final UserService userService;
 
-    public UserController(UserService userService ,Scanner scanner) {
-        this.userService = userService;
-        this.scanner = scanner;
-    }
 
     /**
-     * Creates a new user by receiving the username and password.
+     * Constructs a new UserController with the specified user service.
+     *
+     * @param userService the service handling user operations
+     */
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+
+    /**
+     * Creates a new user by prompting for the user's name, username, and password.
+     *
+     * <p>
+     * Delegates the creation to the {@link UserService}. Displays a success message if registration is successful,
+     * or an error message otherwise.
+     * </p>
      */
     public void createUser() {
         // Ask the user for username and password
@@ -42,11 +58,16 @@ public class UserController {
 
 
     /**
+     * Logs in a user by prompting for the username and password.
      *
-     * @return
+     * <p>
+     * Delegates authentication to the {@link UserService} and displays an error message if login fails.
+     * </p>
+     *
+     * @return true if login is successful and false otherwise
      */
     public boolean loginUser () {
-        System.out.print("\nEnter username: ");
+        System.out.print("\nEnter your username: ");
         String username = scanner.nextLine();
 
         System.out.print("\nEnter password: ");
@@ -60,12 +81,25 @@ public class UserController {
         return true;
     }
 
+
+    /**
+     * Logs out the current user.
+     *
+     * <p>
+     * Delegates the logout process to the {@link UserService}.
+     * </p>
+     */
     public void logoutUser () {
         userService.logout();
     }
 
+
     /**
-     * Deletes an existing user
+     * Deletes an existing user by prompting for the username.
+     *
+     * <p>
+     * If deletion is successful, a confirmation message is displayed. Otherwise, an error message is shown.
+     * </p>
      */
     public void deleteUser () {
         System.out.print("\nEnter the username to the user to delete: ");
@@ -78,8 +112,14 @@ public class UserController {
         }
     }
 
+
     /**
-     * Displays all users in the system.
+     * Displays all registered users.
+     *
+     * <p>
+     * Retrieves the list of users from the {@link UserService} and prints their details.
+     * If no users are found, a warning message is displayed.
+     * </p>
      */
     public void displayAllUsers () {
         // Retrieve the list of all users from UserService
@@ -96,8 +136,14 @@ public class UserController {
         }
     }
 
+
     /**
-     * Retrieves a user by their name.
+     * Finds and displays a user by their name.
+     *
+     * <p>
+     * Prompts the user for a name, then delegates the search to the {@link UserService}.
+     * If found, displays the user's details; otherwise, notifies that the user was not found.
+     * </p>
      */
     public void findUser () {
         System.out.println("\nEnter user name: ");
@@ -116,9 +162,14 @@ public class UserController {
         }
     }
 
+
     /**
      * Updates an existing user's username and password.
-     * Delegates the update logic to the UserService.
+     *
+     * <p>
+     * Prompts the user for the current name, new username, and new password,
+     * then delegates the update process to the {@link UserService}. A success or error message is displayed based on the outcome.
+     * </p>
      */
     public void updateUser () {
         System.out.print("\nEnter your name: ");
@@ -138,7 +189,12 @@ public class UserController {
 
 
     /**
+     * Promotes a user to an administrator role.
      *
+     * <p>
+     * Prompts for the username to be promoted, and delegates the operation to the {@link UserService}.
+     * A confirmation or error message is then displayed.
+     * </p>
      */
     public void promoteUserToAdmin () {
         System.out.print("Enter username to promote to admin: ");
@@ -152,9 +208,15 @@ public class UserController {
         }
     }
 
+
     /**
+     * Checks if the currently logged-in user has administrator privileges.
      *
-     * @return
+     * <p>
+     * Delegates the check to the {@link UserService} based on the logged-in user's information.
+     * </p>
+     *
+     * @return true if the current user is an administrator and false otherwise
      */
     public boolean isAdmin () {
         User currentUser = userService.getLoggedInUser();

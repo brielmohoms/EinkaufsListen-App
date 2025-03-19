@@ -127,6 +127,7 @@ public class ItemDAOTest {
         itemDAO.addItem(new Item("Apple", "Fruit", 1.99, 1.0, "Kitchen"));
         itemDAO.addItem(new Item("Banane", "Fruit", 1.99, 1.0, "Kitchen"));
         itemDAO.deleteAllItems("Kitchen");
+
         List<Item> items = itemDAO.findAllItemsByShoppingListName("Kitchen");
         assertTrue(items.isEmpty());
     }

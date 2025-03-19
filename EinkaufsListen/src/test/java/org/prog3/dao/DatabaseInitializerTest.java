@@ -10,14 +10,23 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DatabaseInitializerTest {
+/**
+ Utility class for initializing the database schema and inserting initial data.
+ *
+ * <p>
+ * This class is responsible for creating necessary tables and populating them
+ * It ensures that the database is properly set up before application startup.
+ * </p>
+ */
+public class DatabaseInitializerTest {
+
 
     @BeforeEach
     void setUp() throws Exception {
         DatabaseInitializer.initialise();
         try(Connection connection= DatabaseConnection.getConnection();
             Statement statement = connection.createStatement()){
-            statement.executeUpdate("DELETE FROM User");// clears the database before every test
+            statement.executeUpdate("DELETE FROM User"); // clears the database before every test
         }
     }
 
@@ -45,6 +54,7 @@ class DatabaseInitializerTest {
 
     /**
      * Test for the ShoppingList table
+     *
      * @throws SQLException
      */
     @Test
@@ -65,6 +75,7 @@ class DatabaseInitializerTest {
 
     /**
      * Test for the Item Table
+     *
      * @throws SQLException
      */
     @Test
