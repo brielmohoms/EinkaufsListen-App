@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 public class UserController {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner ;
     private final UserService userService;
 
 
@@ -25,8 +25,9 @@ public class UserController {
      *
      * @param userService the service handling user operations
      */
-    public UserController(UserService userService) {
+    public UserController(UserService userService,Scanner scanner) {
         this.userService = userService;
+        this.scanner = scanner;
     }
 
 
