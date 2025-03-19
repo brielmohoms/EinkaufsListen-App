@@ -54,15 +54,15 @@ public class UserDAO {
     /**
      * Retrieves a user record by name.
      *
-     * @param name the name of the user to retrieve.
+     * @param username the name of the user to retrieve.
      * @return the matching User object, or null if no user is found.
      */
-    public User findUser (String name) {
-        final String sql = "SELECT * FROM User WHERE name = ?";
+    public User findUser (String username) {
+        final String sql = "SELECT * FROM User WHERE username = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, username);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (rs.next()) {
                     return new User(rs.getInt("id"), rs.getString("username"),

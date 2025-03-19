@@ -23,7 +23,7 @@ public class CLI {
 
     private final ShoppingListService shoppingListService = new ShoppingListService(shoppingListDAO, userService);
     // Inject the shared services into your controllers
-    private final UserController userController = new UserController(userService);
+    private final UserController userController = new UserController(userService,new Scanner(System.in));
     private final ShoppingListController shoppingListController = new ShoppingListController(shoppingListService, new Scanner(System.in));
     private final ItemController itemController = new ItemController();
 

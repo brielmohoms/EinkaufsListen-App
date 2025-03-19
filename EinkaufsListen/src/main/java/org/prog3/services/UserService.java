@@ -118,15 +118,15 @@ public class UserService {
     /**
      * Retrieves a user by their name.
      *
-     * @param userName the username of the user to retrieve. Must not be null or empty.
+     * @param username the username of the user to retrieve. Must not be null or empty.
      * @return the User object if found or null if the user does not exist
      */
-    public User findUser (String userName) {
-        if (userName == null || userName.trim().isEmpty()) {
+    public User findUser (String username) {
+        if (username == null || username.trim().isEmpty()) {
             System.out.println("❌ Invalid username. Please enter a valid username.");
         }
 
-        return userDAO.findUser(userName);
+        return userDAO.findUser(username);
     }
 
 

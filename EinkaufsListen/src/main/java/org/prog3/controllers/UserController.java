@@ -11,11 +11,12 @@ import java.util.Scanner;
  */
 public class UserController {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner ;
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService ,Scanner scanner) {
         this.userService = userService;
+        this.scanner = scanner;
     }
 
     /**
