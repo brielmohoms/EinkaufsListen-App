@@ -199,7 +199,7 @@ public class UserController {
      */
     public void promoteUserToAdmin () {
         System.out.print("Enter username to promote to admin: ");
-        String username = scanner.next();
+        String username = scanner.nextLine();
 
         boolean success = userService.promoteUserToAdmin(username);
         if (success) {
