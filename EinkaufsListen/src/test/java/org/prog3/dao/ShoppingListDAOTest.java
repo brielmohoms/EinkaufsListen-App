@@ -29,7 +29,8 @@ public class ShoppingListDAOTest {
 
     /**
      * Sets up the database connection and clears the shopping list table before each test.
-     * @throws Exception  if a database connection or SQL execution error occurs.
+     *
+     * @throws Exception if a database connection or SQL execution error occurs.
      */
     @BeforeEach
     void SetUp () throws Exception{
@@ -45,6 +46,7 @@ public class ShoppingListDAOTest {
 
     /**
      * Cleans up the database by removing all shopping lists after each test.
+     *
      * @throws Exception if a database connection or SQL execution error occurs.
      */
     @AfterEach
@@ -57,7 +59,7 @@ public class ShoppingListDAOTest {
 
 
     /**
-     *Tests adding a new shopping list and retrieving all shopping lists.
+     * Tests adding a new shopping list and retrieving all shopping lists.
      * Ensures that after insertion, the list is present in the database.
      */
     @Test
@@ -75,7 +77,7 @@ public class ShoppingListDAOTest {
 
     /**
      * Tests deleting the ShoppingList
-     *  Ensures that the shopping list is removed from the database after deletion.
+     * Ensures that the shopping list is removed from the database after deletion.
      */
     @Test
     void testDeleteShoppingList(){

@@ -21,6 +21,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DatabaseInitializerTest {
 
 
+    /**
+     * Sets up the test environment by initializing database
+     *
+     * @throws Exception if an error occurs during the process
+     */
     @BeforeEach
     void setUp() throws Exception {
         DatabaseInitializer.initialise();
@@ -34,7 +39,7 @@ public class DatabaseInitializerTest {
     /**
      * Test for the User Table
      *
-     * @throws SQLException
+     * @throws SQLException if an error occurs during the process
      */
     @Test
     void testUserTable() throws SQLException {
@@ -55,7 +60,7 @@ public class DatabaseInitializerTest {
     /**
      * Test for the ShoppingList table
      *
-     * @throws SQLException
+     * @throws SQLException if an error occurs during the process
      */
     @Test
     void testShoppingListTable () throws SQLException{
@@ -76,7 +81,7 @@ public class DatabaseInitializerTest {
     /**
      * Test for the Item Table
      *
-     * @throws SQLException
+     * @throws SQLException if an error occurs during the process
      */
     @Test
     void testItemTable() throws SQLException{
