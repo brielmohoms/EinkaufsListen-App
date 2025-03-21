@@ -56,7 +56,7 @@ public class ItemController {
      * </p>
      */
     public void addItem () {
-        System.out.print("Enter the shopping list name: \n");
+        System.out.print("\nEnter the shopping list name: ");
         String shoppingListName = scanner.nextLine();
 
         System.out.println("\nEnter item category: ");
@@ -145,6 +145,7 @@ public class ItemController {
 
         System.out.println("\nEnter item new quantity: ");
         double newQuantity = scanner.nextDouble();
+        scanner.nextLine();
 
         if (itemService.updateItemQuantity(shoppingListName, name, newQuantity)) {
             System.out.println("✅ Quantity updated for " + name + " to " + newQuantity);
