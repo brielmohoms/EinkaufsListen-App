@@ -176,9 +176,9 @@ public class UserController {
         System.out.print("\nEnter your name: ");
         String name = scanner.nextLine();
         System.out.println("\nEnter new username: ");
-        String username = scanner.next();
+        String username = scanner.nextLine();
         System.out.println("\nEnter new password: ");
-        String password = scanner.next();
+        String password = scanner.nextLine();
 
         boolean success = userService.updateUser(username, password, name);
         if (success) {
