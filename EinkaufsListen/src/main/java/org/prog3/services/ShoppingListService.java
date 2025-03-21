@@ -62,6 +62,9 @@ public class ShoppingListService {
         if ((name == null) || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Shopping list or items cannot be null.");
         }
+        if (!name.matches("^[A-Za-zÀ-ÿ ]+$")) {
+            throw new IllegalArgumentException("the shopping list name must contain only letters.");
+        }
         ShoppingList shoppingList = new ShoppingList(name);
         String username = userService.getLoggedInUser().getUsername();
         shoppingListDAO.addShoppingList(shoppingList, username);
