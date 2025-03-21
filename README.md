@@ -1,6 +1,6 @@
 # EinkaufsListen-App
 
-## Noel V. Tchinda K., Serge Talla T., Chrislie B. Mohomye Y.
+## Chrislie B. Mohomye Y., Noel V. Tchinda K., Serge Talla T.
 
 ### 1. Projektbeschreibung
 
@@ -9,10 +9,12 @@ verwendet, um Benutzer, Einkaufslisten und Artikel zu verwalten. Die Anwendung
 bietet eine textbasierte Benutzeroberfläche (CLI) und ist plattformunabhängig.
 
 ### 2. Features
-* Benutzerregistrierung und Anmeldung
-* Verwaltung von Einkaufslisten
-* Verwaltung von Artikeln innerhalb der Einkaufslisten
-* Speicherung der Daten in einer SQLite-Datenbank
+* Benutzerregistrierung und Anmeldung.
+* Der erste registrierte Benutzer erhält automatisch Administratorrechte.
+* Admin-Benutzer haben ein erweitertes Menü mit zusätzlichen Verwaltungsfunktionen (z.B. Verwaltung aller Benutzer).
+* Verwaltung von Einkaufslisten.
+* Verwaltung von Artikeln innerhalb der Einkaufslisten.
+* Speicherung der Daten in einer SQLite-Datenbank.
 
 ### 3. Systemanforderungen
 * Java-Version: 21.0.5
@@ -23,7 +25,7 @@ bietet eine textbasierte Benutzeroberfläche (CLI) und ist plattformunabhängig.
 * Abhängigkeiten installieren: `mvn clean install`
 
 ### 5. Schnellstart
-* Befehl: `mvn exec:java "-Dexec.mainClass=org.prog3.app.App"`
+* Befehl: `mvn exec:java -D"exec.mainClass=org.prog3.app.App"`
 * Nach dem Start wird das Hauptmenü angezeigt, wo Benutzer zwischen Anmeldung und Registrierung wählen können.
   
 ### 6. Anwendungsbeispiele
@@ -45,5 +47,5 @@ Die Tests können mit `mvn test` ausgeführt werden.
 * Keine GUI, nur textbasierte CLI.
 
 ### 9. Weiterentwicklung
-* Passwort Hash
+* Passwort Hash.
 * Einführung einer GUI als alternative Benutzeroberfläche.
